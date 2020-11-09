@@ -121,7 +121,7 @@ export const filterItemAssign = (object, filter) => {
     let tempClassList = [];
 
     for (let r = 0; r < dataList.length; r++) {
-        console.log(object.filterItemList.length);
+
         // delete sub-duplicities throw all filter items
         if (object.filterItemList[r].length > 0) {
 

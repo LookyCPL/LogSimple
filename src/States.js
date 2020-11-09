@@ -13,8 +13,8 @@ export const useShareableState = () => {
 
     const [frameList, setFrameList] = useState(startObject);
     const [filterList, setFilterList] = useState([]);
-    const [fileName, setFileName] = useState("someFile.txt");
-    const [rowCount, setRowCount] = useState(10);
+    const [fileName, setFileName] = useState("none");
+    const [rowCount, setRowCount] = useState(0);
     const [isUploaded, setIsUploaded] = useState(false);
 
     return {

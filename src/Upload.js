@@ -25,11 +25,11 @@ export const Upload = (props) => {
         reader.readAsText(files[0]);
 
         reader.onload = (e) => {
-            //console.log(e.target.result);
+
             localStorage.setItem('text', e.target.result);
             FillArray();
-            console.log(e);
         };
+        setFileName(e.target.files[0].name);
     };
 
     return (
