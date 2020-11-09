@@ -1,0 +1,35 @@
+
+.key {
+    display: inline-block;
+    height: 19px;
+    width: auto;
+    font-weight: bold;
+    color: black;
+    border-radius: 1em;
+    text-align: center;
+    padding: 1px 10px;
+    background-color: #FFD217;
+}
+
+.data {
+    display: inline-block;
+    height: auto;
+    width: calc(100% - 40px);
+    padding: 4px 14px 4px 15px;
+    white-space: pre-wrap;
+    color: #fff;
+}
+
+.body {
+    display: inline-block;
+    max-height: 500px;
+    overflow: auto;
+    margin: 0;
+    background: #F3F2F2;
+    line-height: 2em;
+    padding: 8px 14px 12px 15px;
+}
+
+.hidden {
+    display: none;
+}
