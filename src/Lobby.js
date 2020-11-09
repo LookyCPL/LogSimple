@@ -2,7 +2,7 @@ import React from 'react';
 import {Frame} from "./Frame";
 import {useShareableState} from "./States";
 import {useBetween} from 'use-between';
-import "./App.css";
+import "./App.scss";
 import {filterIndexListMerge} from './Methods';
 
 
