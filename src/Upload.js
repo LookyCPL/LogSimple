@@ -6,13 +6,14 @@ import {dateTypeRecognizer, dataSeparateGet, bodyFormatter} from "./Methods";
 
 export const Upload = (props) => {
 
-    const {setFrameList, frameList} = useBetween(useShareableState);
+    const {setFrameList, frameList, setRowCount, setIsUploaded, setFileName} = useBetween(useShareableState);
 
     const FillArray = () => {
 
         setFrameList(dateTypeRecognizer(frameList, localStorage.getItem('text')));
         setFrameList(dataSeparateGet(frameList, localStorage.getItem('text'), frameList.key));
-
+        setRowCount(frameList.key.length);
+        setIsUploaded(true);
         //setFrameList(bodyFormatter(frameList, frameList.get("data")));
     };
 

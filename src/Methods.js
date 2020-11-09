@@ -7,7 +7,7 @@ export const dateTypeRecognizer = (object, inputText) => {
     const dateFormatType = "YYYY-MM-DD HH:mm:ss,SSS";
     let keyList = [];
     let classList = [];
-    let filterItemList = [[]];
+    let filterItemList = [];
     let rows = inputText.split('\n');
     let isDate;
 
@@ -18,12 +18,10 @@ export const dateTypeRecognizer = (object, inputText) => {
 
         if (isDate) {
             keyList.push(row.substring(0, dateFormatType.length));
+            classList.push("default");
+            filterItemList.push(itemList);
         }
-
-        filterItemList.push(itemList);
-        classList.push("default");
     }
-
     object.filterItemList = filterItemList;
     object.class = classList;
     object.key = keyList;
@@ -123,7 +121,7 @@ export const filterItemAssign = (object, filter) => {
     let tempClassList = [];
 
     for (let r = 0; r < dataList.length; r++) {
-
+        console.log(object.filterItemList.length);
         // delete sub-duplicities throw all filter items
         if (object.filterItemList[r].length > 0) {
 
@@ -160,13 +158,13 @@ export const filterItemAssign = (object, filter) => {
             };
 
             object.filterItemList[r].push(filterItem);
+
             tempClassList.push("default");
         }
         else {
             tempClassList.push("hidden");
         }
     }
-
     object.class = tempClassList;
     return {...object};
 };
@@ -193,9 +191,9 @@ export const filterItemUnAssignHandler = (object, filter) => {
             tempClassList.push("hidden");
         }
     }
-    if (object.filterItemList.flat().length === 0) {
 
-        tempClassList.fill("default", 0, object.filterItemList.length);
+    if (object.filterItemList.flat().length === 0) {
+        tempClassList.fill("default",0, tempClassList.length);
     }
     object.class = tempClassList;
     return {...object};

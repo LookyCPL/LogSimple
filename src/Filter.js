@@ -6,7 +6,7 @@ import {filterItemAddHandler, filterItemAssign, filterItemRemoveHandler, filterI
 
 export const Filter = (props) => {
 
-    const {frameList, setFrameList, filterList, setFilterList} = useBetween(useShareableState);
+    const {frameList, setFrameList, filterList, setFilterList, setRowCount} = useBetween(useShareableState);
     const [inputFilter, setInputFilter] = useState(null);
     const filters = [];
 
@@ -24,6 +24,7 @@ export const Filter = (props) => {
 
         setFilterList(filterItemRemoveHandler(filterList, e.target.id));
         setFrameList(filterItemUnAssignHandler(frameList, e.target.id));
+        setRowCount(frameList.class.filter((x) => {return x === "default";}).length);
     };
 
     const filterAdd = () => {
@@ -40,6 +41,7 @@ export const Filter = (props) => {
                 setFrameList(filterItemAssign(frameList, inputFilter));
             }
         }
+        setRowCount(frameList.class.filter((x) => {return x === "default";}).length);
         setInputFilter("");
     };
 

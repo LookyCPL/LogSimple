@@ -1,10 +1,22 @@
 import React from 'react';
+import {useBetween} from 'use-between';
+import {useShareableState} from "./States";
 
 export const Info = (props) => {
 
+
+    const {fileName, rowCount} = useBetween(useShareableState);
+
     return(
         <div className={"info"}>
-            <label id={"rowCount"} title={"Počet záznamů"}>8</label>
+            <div className={"infoItem"}>
+                <label className={"title"}>File name</label>
+                <label className={"value"}>{fileName}</label>
+            </div>
+            <div className={"infoItem"}>
+                <label className={"title"}>Row count</label>
+                <label className={"value"}>{rowCount}</label>
+            </div>
         </div>
     );
 };

@@ -40,6 +40,7 @@ export const MainPage = (props) => {
         <div className={"main"}>
             <div className={"header"}>
                 <Upload/>
+                <Info/>
             </div>
             <div className={"page"}>
                 <Menu/>
