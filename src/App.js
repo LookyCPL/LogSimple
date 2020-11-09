@@ -1,5 +1,5 @@
 import React from 'react';
-import "./App.css";
+import "./App.scss";
 import {Lobby} from "./Lobby.js";
 import {Upload} from "./Upload.js";
 import {Filter} from "./Filter";
@@ -26,7 +26,6 @@ Data structure:
  */
 
 export const MainPage = (props) => {
-
 
     const onClickHandler = (props) => {
 

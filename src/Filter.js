@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './Filter.css';
+import './Filter.scss';
 import {useBetween} from 'use-between';
 import {useShareableState} from "./States";
 import {filterItemAddHandler, filterItemAssign, filterItemRemoveHandler, filterItemUnAssignHandler} from "./Methods";
@@ -24,20 +24,22 @@ export const Filter = (props) => {
 
         setFilterList(filterItemRemoveHandler(filterList, e.target.id));
         setFrameList(filterItemUnAssignHandler(frameList, e.target.id));
-        console.log(frameList.filterItemList);
     };
 
     const filterAdd = () => {
 
-        let newFilterState = filterItemAddHandler(filterList, inputFilter);
+        if (inputFilter && inputFilter.replace(/ /g, "").length !== 0) {
 
-        if (newFilterState === "duplicity") {
-            alert("Duplicity!");
-        } else {
-            setFilterList(newFilterState);
-            setFrameList(filterItemAssign(frameList, inputFilter));
+            let newFilterState = filterItemAddHandler(filterList, inputFilter);
+
+            if (newFilterState === "duplicity") {
+                alert("Duplicity!");
+            }
+            else {
+                setFilterList(newFilterState);
+                setFrameList(filterItemAssign(frameList, inputFilter));
+            }
         }
-        console.log(frameList.filterItemList);
         setInputFilter("");
     };
 
@@ -53,11 +55,11 @@ export const Filter = (props) => {
         <div className={"filter"}>
             <div className={"input"}>
                 <div className={"inputContent"}>
-                    <input  value={inputFilter} onInput={e => setInputFilter(e.target.value)}/>
+                    <input value={inputFilter} onInput={e => setInputFilter(e.target.value)}/>
                     <button onClick={filterAdd}>ADD</button>
                 </div>
             </div>
-                <div className={"filterList"}>{filters}</div>
+            <div className={"filterList"}>{filters}</div>
         </div>
     );
 };
