@@ -1,11 +1,10 @@
 import React from 'react';
-import "./App.scss";
 import {Lobby} from "./Lobby.js";
 import {Upload} from "./Upload.js";
 import {Filter} from "./Filter";
 import {Menu} from "./Menu.js";
 import {Info} from "./Info.js";
-
+import "./App.scss";
 
 /*
 
@@ -25,7 +24,7 @@ Data structure:
                     -- end (Integer)
  */
 
-export const MainPage = (props) => {
+export const App = (props) => {
 
     const onClickHandler = (props) => {
 

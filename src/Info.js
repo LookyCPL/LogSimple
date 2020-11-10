@@ -1,6 +1,6 @@
 import React from 'react';
 import {useBetween} from 'use-between';
-import {useShareableState} from "./States";
+import {useShareableState} from "./states";
 
 export const Info = (props) => {
 

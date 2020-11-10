@@ -1,44 +1,52 @@
-import React from 'react';
-import {useShareableState} from "./States";
-import {useBetween} from 'use-between';
-import {dateTypeRecognizer, dataSeparateGet, bodyFormatter} from "./Methods";
+import React from "react";
+import { useBetween } from "use-between";
+import { useShareableState } from "./states";
+import { dateTypeRecognizer, dataSeparateGet, bodyFormatter } from "./methods";
 
 
 export const Upload = (props) => {
 
-    const {setFrameList, frameList, setRowCount, setIsUploaded, setFileName} = useBetween(useShareableState);
+  const {
+        setFrameList,
+        frameList,
+        setRowCount,
+        setIsUploaded,
+        setFileName,
+    } = useBetween(useShareableState);
+  
+  const fillArray = (fileContent) => {
+    let tempObject = dateTypeRecognizer(frameList, fileContent);
+    tempObject = dataSeparateGet(tempObject, fileContent, tempObject.key);
 
-    const FillArray = () => {
+    setFrameList(tempObject);
+    setRowCount(frameList.key.length);
+    setIsUploaded(true);
+    //setFrameList(bodyFormatter(frameList, frameList.get("data")));
+  };
 
-        setFrameList(dateTypeRecognizer(frameList, localStorage.getItem('text')));
-        setFrameList(dataSeparateGet(frameList, localStorage.getItem('text'), frameList.key));
-        setRowCount(frameList.key.length);
-        setIsUploaded(true);
-        //setFrameList(bodyFormatter(frameList, frameList.get("data")));
+  const uploadFile = (e) => {
+    let files = e.target.files;
+    let reader = new FileReader();
+
+    reader.readAsText(files[0]);
+    reader.onload = (e) => {
+      fillArray(e.target.result);
     };
+    
+    setFileName(e.target.files[0].name);
+  };
 
-    const uploadFile = (e) => {
-
-        let files = e.target.files;
-        let reader = new FileReader();
-
-        reader.readAsText(files[0]);
-
-        reader.onload = (e) => {
-
-            localStorage.setItem('text', e.target.result);
-            FillArray();
-        };
-        setFileName(e.target.files[0].name);
-    };
-
-    return (
-        <div>
-            <label className="upload">
-                <input className={"hidden"} type="file" id="inputFile" name="inputFile" onChange={(e) => uploadFile(e)}/>
-            </label>
-        </div>
-
-    );
-
+  return (
+    <div>
+      <label className="upload">
+        <input
+          className={"hidden"}
+          type="file"
+          id="inputFile"
+          name="inputFile"
+          onChange={(e) => uploadFile(e)}
+        />
+      </label>
+    </div>
+  );
 };

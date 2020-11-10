@@ -1,9 +1,9 @@
 import React from 'react';
 import {Frame} from "./Frame";
-import {useShareableState} from "./States";
+import {useShareableState} from "./states";
 import {useBetween} from 'use-between';
 import "./App.scss";
-import {filterIndexListMerge} from './Methods';
+import {filterIndexListMerge} from './methods';
 
 
 export const Lobby = (props) => {
@@ -18,25 +18,32 @@ export const Lobby = (props) => {
 
     const prepareData = (filterItemList, data) => {
 
-        if (data && filterItemList) {
+        if (!data || !filterItemList) return data;
+        if (filterItemList.length === 0) return data;
 
-            if(filterItemList.length > 0){
+        let temp = [];
+        let endSubstring = data;
+        let indexShift = 0;
 
-                    let temp = [];
-                    let endSubstring = data;
-                    let indexShift = 0;
-
-                    for(const indexes of filterIndexListMerge(filterItemList)){
-
-                        temp.push(endSubstring.substring(0,indexes.start - indexShift),<span className="filterItemSubstring">{endSubstring.substring(indexes.start - indexShift,indexes.end - indexShift)}</span>);
-                        endSubstring = endSubstring.substring(indexes.end - indexShift,endSubstring.length);
-                        indexShift = indexes.end;
-                    }
-                    temp.push(endSubstring);
-                    return temp;
-            }
+        for (const indexes of filterIndexListMerge(filterItemList)) {
+          temp.push(
+            endSubstring.substring(0, indexes.start - indexShift),
+            <span className="filterItemSubstring">
+              {endSubstring.substring(
+                indexes.start - indexShift,
+                indexes.end - indexShift
+              )}
+            </span>
+          );
+          endSubstring = endSubstring.substring(
+            indexes.end - indexShift,
+            endSubstring.length
+          );
+          indexShift = indexes.end;
         }
-            return data;
+        temp.push(endSubstring);
+        return temp;
+        
     };
 
     const renderFrame = (frameClass, frameKey, frameData, frameFilterItemList) => {
