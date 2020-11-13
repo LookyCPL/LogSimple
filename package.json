@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "compile-sass": "^1.1.1",
-    "eslint": "^7.13.0",
-    "eslint-plugin-react": "^7.21.5",
+    "eslint": "^6.6.0",
     "moment": "^2.29.1",
     "prettier": "^2.1.2",
     "prop-types": "latest",

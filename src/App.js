@@ -1,10 +1,13 @@
-import React from 'react';
-import {Lobby} from "./Lobby.js";
-import {Upload} from "./Upload.js";
-import {Filter} from "./Filter";
-import {Menu} from "./Menu.js";
-import {Info} from "./Info.js";
+import React from "react";
+import { useBetween } from "use-between";
+import { useShareableState } from "./states";
+import { Lobby } from "./Lobby.js";
+import { Upload } from "./Upload.js";
+import { Filter } from "./Filter";
+import { Menu } from "./Menu.js";
+import { Info } from "./Info.js";
 import "./App.scss";
+import moment from "moment";
 
 /*
 
@@ -26,31 +29,35 @@ Data structure:
 
 export const App = (props) => {
 
-    const onClickHandler = (props) => {
+    const { frameList } = useBetween(useShareableState);
 
-        //let array = ["a", "b", "c"];
-        //alert(array.indexOf("d"));
-        // setFilterList(["shit", "hovno"]);
-        //alert( dateTypeRecognizer("2020-10-20  [brnpr"));
-        //alert(dataSeparateGet("188jjj--231", ["greg"]));
-    };
+  const onClickHandler = (props) => {
+//console.log();
+      //sessionStorage.clear();
+    //let array = ["a", "b", "c"];
+    //alert(array.indexOf("d"));
+    // setFilterList(["shit", "hovno"]);
+      console.log(Date.parse("2020-10-20 15:02:15.919"));
+    //alert(moment("2020-02-20", "YYYY-MM-DD HH:mm:ss,SSS").isValid());
+    //alert(dataSeparateGet("188jjj--231", ["greg"]));
+  };
 
-    return (
-        <div className={"main"}>
-            <div className={"header"}>
-                <Upload/>
-                <Info/>
-            </div>
-            <div className={"page"}>
-                <Menu/>
-                <div className={"content"}>
-                    <div>
-                        <Lobby/>
-                        <button onClick={onClickHandler}>test</button>
-                    </div>
-                </div>
-            </div>
-            <Filter/>
+  return (
+    <div className={"main"}>
+      <div className={"header"}>
+        <Upload />
+        <Info />
+      </div>
+      <div className={"page"}>
+        <Menu />
+        <div className={"content"}>
+          <div>
+            <Lobby />
+            <button onClick={onClickHandler}>test</button>
+          </div>
         </div>
-    );
+      </div>
+      <Filter />
+    </div>
+  );
 };

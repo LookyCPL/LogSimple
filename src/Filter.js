@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useBetween } from "use-between";
 import { useShareableState } from "./states";
 import {
-  filterItemAddHandler,
+  filterItemAddHandle,
   filterItemAssign,
-  filterItemRemoveHandler,
-  filterItemUnAssignHandler,
+  filterItemRemoveHandle,
+  filterItemUnAssignHandle,
 } from "./methods";
 import "./Filter.scss";
 
@@ -18,22 +18,10 @@ export const Filter = (props) => {
     setRowCount,
   } = useBetween(useShareableState);
   const [inputFilter, setInputFilter] = useState(null);
-  const filters = [];
-
-  const RenderFilterItem = (filterValue, filterClass) => (
-    <div className={filterClass}>
-      <label>{filterValue}</label>
-      <button
-        onClick={filterRemove}
-        id={filterValue}
-        className={"removeItem"}
-      />
-    </div>
-  );
 
   const filterRemove = (e) => {
-    setFilterList(filterItemRemoveHandler(filterList, e.target.id));
-    setFrameList(filterItemUnAssignHandler(frameList, e.target.id));
+    setFilterList(filterItemRemoveHandle(filterList, e.target.id));
+    setFrameList(filterItemUnAssignHandle(frameList, e.target.id));
     setRowCount(
       frameList.class.filter((x) => {
         return x === "default";
@@ -43,7 +31,7 @@ export const Filter = (props) => {
 
   const filterAdd = () => {
     if (inputFilter && inputFilter.replace(/ /g, "").length !== 0) {
-      let newFilterState = filterItemAddHandler(filterList, inputFilter);
+      let newFilterState = filterItemAddHandle(filterList, inputFilter);
 
       if (newFilterState === "duplicity") {
         alert("Duplicity!");
@@ -60,12 +48,6 @@ export const Filter = (props) => {
     setInputFilter("");
   };
 
-  if (filterList) {
-    for (let w = 0; w < filterList.length; w++) {
-      filters.push(RenderFilterItem(filterList[w], "filterItem"));
-    }
-  }
-
   return (
     <div className={"filter"}>
       <div className={"input"}>
@@ -77,7 +59,18 @@ export const Filter = (props) => {
           <button onClick={filterAdd}>ADD</button>
         </div>
       </div>
-      <div className={"filterList"}>{filters}</div>
+      <div className={"filterList"}>
+        {filterList.map((filter, i) => (
+          <div className="filterItem">
+            <label>{filterList[i]}</label>
+            <button
+              onClick={filterRemove}
+              id={filterList[i]}
+              className={"removeItem"}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
-};;
+};

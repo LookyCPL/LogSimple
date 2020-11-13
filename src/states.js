@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 
 export const useShareableState = () => {
-  let initialObject = {
-    class: ["default"],
-    key: ["key1"],
-    data: ["data1"],
-    filterItemList: [[]],
-  };
+    
+    let initialObject = JSON.parse(sessionStorage.getItem("frameList")) || {
+      class: ["hidden"],
+      key: ["key1"],
+      data: ["data1"],
+      filterItemList: [[]],
+    };
+    let initialRowCount = initialObject.class.filter((x) => {
+      return x === "default";
+    }).length;
 
-  const [frameList, setFrameList] = useState(initialObject);
-  const [filterList, setFilterList] = useState([]);
-  const [fileName, setFileName] = useState("none");
-  const [rowCount, setRowCount] = useState(0);
-  const [isUploaded, setIsUploaded] = useState(false);
+    const [frameList, setFrameList] = useState(initialObject);
+    const [filterList, setFilterList] = useState(JSON.parse(sessionStorage.getItem("filterList")) || []);
+    const [fileName, setFileName] = useState(sessionStorage.getItem("fileName") || "none");
+    const [rowCount, setRowCount] = useState(initialRowCount);
+    const [isUploaded, setIsUploaded] = useState(false);
 
   return {
     frameList,
@@ -24,6 +28,7 @@ export const useShareableState = () => {
     rowCount,
     setRowCount,
     isUploaded,
-    setIsUploaded,
+    setIsUploaded
   };
 };
+

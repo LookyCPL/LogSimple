@@ -1,7 +1,8 @@
 import React from "react";
 import { useBetween } from "use-between";
 import { useShareableState } from "./states";
-import { dataSeparate, bodyFormatter } from "./methods";
+import { dataSeparate } from "./methods";
+
 
 export const Upload = (props) => {
   const {
@@ -10,27 +11,32 @@ export const Upload = (props) => {
     setRowCount,
     setIsUploaded,
     setFileName,
+    setFilterList
   } = useBetween(useShareableState);
 
-  const fillArray = (fileContent) => {
-    const separated = dataSeparate(fileContent);
+  const fillArray = (content) => {
+    const separated = dataSeparate(content);
 
+    sessionStorage.setItem("frameList", JSON.stringify(separated));
     setFrameList(separated);
     setRowCount(frameList.key.length);
     setIsUploaded(true);
-    //setFrameList(bodyFormatter(frameList, frameList.get("data")));
   };
 
   const uploadFile = (e) => {
     let files = e.target.files;
     let reader = new FileReader();
+    let fileName;
 
     reader.readAsText(files[0]);
     reader.onload = (e) => {
       fillArray(e.target.result);
     };
-
-    setFileName(e.target.files[0].name);
+    fileName = e.target.files[0].name;
+    sessionStorage.setItem("fileName", fileName);
+    sessionStorage.removeItem("filterList");
+    setFileName(fileName);
+    setFilterList([]);
   };
 
   return (

@@ -1,19 +1,33 @@
 import moment from "moment";
-import React from "react";
 
 // --------------------------------------------- UPLOAD LOGIC -------------------------------------------
-const separateDates = (rows) => {
-  const dateFormatType = "YYYY-MM-DD HH:mm:ss,SSS";
+const keyRecognize = (data) => {
+  const dateFormatTypeList = [
+    "YYYY-MM-DD HH:mm:ss,SSS",
+    "YYYY-MM-DD HH:mm:ss",
+    "YYYY-MM-DD",
+  ];
+
+  //date check
+  for (const format of dateFormatTypeList) {
+    let temp = data.substring(0, format.length);
+    if (!isNaN(Date.parse(temp.replace(",", ".")))) {
+      return temp;
+    }
+  }
+  return "unknown";
+};
+
+const separateKeys = (rows) => {
+
   return rows
-    .map((row) => row.substring(0, dateFormatType.length))
-    .filter((formattedDate) =>
-      moment(formattedDate, dateFormatType, true).isValid()
-    );
+    .map((row) => keyRecognize(row))
+    .filter((key) => key !== "unknown");
 };
 
 export const dataSeparate = (fileContent) => {
   const rows = fileContent.split("\n");
-  let keyList = separateDates(rows);
+  let keyList = separateKeys(rows);
 
   let dataList = [];
   let separatorCount = 0;
@@ -50,42 +64,22 @@ export const dataSeparate = (fileContent) => {
     filterItemList: Array(keyList.length).fill([]),
   };
 };
-/*
-export const bodyFormatter = (map, dataList) => {
-
-    const domParser = new DOMParser();
-    let bodyList = [];
-    let bodyClassList = [];
-
-    for (let r = 0; r < dataList.length; r++) {
-
-        bodyList.push(domParser.parseFromString(dataList[r], "text/xml"));
-        bodyClassList.push("body");
-
-    }
-    map.set("bodyClass", bodyClassList);
-    map.set("body", bodyList);
-    return new Map([...map]);
-};
-*/
 
 // ------------------------- FILTER LOGIC -----------------------------------------------
-export const filterItemAddHandler = (filterList, filter) => {
+export const filterItemAddHandle = (filterList, filter) => {
   const hasDuplicity = filterList.some((f) => f.search(filter) > -1);
   if (hasDuplicity) return "duplicity";
 
   const tempList = filterList.filter((f) => filter.search(f) === -1);
   tempList.push(filter);
+  sessionStorage.setItem("filterList", JSON.stringify(tempList));
   return tempList;
 };
 
-export const filterItemRemoveHandler = (filterList, filter) => {
-  for (let g = 0; g < filterList.length; g++) {
-    if (filterList[g] === filter) {
-      filterList.splice(g, 1);
-    }
-  }
-  return new Array(...filterList);
+export const filterItemRemoveHandle = (filterList, filter) => {
+  let tempList = filterList.filter((f) => f !== filter);
+  sessionStorage.setItem("filterList", JSON.stringify(tempList));
+  return tempList;
 };
 
 export const filterItemAssign = (object, filter) => {
@@ -123,10 +117,11 @@ export const filterItemAssign = (object, filter) => {
     }
   }
   object.class = tempClassList;
+  sessionStorage.setItem("frameList", JSON.stringify(object));
   return { ...object };
 };
 
-export const filterItemUnAssignHandler = (object, filter) => {
+export const filterItemUnAssignHandle = (object, filter) => {
   let tempClassList = [];
 
   for (let w = 0; w < object.filterItemList.length; w++) {
@@ -149,6 +144,7 @@ export const filterItemUnAssignHandler = (object, filter) => {
     tempClassList.fill("default", 0, tempClassList.length);
   }
   object.class = tempClassList;
+  sessionStorage.setItem("frameList", JSON.stringify(object));
   return { ...object };
 };
 
