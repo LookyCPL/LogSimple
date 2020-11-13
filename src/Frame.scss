@@ -1,0 +1,49 @@
+.key {
+  button {
+    height: 21px;
+    width: auto;
+    border-radius: 1em;
+    border: none;
+    cursor: pointer;
+    padding: 1px 18px;
+    background-color: #ffd217;
+    font-weight: bold;
+    font-family: calibri, serif;
+    font-size: 16px;
+
+    &:hover {
+      background-color: #66cc00;
+    }
+  }
+
+  &.marked button {
+    background-color: #66cc00;
+
+    &:hover {
+      background-color: red;
+    }
+  }
+}
+
+.data {
+  display: inline-block;
+  height: auto;
+  width: calc(100% - 40px);
+  padding: 4px 14px 4px 15px;
+  white-space: pre-wrap;
+  color: #fff;
+}
+
+.body {
+  display: inline-block;
+  max-height: 500px;
+  overflow: auto;
+  margin: 0;
+  background: #f3f2f2;
+  line-height: 2em;
+  padding: 8px 14px 12px 15px;
+}
+
+.hidden {
+  display: none;
+}

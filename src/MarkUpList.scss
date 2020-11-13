@@ -1,0 +1,33 @@
+.markUpList {
+  display: flex;
+  width: 15px;
+  background-color: #ffd217;
+
+  &.expanded {
+    width: 75px;
+    background-color: #ffd217;
+
+    .btnExpand {
+      background: url(./sourceData/markUpListUnExpandBtn.svg) no-repeat center
+        #dbb412;
+      background-size: 15px 30px;
+    }
+  }
+
+  .btnExpand {
+    display: inline-block;
+    border: none;
+    horiz-align: right;
+    width: 15px;
+    height: 100%;
+    cursor: pointer;
+    background: url(./sourceData/markUpListExpandBtn.svg) no-repeat center
+      #dbb412;
+    background-size: 15px 30px;
+  }
+
+  >.listContent {
+    width: 60px;
+    height: 100%;
+  }
+}

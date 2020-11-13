@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
 export const useShareableState = () => {
-    
+
     let initialObject = JSON.parse(sessionStorage.getItem("frameList")) || {
+      isMarked: [false],
       class: ["hidden"],
       key: ["key1"],
       data: ["data1"],
@@ -17,6 +18,7 @@ export const useShareableState = () => {
     const [fileName, setFileName] = useState(sessionStorage.getItem("fileName") || "none");
     const [rowCount, setRowCount] = useState(initialRowCount);
     const [isUploaded, setIsUploaded] = useState(false);
+    const [isMarkUpListExpanded, setMarkUpListExpanded] = useState(false);
 
   return {
     frameList,
@@ -28,7 +30,9 @@ export const useShareableState = () => {
     rowCount,
     setRowCount,
     isUploaded,
-    setIsUploaded
+    setIsUploaded,
+    isMarkUpListExpanded,
+    setMarkUpListExpanded,
   };
 };
 

@@ -19,7 +19,6 @@ const keyRecognize = (data) => {
 };
 
 const separateKeys = (rows) => {
-
   return rows
     .map((row) => keyRecognize(row))
     .filter((key) => key !== "unknown");
@@ -58,6 +57,7 @@ export const dataSeparate = (fileContent) => {
   });
 
   return {
+    isMarked: Array(keyList.length).fill(false),
     key: keyList,
     data: dataList,
     class: Array(keyList.length).fill("default"),
@@ -159,3 +159,8 @@ export const filterIndexListMerge = (filterItemList) =>
       if (a.id < b.id) return -1;
       return 0;
     });
+
+export const markRowHandle = (object, index, isMarked) => {
+  object.isMarked[index] = isMarked;
+  return { ...object };
+};

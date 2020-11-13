@@ -1,7 +1,7 @@
 import React from "react";
 import { useBetween } from "use-between";
-import { Frame } from "./Frame";
 import { useShareableState } from "./states";
+import { Frame } from "./Frame";
 import { filterIndexListMerge } from "./methods";
 import "./App.scss";
 
@@ -12,6 +12,7 @@ export const Lobby = (props) => {
   let keyList = frameList.key.slice();
   let dataList = frameList.data.slice();
   let filterItemList = frameList.filterItemList.slice();
+  let isMarked = frameList.isMarked.slice();
 
   const prepareData = (filterItemList, data) => {
     if (!data || !filterItemList) return data;
@@ -47,6 +48,8 @@ export const Lobby = (props) => {
     <div>
       {keyList.map((key, i) => (
         <Frame
+          isMarked={isMarked[i]}
+          index={i}
           key={i}
           class={classList[i]}
           frKey={key}
