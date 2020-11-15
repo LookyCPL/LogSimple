@@ -1,6 +1,19 @@
 import moment from "moment";
 
 // --------------------------------------------- UPLOAD LOGIC -------------------------------------------
+
+const cssColorClassList = [
+  "lightGreen", //#66ff66
+  "lightBlue", //#33ccff
+  "lightPnk", //#ff99ff
+  "green", //#00cc00
+  "blue", //#0000ff
+  "pink", //#ff00ff
+  "darkGreen", //#006600
+  "darkBlue", //#000080
+  "darkPink", //#cc00cc
+];
+
 const keyRecognize = (data) => {
   const dateFormatTypeList = [
     "YYYY-MM-DD HH:mm:ss,SSS",
@@ -28,6 +41,7 @@ export const dataSeparate = (fileContent) => {
   const rows = fileContent.split("\n");
   let keyList = separateKeys(rows);
 
+  let indexList = [];
   let dataList = [];
   let separatorCount = 0;
   let rowCount = 0;
@@ -38,6 +52,7 @@ export const dataSeparate = (fileContent) => {
 
     if (index === 0) {
       dataList.push(row.substring(keyListOnSeparator.length, row.length));
+      indexList.push(separatorCount);
       if (separatorCount < keyList.length - 1) separatorCount++;
       rowCount++;
     } else if (index > 0) {
@@ -45,6 +60,7 @@ export const dataSeparate = (fileContent) => {
         row.substring(0, index) +
           row.substring(index + keyListOnSeparator.length, row.length)
       );
+      indexList.push(separatorCount);
       if (separatorCount < keyList.length - 1) separatorCount++;
       rowCount++;
     } else {
@@ -57,10 +73,12 @@ export const dataSeparate = (fileContent) => {
   });
 
   return {
+    index: indexList,
     isMarked: Array(keyList.length).fill(false),
     key: keyList,
     data: dataList,
     class: Array(keyList.length).fill("default"),
+    colorClass: Array(keyList.length).fill("default"),
     filterItemList: Array(keyList.length).fill([]),
   };
 };
@@ -160,7 +178,31 @@ export const filterIndexListMerge = (filterItemList) =>
       return 0;
     });
 
-export const markRowHandle = (object, index, isMarked) => {
+export const markRowHandle = (object, index, isMarked, colorIndex) => {
   object.isMarked[index] = isMarked;
+  object.colorClass[index] = (isMarked ? cssColorClassList[colorIndex] : "default");
+  sessionStorage.setItem("frameList", JSON.stringify(object));
   return { ...object };
+};
+
+export const markUpListSetHandle = (object, index, markUpList, isMarked, colorIndex) => {
+  if (!isMarked) {
+    markUpList.push({
+      index: index,
+      key: object.key[index],
+      class: "markUp " + cssColorClassList[colorIndex],
+    });
+  } else {
+    markUpList = markUpList.filter((f) => f.index !== index);
+  }
+
+  return markUpList.flat().sort((a, b) => {
+    if (parseInt(a.index) > parseInt(b.index)) return 1;
+    if (parseInt(a.index) < parseInt(b.index)) return -1;
+    return 0;
+  });
+};
+
+export const getCssColorClass = (index) => {
+  return cssColorClassList[index];
 };

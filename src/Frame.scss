@@ -16,12 +16,23 @@
     }
   }
 
-  &.marked button {
-    background-color: #66cc00;
+  &.marked {
+    & button {
+      background-color: #66cc00;
 
-    &:hover {
-      background-color: red;
+      &:hover {
+        background-color: red;
+      }
     }
+    .lightGreen{background-color: #66ff66}
+    .green{background-color: #00cc00}
+    .darkGreen{background-color: #006600}
+    .lightBlue{background-color: #33ccff}
+    .blue{background-color: #0000ff}
+    .darkBlue{background-color: #000080}
+    .lightPnk{background-color: #ff99ff}
+    .pink{background-color: #ff00ff}
+    .darkPink{background-color: red}
   }
 }
 

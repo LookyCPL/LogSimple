@@ -10,12 +10,13 @@ import "./App.scss";
 import moment from "moment";
 
 /*
-
 Data structure:
 
 -- frameList (Object)
-    -- isMarked (Boolean)
+    -- index (Array[Integer])
+    -- isMarked (Array[Boolean])
     -- class (Array[String])
+    -- colorClass (Array[String])
     -- key (Array[String])
     -- data (Array[String])
     -- filterItemList (Array[Object])
@@ -26,9 +27,17 @@ Data structure:
             -- id (String)
             -- start (Integer)
             -- end (Integer)
- */
+
+-- filterList (Array[String])
+
+-- markUpList(Array[Object])
+  -- key (String)
+  -- class (String)
+  -- index (Integer)
+*/
 
 export const App = (props) => {
+  //sessionStorage.clear();
   const {
     frameList,
     setFrameList,
@@ -42,13 +51,19 @@ export const App = (props) => {
     setIsUploaded,
     isMarkUpListExpanded,
     setMarkUpListExpanded,
+    markUpList,
+    setMarkUpList
   } = useBetween(useShareableState);
 
   const onClickHandler = (props) => {
-    //console.log();
+    //document.getElementById("2020-10-20 15:02:16,120").scrollIntoView();
+    //document.getElementById("2020-10-20 15:02:16,120").style.backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+    //console.log("#" + (Math.random()*16777215).toString(16));
+    //console.log(markUpList);
+   //console.log(sessionStorage.getItem("colorIndex"));
     //sessionStorage.clear();
     //let array = ["a", "b", "c"];
-    alert(isMarkUpListExpanded);
+    //alert(isMarkUpListExpanded);
     // setFilterList(["shit", "hovno"]);
     //console.log(Date.parse("2020-10-20 15:02:15.919"));
     //alert(moment("2020-02-20", "YYYY-MM-DD HH:mm:ss,SSS").isValid());

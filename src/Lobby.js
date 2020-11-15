@@ -9,6 +9,7 @@ export const Lobby = (props) => {
   const { frameList } = useBetween(useShareableState);
 
   let classList = frameList.class.slice();
+  let colorClassList = frameList.colorClass.slice();
   let keyList = frameList.key.slice();
   let dataList = frameList.data.slice();
   let filterItemList = frameList.filterItemList.slice();
@@ -52,6 +53,7 @@ export const Lobby = (props) => {
           index={i}
           key={i}
           class={classList[i]}
+          colorClass={colorClassList[i]}
           frKey={key}
           data={prepareData(filterItemList[i], dataList[i])}
           filterItemList={filterItemList[i]}

@@ -1,25 +1,29 @@
 import React from "react";
 import { useBetween } from "use-between";
 import { useShareableState } from "./states";
-import { markRowHandle } from "./methods";
+import { getCssColorClass, markRowHandle , markUpListSetHandle } from "./methods";
 import "./Frame.scss";
 
 export const Frame = (props) => {
-  const { frameList, setFrameList } = useBetween(useShareableState);
+  const { colorIndex, setColorIndex, markUpList, setMarkUpList, frameList, setFrameList } = useBetween(useShareableState);
 
   const markHandle = (e, isMarked) => {
-    setFrameList(markRowHandle(frameList, e.target.id, isMarked));
+      let newMarkUpList = markUpListSetHandle(frameList, e.target.id, markUpList, !isMarked, colorIndex);
+      sessionStorage.setItem("markUpList", JSON.stringify(newMarkUpList));
+      setFrameList(markRowHandle(frameList, e.target.id, isMarked, colorIndex));
+      setMarkUpList(newMarkUpList);
+
+      if(isMarked){
+          let newColorIndex = (colorIndex < 8 ?  colorIndex + 1 : 0);
+          setColorIndex(newColorIndex);
+          sessionStorage.setItem("colorIndex", newColorIndex);
+      }
   };
 
   return (
-    <div className={props.class}>
-      <div>
-        <button className={"hidden"} id={props.index}>
-          {props.index}
-        </button>
-      </div>
-      <div className={props.isMarked ? "key marked" : "key"}>
-        <button id={props.index} onClick={(e) => markHandle(e, !props.isMarked)}>
+    <div id={props.index + " - " + props.frKey} className={props.class}>
+      <div className={props.isMarked ? "key marked " : "key"}>
+        <button  className={props.colorClass} id={props.index} onClick={(e) => markHandle(e, !props.isMarked)}>
           {props.frKey}
         </button>
       </div>
