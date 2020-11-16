@@ -51,13 +51,11 @@ export const Filter = (props) => {
   return (
     <div className={"filter"}>
       <div className={"input"}>
-        <div className={"inputContent"}>
           <input
             value={inputFilter}
             onInput={(e) => setInputFilter(e.target.value)}
           />
-          <button onClick={filterAdd}>ADD</button>
-        </div>
+          <button onClick={filterAdd}/>
       </div>
       <div className={"filterList"}>
         {filterList.map((filter, i) => (

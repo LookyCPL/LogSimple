@@ -9,6 +9,16 @@ import { Info } from "./Info.js";
 import "./App.scss";
 import moment from "moment";
 
+
+/*
+
+TODO !!!
+- dodelat neaktivnost markUpu, kdyz nemam radek vyfiltrovany
+- dostylovat markUp list
+- dostylovat dolni panel filtru
+- implementovat vyhledavac keys
+*/
+
 /*
 Data structure:
 

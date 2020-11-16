@@ -8,7 +8,7 @@
     background-color: #ffd217;
 
     .btnExpand {
-      background: url(./sourceData/markUpListUnExpandBtn.svg) no-repeat center #dbb412;
+      background: url(./sourceData/markUpListExpandBtn.svg) no-repeat center #dbb412;
       background-size: 15px 30px;
     }
   }
@@ -24,7 +24,7 @@
     width: 15px;
     height: 100%;
     cursor: pointer;
-    background: url(./sourceData/markUpListExpandBtn.svg) no-repeat center #dbb412;
+    background: url(./sourceData/markUpListUnExpandBtn.svg) no-repeat center #dbb412;
     background-size: 15px 30px;
   }
 

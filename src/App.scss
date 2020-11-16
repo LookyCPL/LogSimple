@@ -1,71 +1,68 @@
-
 .main {
-    height: 100%;
-}
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
-.header {
+  .header {
     display: flex;
     width: 100%;
     height: 100px;
     background-size: 100% auto !important;
     background: url(sourceData/header.svg) no-repeat;
-}
 
-.upload {
-    margin: 18px 30px 0 15px;
-    display: inline-block;
-    height: 60px;
-    width: 60px;
-    background: url("sourceData/btnFileUpload-normal.svg") no-repeat;
-    cursor: pointer;
-}
+    .upload {
+      margin: 18px 30px 0 15px;
+      display: inline-block;
+      height: 60px;
+      width: 60px;
+      background: url("sourceData/btnFileUpload-normal.svg") no-repeat;
+      cursor: pointer;
 
-.upload:hover {
-    background: url("sourceData/btnFileUpload-hover.svg") no-repeat;
-}
+      &:hover {
+        background: url("sourceData/btnFileUpload-hover.svg") no-repeat;
+      }
+    }
 
-.content {
-    overflow-y: scroll;
-    display: inline-block;
-    width: 100%;
-    background-color: #5B5B5B;
-    padding: 18px 0 0 16px;
-}
+    .info {
+      display: flex;
+      padding: 20px 10px 10px 0;
+      font-family: calibri, serif;
 
-.page {
-    height: calc(100% - 150px);
-    display: flex;
-}
-
-.filterItemSubstring {
-    font-weight: bold;
-    color: #FFD217;
-}
-
-.info{
-    display: flex;
-    padding: 20px 10px 10px 0;
-    font-family: calibri, serif;
-
-    .infoItem{
+      .infoItem {
         margin-right: 10px;
         max-width: 120px;
         width: 120px;
 
-        .title{
-            display: inline-block;
-            width: 100%;
-            font-size: 22px;
-            font-weight: bold;
-            color: #5B5B5B;
-
+        .title {
+          display: inline-block;
+          width: 100%;
+          font-size: 22px;
+          font-weight: bold;
+          color: #5b5b5b;
         }
 
-        .value{
-            display: inline-block;
-            width: 100%;
-
+        .value {
+          display: inline-block;
+          width: 100%;
         }
+      }
     }
+  }
 
+  .page {
+    height: calc(100% - 135px);
+    display: flex;
+
+    .content {
+      overflow-y: scroll;
+      display: inline-block;
+      width: 100%;
+      background-color: #5b5b5b;
+      padding: 18px 0 0 16px;
+    }
+  }
+}
+
+.hidden {
+  display: none;
 }
