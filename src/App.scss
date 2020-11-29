@@ -47,6 +47,15 @@
         }
       }
     }
+
+    button{
+      height: 20px;
+      width: 80px;
+      font-size: 10px;
+      background-color: crimson;
+      cursor: pointer;
+      border: solid;
+    }
   }
 
   .page {
@@ -65,4 +74,11 @@
 
 .hidden {
   display: none;
+}
+
+.hover {
+  &:hover{
+    background-color: #dbb412;
+    visibility: visible;
+  }
 }

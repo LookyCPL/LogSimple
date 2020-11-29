@@ -6,6 +6,7 @@ import {
   filterItemAssign,
   filterItemRemoveHandle,
   filterItemUnAssignHandle,
+  classByFilterListSet,
 } from "./methods";
 import "./Filter.scss";
 
@@ -16,12 +17,23 @@ export const Filter = (props) => {
     filterList,
     setFilterList,
     setRowCount,
+    isFilterBound,
+    setFilterBound,
   } = useBetween(useShareableState);
   const [inputFilter, setInputFilter] = useState(null);
 
   const filterRemove = (e) => {
-    setFilterList(filterItemRemoveHandle(filterList, e.target.id));
-    setFrameList(filterItemUnAssignHandle(frameList, e.target.id));
+    let newFilterList = filterItemRemoveHandle(filterList, e.target.id);
+
+    setFilterList(newFilterList);
+    setFrameList(
+      filterItemUnAssignHandle(
+        frameList,
+        e.target.id,
+        newFilterList,
+        isFilterBound
+      )
+    );
     setRowCount(
       frameList.class.filter((x) => {
         return x === "default";
@@ -37,7 +49,14 @@ export const Filter = (props) => {
         alert("Duplicity!");
       } else {
         setFilterList(newFilterState);
-        setFrameList(filterItemAssign(frameList, inputFilter));
+        setFrameList(
+          filterItemAssign(
+            frameList,
+            inputFilter,
+            newFilterState,
+            isFilterBound
+          )
+        );
       }
     }
     setRowCount(
@@ -48,26 +67,38 @@ export const Filter = (props) => {
     setInputFilter("");
   };
 
+  const filterBindHandle = () => {
+      classByFilterListSet(frameList, filterList, !isFilterBound);
+      setFilterBound(!isFilterBound);
+      sessionStorage.setItem("fileName", JSON.stringify(!isFilterBound));
+  };
+
   return (
-    <div className={"filter"}>
-      <div className={"input"}>
-          <input
-            value={inputFilter}
-            onInput={(e) => setInputFilter(e.target.value)}
-          />
-          <button onClick={filterAdd}/>
+    <div className="filter">
+      <div className="input">
+        <input
+          value={inputFilter}
+          onInput={(e) => setInputFilter(e.target.value)}
+        />
+        <button onClick={filterAdd} />
       </div>
-      <div className={"filterList"}>
+      <div className="filterList">
         {filterList.map((filter, i) => (
           <div className="filterItem">
             <label>{filterList[i]}</label>
             <button
               onClick={filterRemove}
               id={filterList[i]}
-              className={"removeItem"}
+              className="removeItem"
             />
           </div>
         ))}
+      </div>
+      <div
+        className={isFilterBound ? "binder bound" : "binder"}
+        onClick={filterBindHandle}
+      >
+        <button />
       </div>
     </div>
   );

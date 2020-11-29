@@ -14,9 +14,12 @@ import moment from "moment";
 
 TODO !!!
 - dodelat neaktivnost markUpu, kdyz nemam radek vyfiltrovany
+- dodelat hover na markUpy
 - dostylovat markUp list
 - dostylovat dolni panel filtru
 - implementovat vyhledavac keys
+
+- blbne filtr ! dodelat svazovani filtracnich kriterii
 */
 
 /*
@@ -69,8 +72,8 @@ export const App = (props) => {
     //document.getElementById("2020-10-20 15:02:16,120").scrollIntoView();
     //document.getElementById("2020-10-20 15:02:16,120").style.backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16);
     //console.log("#" + (Math.random()*16777215).toString(16));
-    //console.log(markUpList);
-   //console.log(sessionStorage.getItem("colorIndex"));
+//console.log(frameList);
+//console.log(filterList);
     //sessionStorage.clear();
     //let array = ["a", "b", "c"];
     //alert(isMarkUpListExpanded);
@@ -80,11 +83,16 @@ export const App = (props) => {
     //alert(dataSeparateGet("188jjj--231", ["greg"]));
   };
 
+  const clearSession =() => {
+    sessionStorage.clear()
+  };
+
   return (
     <div className={"main"}>
       <div className={"header"}>
         <Upload />
         <Info />
+        <button onClick={clearSession}>CLEAR</button>
       </div>
       <div className={"page"}>
         <MarkUpList isExpanded={isMarkUpListExpanded}/>

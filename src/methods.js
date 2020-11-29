@@ -100,7 +100,7 @@ export const filterItemRemoveHandle = (filterList, filter) => {
   return tempList;
 };
 
-export const filterItemAssign = (object, filter) => {
+export const filterItemAssign = (object, filter, filterList, isBound) => {
   let dataList = object.data;
   let tempClassList = [];
 
@@ -126,20 +126,22 @@ export const filterItemAssign = (object, filter) => {
         matchWord: false,
         indexList: subIndexList,
       };
-
       object.filterItemList[r].push(filterItem);
+    }
 
-      tempClassList.push("default");
-    } else {
+    if (object.filterItemList[r].length === 0 || (isBound && object.filterItemList[r].length !== filterList.length)) {
       tempClassList.push("hidden");
+    } else {
+      tempClassList.push("default");
     }
   }
+
   object.class = tempClassList;
   sessionStorage.setItem("frameList", JSON.stringify(object));
   return { ...object };
 };
 
-export const filterItemUnAssignHandle = (object, filter) => {
+export const filterItemUnAssignHandle = (object, filter, filterList, isBound) => {
   let tempClassList = [];
 
   for (let w = 0; w < object.filterItemList.length; w++) {
@@ -151,13 +153,14 @@ export const filterItemUnAssignHandle = (object, filter) => {
         }
       }
     }
-    if (object.filterItemList[w].length > 0) {
-      tempClassList.push("default");
-    } else {
+
+    if (object.filterItemList[w].length === 0 || (isBound && object.filterItemList[w].length !== filterList.length)) {
       tempClassList.push("hidden");
     }
+    else {
+      tempClassList.push("default");
+    }
   }
-
   if (object.filterItemList.flat().length === 0) {
     tempClassList.fill("default", 0, tempClassList.length);
   }
@@ -166,6 +169,22 @@ export const filterItemUnAssignHandle = (object, filter) => {
   return { ...object };
 };
 
+
+export const classByFilterListSet = (object, filterList, isBound) => {
+  let tempClassList = [];
+  let filterItemListList = object.filterItemList;
+
+  for (let i = 0; i < filterItemListList.length; i++) {
+    if (object.filterItemList[i].length === 0 || (isBound && object.filterItemList[i].length !== filterList.length)) {
+      tempClassList.push("hidden");
+    } else {
+      tempClassList.push("default");
+    }
+  }
+
+  object.class = tempClassList;
+  return { ...object };
+};
 // ------------------------- USAGE LOGIC -----------------------------------------------
 
 export const filterIndexListMerge = (filterItemList) =>

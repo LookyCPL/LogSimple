@@ -8,7 +8,8 @@
     background-color: #ffd217;
 
     .btnExpand {
-      background: url(./sourceData/markUpListExpandBtn.svg) no-repeat center #dbb412;
+      background: url(./sourceData/markUpListExpandBtn.svg) no-repeat center
+        #dbb412;
       background-size: 15px 30px;
     }
   }
@@ -24,7 +25,8 @@
     width: 15px;
     height: 100%;
     cursor: pointer;
-    background: url(./sourceData/markUpListUnExpandBtn.svg) no-repeat center #dbb412;
+    background: url(./sourceData/markUpListUnExpandBtn.svg) no-repeat center
+      #dbb412;
     background-size: 15px 30px;
   }
 
@@ -44,9 +46,7 @@
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer 10+ */
 
-
-
-    > .markUp {
+    .markUp {
       display: inline-block;
       width: 30px;
       height: 30px;
@@ -57,6 +57,16 @@
       cursor: pointer;
       border-radius: 100%;
       border: none;
+
+      .markUpPopUp {
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        display: inherit;
+        cursor: pointer;
+        position: absolute;
+
+      }
 
       &.lightGreen {
         background-color: #66ff66;
@@ -84,6 +94,12 @@
       }
       &.darkPink {
         background-color: #cc00cc;
+      }
+
+      &:hover {
+        .markUpPopUp {
+          display: inline-block;
+        }
       }
     }
   }

@@ -32,7 +32,7 @@
       top: 8px;
 
       &:hover {
-        background-color: #dbb412;
+        border-bottom-color: #dbb412;
       }
     }
     button {
@@ -50,38 +50,68 @@
       }
     }
   }
-}
-
-.filterList {
-  padding-left: 40px;
-  display: flex;
-  height: 35px;
-  max-height: 35px;
-
-  .filterItem {
-    font-family: calibri, serif;
+  .filterList {
+    padding-left: 40px;
     display: flex;
-    margin: 6px 10px 0 0;
-    max-height: 23px;
-    background: #5b5b5b;
-    width: auto;
-    color: #ffd217;
-    border-radius: 1em;
+    height: 35px;
+    max-height: 35px;
 
-    button {
-      border: none;
-      height: 16px;
-      width: 16px;
-      background: url(./sourceData/filterItemRemove.svg) no-repeat;
+    .filterItem {
+      font-family: calibri, serif;
+      display: flex;
+      margin: 6px 10px 0 0;
+      max-height: 23px;
+      background: #5b5b5b;
+      width: auto;
+      color: #ffd217;
+      border-radius: 1em;
+
+      button {
+        border: none;
+        height: 16px;
+        width: 16px;
+        background: url(./sourceData/filterItemRemove.svg) no-repeat;
+        position: relative;
+        right: 4px;
+        top: 3px;
+        cursor: pointer;
+      }
+
+      label {
+        font-size: 16px;
+        padding: 1px 12px 0 16px;
+      }
+    }
+  }
+
+  .binder{
+    position: absolute;
+    right: 0;
+    width: 50px;
+    height: 35px;
+
+    button{
+      cursor: pointer;
       position: relative;
       right: 4px;
       top: 3px;
-      cursor: pointer;
+      border: none;
+      height: 22px;
+      width: 44px;
+      background: url(./sourceData/btnFilterBind-normal.svg) no-repeat;
+
+      &:hover{
+        background: url(./sourceData/btnFilterBind-hover.svg) no-repeat;
+      }
     }
 
-    label {
-      font-size: 16px;
-      padding: 1px 12px 0 16px;
+    &.bound  button{
+      background: url(./sourceData/btnFilterBind-BoundNormal.svg) no-repeat;
+      &:hover{
+        background: url(./sourceData/btnFilterBind-hover.svg) no-repeat;
+      }
     }
   }
 }
+
+

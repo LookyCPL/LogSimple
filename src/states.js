@@ -43,6 +43,7 @@ export const useShareableState = () => {
 
     const [frameList, setFrameList] = useState(initialObject);
     const [filterList, setFilterList] = useState(JSON.parse(sessionStorage.getItem("filterList")) || []);
+    const [isFilterBound, setFilterBound] = useState(JSON.parse(sessionStorage.getItem("isFilterBound")) || false);
     const [fileName, setFileName] = useState(sessionStorage.getItem("fileName") || "none");
     const [rowCount, setRowCount] = useState(initialRowCount);
     const [isUploaded, setIsUploaded] = useState(false);
@@ -55,6 +56,8 @@ export const useShareableState = () => {
         setFrameList,
         filterList,
         setFilterList,
+        isFilterBound,
+        setFilterBound,
         fileName,
         setFileName,
         rowCount,
