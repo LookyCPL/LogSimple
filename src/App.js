@@ -72,7 +72,7 @@ export const App = (props) => {
     //document.getElementById("2020-10-20 15:02:16,120").scrollIntoView();
     //document.getElementById("2020-10-20 15:02:16,120").style.backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16);
     //console.log("#" + (Math.random()*16777215).toString(16));
-//console.log(frameList);
+console.log(frameList.data);
 //console.log(filterList);
     //sessionStorage.clear();
     //let array = ["a", "b", "c"];
