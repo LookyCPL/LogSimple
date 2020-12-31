@@ -7,11 +7,10 @@ import { Filter } from "./Filter";
 import { MarkUpList } from "./MarkUpList.js";
 import { Info } from "./Info.js";
 import "./App.scss";
+import { increment } from "./actions";
+import { useDispatch } from "react-redux";
 import moment from "moment";
-
-
 /*
-
 TODO !!!
 - dodelat neaktivnost markUpu, kdyz nemam radek vyfiltrovany
 - dodelat hover na markUpy
@@ -47,7 +46,10 @@ Data structure:
   -- key (String)
   -- class (String)
   -- index (Integer)
+  -- sign (String)
 */
+
+
 
 export const App = (props) => {
   //sessionStorage.clear();
@@ -68,11 +70,14 @@ export const App = (props) => {
     setMarkUpList
   } = useBetween(useShareableState);
 
+    const dispatch = useDispatch();
+
   const onClickHandler = (props) => {
+
     //document.getElementById("2020-10-20 15:02:16,120").scrollIntoView();
     //document.getElementById("2020-10-20 15:02:16,120").style.backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16);
     //console.log("#" + (Math.random()*16777215).toString(16));
-console.log(frameList.data);
+//console.log(frameList);
 //console.log(filterList);
     //sessionStorage.clear();
     //let array = ["a", "b", "c"];

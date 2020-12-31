@@ -2,12 +2,16 @@ import React, {useState} from "react";
 import { useBetween } from "use-between";
 import { useShareableState } from "./states";
 import { getCssColorClass } from "./methods";
+import { useSelector } from "react-redux";
 import "./MarkUpList.scss";
 
 export const MarkUpList = (props) => {
-  const { frameList, markUpList, setMarkUpListExpanded } = useBetween(
+  const {
+      markUpList,
+      setMarkUpListExpanded } = useBetween(
     useShareableState
   );
+    const frameList = useSelector(state => state.frameList);
 
   const [hoverId, setHoverId] = useState("hidden");
 
@@ -43,9 +47,8 @@ export const MarkUpList = (props) => {
               // onMouseEnter={(e) => hoverVisibleHandle(e)}
               // onMouseLeave={setHoverId("hidden")}
             >
-              M
+                {mark.sign}
             </button>
-
           </div>
         ))}
       </div>

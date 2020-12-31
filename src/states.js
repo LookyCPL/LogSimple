@@ -41,8 +41,6 @@ export const useShareableState = () => {
       return x === "default";
     }).length;
 
-    const [frameList, setFrameList] = useState(initialObject);
-    const [filterList, setFilterList] = useState(JSON.parse(sessionStorage.getItem("filterList")) || []);
     const [isFilterBound, setFilterBound] = useState(JSON.parse(sessionStorage.getItem("isFilterBound")) || false);
     const [fileName, setFileName] = useState(sessionStorage.getItem("fileName") || "none");
     const [rowCount, setRowCount] = useState(initialRowCount);
@@ -50,12 +48,9 @@ export const useShareableState = () => {
     const [markUpList, setMarkUpList] = useState(JSON.parse(sessionStorage.getItem("markUpList")) || []);
     const [isMarkUpListExpanded, setMarkUpListExpanded] = useState(JSON.parse(sessionStorage.getItem("isMarkUpListExpanded")) || false);
     const [colorIndex, setColorIndex] = useState(parseInt(sessionStorage.getItem("colorIndex")) || 0);
+    const [signIndex, setSignIndex] = useState(parseInt(sessionStorage.getItem("signIndex")) || 0);
 
     return {
-        frameList,
-        setFrameList,
-        filterList,
-        setFilterList,
         isFilterBound,
         setFilterBound,
         fileName,
@@ -69,7 +64,9 @@ export const useShareableState = () => {
         markUpList,
         setMarkUpList,
         colorIndex,
-        setColorIndex
+        setColorIndex,
+        signIndex,
+        setSignIndex
     };
 };
 

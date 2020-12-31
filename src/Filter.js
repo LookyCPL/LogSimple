@@ -8,32 +8,31 @@ import {
   filterItemUnAssignHandle,
   classByFilterListSet,
 } from "./methods";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import "./Filter.scss";
+import {setFilterList, setFrameList} from "./actions";
+
+
 
 export const Filter = (props) => {
   const {
-    frameList,
-    setFrameList,
-    filterList,
-    setFilterList,
     setRowCount,
     isFilterBound,
     setFilterBound,
   } = useBetween(useShareableState);
+
+    const dispatch = useDispatch();
+    const filterList = useSelector(state => state.filterList);
+    const frameList = useSelector(state => state.frameList);
+
   const [inputFilter, setInputFilter] = useState(null);
 
   const filterRemove = (e) => {
     let newFilterList = filterItemRemoveHandle(filterList, e.target.id);
+    dispatch(setFilterList(newFilterList));
+    dispatch(setFrameList(filterItemUnAssignHandle(frameList, e.target.id, newFilterList, isFilterBound)));
 
-    setFilterList(newFilterList);
-    setFrameList(
-      filterItemUnAssignHandle(
-        frameList,
-        e.target.id,
-        newFilterList,
-        isFilterBound
-      )
-    );
     setRowCount(
       frameList.class.filter((x) => {
         return x === "default";
@@ -48,15 +47,8 @@ export const Filter = (props) => {
       if (newFilterState === "duplicity") {
         alert("Duplicity!");
       } else {
-        setFilterList(newFilterState);
-        setFrameList(
-          filterItemAssign(
-            frameList,
-            inputFilter,
-            newFilterState,
-            isFilterBound
-          )
-        );
+        dispatch(setFilterList(newFilterState));
+        dispatch(setFrameList(filterItemAssign(frameList, inputFilter, newFilterState, isFilterBound)));
       }
     }
     setRowCount(

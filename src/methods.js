@@ -14,6 +14,29 @@ const cssColorClassList = [
     "darkPink", //#cc00cc
 ];
 
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXY";
+
+export const saveSessionState = (state) => {
+    try {
+        const serializedState = JSON.stringify(state);
+        sessionStorage.setItem("state", serializedState);
+    } catch (error) {
+        // Ignore write errors.
+    }
+};
+/*
+export const loadSessionState = () => {
+    try {
+        const serializedState = sessionStorage.getItem("state");
+
+        if (serializedState === null) return initialState;
+
+        return JSON.parse(serializedState);
+    } catch (error) {
+        return undefined;
+    }
+};*/
+
 const keyRecognize = (data) => {
     const dateFormatTypeList = [
         "YYYY-MM-DD HH:mm:ss,SSS",
@@ -197,12 +220,13 @@ export const markRowHandle = (object, index, isMarked, colorIndex) => {
     return {...object};
 };
 
-export const markUpListSetHandle = (object, index, markUpList, isMarked, colorIndex) => {
+export const markUpListSetHandle = (object, index, markUpList, isMarked, colorIndex, signIndex) => {
     if (!isMarked) {
         markUpList.push({
             index: index,
             key: object.key[index],
             class: "markUp " + cssColorClassList[colorIndex],
+            sign: alphabet[signIndex],
         });
     } else {
         markUpList = markUpList.filter((f) => f.index !== index);
@@ -217,4 +241,27 @@ export const markUpListSetHandle = (object, index, markUpList, isMarked, colorIn
 
 export const getCssColorClass = (index) => {
     return cssColorClassList[index];
+};
+
+export const calculateMarkUpLetter = (current) => {
+
+    for(let i = 0; i < alphabet.length; i++){
+
+        if(current.search(alphabet[i]) === -1){
+            return alphabet[i];
+        }
+    }
+
+    let counts = Array.fill(0, alphabet.length);
+    counts[0] = 1;
+//blbost !!!
+    for(let u = 1; u < current.length; u++){
+        if(current[u] === current[u-1]){
+
+            counts[counts.length - 1] = counts[counts.length - 1] + 1;
+        }
+        else {
+            counts.push(1);
+        }
+    }
 };
