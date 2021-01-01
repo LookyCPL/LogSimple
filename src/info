@@ -1,0 +1,45 @@
+Data structure:
+
+-- frameList (Object)
+    -- index (Array[Integer])
+    -- isMarked (Array[Boolean])
+    -- class (Array[String])
+    -- colorClass (Array[String])
+    -- key (Array[String])
+    -- data (Array[String])
+    -- filterItemList (Array[Object])
+        -- id (String)
+        -- caseSens (Boolean)
+        -- matchWord (Boolean)
+        -- indexList (Array[Object])
+            -- id (String)
+            -- start (Integer)
+            -- end (Integer)
+
+-- filterList (Array[String])
+
+-- markUpList(Array[Object])
+  -- key (String)
+  -- class (String)
+  -- index (Integer)
+  -- sign (String)
+
+-- generalConfig (Object)
+    -- rowCount
+    -- fileName
+    -- isUploaded
+    -- isFilterBound
+    -- isMarkUpListExpanded
+    -- colorIndex
+    -- letterIndex
+
+
+    TODO !!!
+    - dodelat neaktivnost markUpu, kdyz nemam radek vyfiltrovany
+    - dodelat hover na markUpy
+    - dostylovat markUp list
+    - dostylovat dolni panel filtru
+    - implementovat vyhledavac keys
+
+
+

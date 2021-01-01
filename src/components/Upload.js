@@ -1,29 +1,16 @@
 import React from "react";
-import { useBetween } from "use-between";
-import { useShareableState } from "./states";
-import { dataSeparate } from "./methods";
 import { useDispatch } from "react-redux";
-import {setFrameList} from "./actions";
+import { dataSeparate } from "./methods";
+import { setRowCount, setFilterList, setFrameList, uploadFile as uploadFileAction } from "../store/actions";
 
-
-export const Upload = (props) => {
-  const {
-    //setFrameList,
-    setRowCount,
-    setIsUploaded,
-    setFileName,
-    setFilterList
-  } = useBetween(useShareableState);
-
+export const Upload = () => {
   const dispatch = useDispatch();
 
   const fillArray = (content) => {
     const separated = dataSeparate(content);
 
-    //sessionStorage.setItem("frameList", JSON.stringify(separated));
     dispatch(setFrameList(separated));
-    setRowCount(separated.key.length);
-    setIsUploaded(true);
+    dispatch(setRowCount(separated.key.length));
   };
 
   const uploadFile = (e) => {
@@ -36,10 +23,8 @@ export const Upload = (props) => {
       fillArray(e.target.result);
     };
     fileName = e.target.files[0].name;
-    sessionStorage.setItem("fileName", fileName);
-    sessionStorage.removeItem("filterList");
-    setFileName(fileName);
-    setFilterList([]);
+    dispatch(uploadFileAction(fileName));
+    dispatch(setFilterList([]));
   };
 
   return (

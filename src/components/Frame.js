@@ -1,38 +1,29 @@
 import React from "react";
-import {useBetween} from "use-between";
-import {useShareableState} from "./states";
-import {getCssColorClass, markRowHandle, markUpListSetHandle} from "./methods";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { markRowHandle, markUpListSetHandle } from "./methods";
+import { setFrameList, setColorIndex, setLetterIndex, setMarkUpList } from "../store/actions";
 import "./Frame.scss";
-import {setFrameList} from "./actions";
 
 export const Frame = (props) => {
-    const {
-      setSignIndex,
-      signIndex,
-      colorIndex,
-      setColorIndex,
-      markUpList,
-      setMarkUpList,
-    } = useBetween(useShareableState);
 
     const dispatch = useDispatch();
     const frameList = useSelector(state => state.frameList);
+    const markUpList = useSelector(state => state.markUpList);
+    const colorIndex = useSelector(state => state.generalConfig.colorIndex);
+    const letterIndex = useSelector(state => state.generalConfig.letterIndex);
 
     const markHandle = (e, isMarked) => {
-        let newMarkUpList = markUpListSetHandle(frameList, e.target.id, markUpList, !isMarked, colorIndex, signIndex);
-        sessionStorage.setItem("markUpList", JSON.stringify(newMarkUpList));
+        let newMarkUpList = markUpListSetHandle(frameList, e.target.id, markUpList, !isMarked, colorIndex, letterIndex);
+
         dispatch(setFrameList(markRowHandle(frameList, e.target.id, isMarked, colorIndex)));
-        setMarkUpList(newMarkUpList);
+        dispatch(setMarkUpList(newMarkUpList));
 
         if (isMarked) {
             let newColorIndex = (colorIndex < 8 ? colorIndex + 1 : 0);
-            let newSignIndex = (signIndex < 24 ? signIndex + 1 : 0);
-            setSignIndex(newSignIndex);
-            setColorIndex(newColorIndex);
-            sessionStorage.setItem("colorIndex", newColorIndex);
-            sessionStorage.setItem("signIndex", newSignIndex);
+            let newSignIndex = (letterIndex < 24 ? letterIndex + 1 : 0);
+            dispatch(setLetterIndex(newSignIndex));
+            dispatch(setColorIndex(newColorIndex));
         }
     };
 

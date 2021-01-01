@@ -1,4 +1,5 @@
 import moment from "moment";
+import {initialState} from "../store/initialState";
 
 // --------------------------------------------- UPLOAD LOGIC -------------------------------------------
 
@@ -24,7 +25,7 @@ export const saveSessionState = (state) => {
         // Ignore write errors.
     }
 };
-/*
+
 export const loadSessionState = () => {
     try {
         const serializedState = sessionStorage.getItem("state");
@@ -35,7 +36,7 @@ export const loadSessionState = () => {
     } catch (error) {
         return undefined;
     }
-};*/
+};
 
 const keyRecognize = (data) => {
     const dateFormatTypeList = [
@@ -220,13 +221,13 @@ export const markRowHandle = (object, index, isMarked, colorIndex) => {
     return {...object};
 };
 
-export const markUpListSetHandle = (object, index, markUpList, isMarked, colorIndex, signIndex) => {
+export const markUpListSetHandle = (object, index, markUpList, isMarked, colorIndex, letterIndex) => {
     if (!isMarked) {
         markUpList.push({
             index: index,
             key: object.key[index],
             class: "markUp " + cssColorClassList[colorIndex],
-            sign: alphabet[signIndex],
+            sign: alphabet[letterIndex],
         });
     } else {
         markUpList = markUpList.filter((f) => f.index !== index);
@@ -237,10 +238,6 @@ export const markUpListSetHandle = (object, index, markUpList, isMarked, colorIn
         if (parseInt(a.index) < parseInt(b.index)) return -1;
         return 0;
     });
-};
-
-export const getCssColorClass = (index) => {
-    return cssColorClassList[index];
 };
 
 export const calculateMarkUpLetter = (current) => {

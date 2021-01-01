@@ -1,44 +1,26 @@
 import React, { useState } from "react";
-import { useBetween } from "use-between";
-import { useShareableState } from "./states";
-import {
-  filterItemAddHandle,
-  filterItemAssign,
-  filterItemRemoveHandle,
-  filterItemUnAssignHandle,
-  classByFilterListSet,
-} from "./methods";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { filterItemAddHandle, filterItemAssign, filterItemRemoveHandle, filterItemUnAssignHandle, classByFilterListSet } from "./methods";
+import { setFilterList, setFrameList, setFilterBound, setRowCount } from "../store/actions";
 import "./Filter.scss";
-import {setFilterList, setFrameList} from "./actions";
 
-
-
-export const Filter = (props) => {
-  const {
-    setRowCount,
-    isFilterBound,
-    setFilterBound,
-  } = useBetween(useShareableState);
+export const Filter = () => {
 
     const dispatch = useDispatch();
     const filterList = useSelector(state => state.filterList);
     const frameList = useSelector(state => state.frameList);
+    const isFilterBound = useSelector(state => state.generalConfig.isFilterBound);
 
   const [inputFilter, setInputFilter] = useState(null);
 
   const filterRemove = (e) => {
     let newFilterList = filterItemRemoveHandle(filterList, e.target.id);
+
     dispatch(setFilterList(newFilterList));
     dispatch(setFrameList(filterItemUnAssignHandle(frameList, e.target.id, newFilterList, isFilterBound)));
-
-    setRowCount(
-      frameList.class.filter((x) => {
-        return x === "default";
-      }).length
-    );
-  };
+    dispatch(setRowCount(frameList.class.filter((x) => {return x === "default";}).length));
+    };
 
   const filterAdd = () => {
     if (inputFilter && inputFilter.replace(/ /g, "").length !== 0) {
@@ -47,22 +29,17 @@ export const Filter = (props) => {
       if (newFilterState === "duplicity") {
         alert("Duplicity!");
       } else {
-        dispatch(setFilterList(newFilterState));
-        dispatch(setFrameList(filterItemAssign(frameList, inputFilter, newFilterState, isFilterBound)));
+          dispatch(setFilterList(newFilterState));
+          dispatch(setFrameList(filterItemAssign(frameList, inputFilter, newFilterState, isFilterBound)));
+          dispatch(setRowCount(frameList.class.filter((x) => {return x === "default";}).length));
       }
     }
-    setRowCount(
-      frameList.class.filter((x) => {
-        return x === "default";
-      }).length
-    );
-    setInputFilter("");
+      setInputFilter("");
   };
 
   const filterBindHandle = () => {
       classByFilterListSet(frameList, filterList, !isFilterBound);
-      setFilterBound(!isFilterBound);
-      sessionStorage.setItem("fileName", JSON.stringify(!isFilterBound));
+      dispatch(setFilterBound(!isFilterBound));
   };
 
   return (

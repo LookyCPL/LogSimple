@@ -8,18 +8,18 @@
     width: 100%;
     height: 100px;
     background-size: 100% auto !important;
-    background: url(sourceData/header.svg) no-repeat;
+    background: url(../sourceData/header.svg) no-repeat;
 
     .upload {
       margin: 18px 30px 0 15px;
       display: inline-block;
       height: 60px;
       width: 60px;
-      background: url("sourceData/btnFileUpload-normal.svg") no-repeat;
+      background: url("../sourceData/btnFileUpload-normal.svg") no-repeat;
       cursor: pointer;
 
       &:hover {
-        background: url("sourceData/btnFileUpload-hover.svg") no-repeat;
+        background: url("../sourceData/btnFileUpload-hover.svg") no-repeat;
       }
     }
 

@@ -1,10 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Frame } from "./Frame";
 import { filterIndexListMerge } from "./methods";
-import { useSelector } from "react-redux";
 import "./App.scss";
 
-export const Lobby = (props) => {
+export const Lobby = () => {
 
   const frameList = useSelector(state => state.frameList);
   let classList = frameList.class.slice();

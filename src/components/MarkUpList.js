@@ -1,31 +1,18 @@
-import React, {useState} from "react";
-import { useBetween } from "use-between";
-import { useShareableState } from "./states";
-import { getCssColorClass } from "./methods";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setMarkUpListExpanded } from "../store/actions";
 import "./MarkUpList.scss";
 
 export const MarkUpList = (props) => {
-  const {
-      markUpList,
-      setMarkUpListExpanded } = useBetween(
-    useShareableState
-  );
-    const frameList = useSelector(state => state.frameList);
+  const dispatch = useDispatch();
+  const frameList = useSelector((state) => state.frameList);
+  const markUpList = useSelector((state) => state.markUpList);
 
-  const [hoverId, setHoverId] = useState("hidden");
-
-  const hoverVisibleHandle = (e) => {
-      setHoverId(e.target.id);
-  };
-
-  const setExpand = () => {
-    sessionStorage.setItem(
-      "isMarkUpListExpanded",
-      JSON.stringify(!props.isExpanded)
-    );
-    setMarkUpListExpanded(!props.isExpanded);
-  };
+  // const [hoverId, setHoverId] = useState("hidden");
+  // const hoverVisibleHandle = (e) => {
+  //     setHoverId(e.target.id);
+  // };
 
   const markUpHandle = (e) => {
     const index = e.target.id;
@@ -47,13 +34,16 @@ export const MarkUpList = (props) => {
               // onMouseEnter={(e) => hoverVisibleHandle(e)}
               // onMouseLeave={setHoverId("hidden")}
             >
-                {mark.sign}
+              {mark.sign}
             </button>
           </div>
         ))}
       </div>
       <div>
-        <button onClick={setExpand} className="btnExpand" />
+        <button
+          onClick={() => dispatch(setMarkUpListExpanded())}
+          className="btnExpand"
+        />
       </div>
     </div>
   );
