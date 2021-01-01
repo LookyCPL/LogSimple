@@ -1,21 +1,6 @@
-import moment from "moment";
 import {initialState} from "../store/initialState";
 
 // --------------------------------------------- UPLOAD LOGIC -------------------------------------------
-
-const cssColorClassList = [
-    "lightGreen", //#66ff66
-    "lightBlue", //#33ccff
-    "lightPnk", //#ff99ff
-    "green", //#00cc00
-    "blue", //#0000ff
-    "pink", //#ff00ff
-    "darkGreen", //#006600
-    "darkBlue", //#000080
-    "darkPink", //#cc00cc
-];
-
-const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXY";
 
 export const saveSessionState = (state) => {
     try {
@@ -202,32 +187,19 @@ export const classByFilterListSet = (object, filterList, isBound) => {
     object.class = tempClassList;
     return {...object};
 };
-// ------------------------- USAGE LOGIC -----------------------------------------------
 
-export const filterIndexListMerge = (filterItemList) =>
-    filterItemList
-        .map((filterItem) => filterItem.indexList)
-        .flat()
-        .sort((a, b) => {
-            if (a.id > b.id) return 1;
-            if (a.id < b.id) return -1;
-            return 0;
-        });
+// ------------------------- MARK UP LIST LOGIC -----------------------------------------------
 
-export const markRowHandle = (object, index, isMarked, colorIndex) => {
-    object.isMarked[index] = isMarked;
-    object.colorClass[index] = (isMarked ? cssColorClassList[colorIndex] : "default");
-    sessionStorage.setItem("frameList", JSON.stringify(object));
-    return {...object};
-};
 
-export const markUpListSetHandle = (object, index, markUpList, isMarked, colorIndex, letterIndex) => {
+export const markUpListSetHandle = (object, index, markUpList, isMarked, styleList) => {
+
+    const style = styleList.filter((i) => (i !== null))[0];
+
     if (!isMarked) {
         markUpList.push({
             index: index,
             key: object.key[index],
-            class: "markUp " + cssColorClassList[colorIndex],
-            sign: alphabet[letterIndex],
+            style: style,
         });
     } else {
         markUpList = markUpList.filter((f) => f.index !== index);
@@ -240,25 +212,53 @@ export const markUpListSetHandle = (object, index, markUpList, isMarked, colorIn
     });
 };
 
-export const calculateMarkUpLetter = (current) => {
+export const markUpStyleListHandle = (isMarked, styleListIndex, styleList, style) => {
 
-    for(let i = 0; i < alphabet.length; i++){
+    if (!isMarked) {
 
-        if(current.search(alphabet[i]) === -1){
-            return alphabet[i];
+        for (let i = 0; i < styleList.length; i++) {
+            if (styleList[i] !== null) {
+                styleList[i] = null;
+                break;
+            }
         }
+    } else {
+        styleList[styleListIndex] = style;
     }
-
-    let counts = Array.fill(0, alphabet.length);
-    counts[0] = 1;
-//blbost !!!
-    for(let u = 1; u < current.length; u++){
-        if(current[u] === current[u-1]){
-
-            counts[counts.length - 1] = counts[counts.length - 1] + 1;
-        }
-        else {
-            counts.push(1);
-        }
-    }
+    return [...styleList];
 };
+
+export const markRowHandle = (object, index, isMarked, styleList) => {
+
+    let newClass;
+
+    if (isMarked) {
+        for (let i = 0; i < styleList.length; i++) {
+            if (styleList[i] !== null) {
+                newClass = styleList[i].class;
+                break;
+            }
+        }
+    }
+    object.isMarked[index] = isMarked;
+    object.colorClass[index] = (isMarked ? newClass : "default");
+    return {...object};
+};
+
+// ------------------------- USAGE LOGIC -----------------------------------------------
+
+export const filterIndexListMerge = (filterItemList) =>
+    filterItemList
+        .map((filterItem) => filterItem.indexList)
+        .flat()
+        .sort((a, b) => {
+            if (a.id > b.id) return 1;
+            if (a.id < b.id) return -1;
+            return 0;
+        });
+
+
+
+
+
+

@@ -41,11 +41,8 @@ const generalConfigReducer = (state = initialState.generalConfig, action) => {
       const isExpanded = state.isMarkUpListExpanded;
       state.isMarkUpListExpanded = !isExpanded;
       return state;
-    case "SET_COLOR_INDEX":
-      state.colorIndex = action.index;
-      return state;
-    case "SET_LETTER_INDEX":
-      state.letterIndex = action.index;
+    case "SET_MARK_UP_STYLE_LIST":
+      state.markUpStyleList = action.new;
       return state;
     default:
       return state;

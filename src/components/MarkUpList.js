@@ -29,12 +29,12 @@ export const MarkUpList = (props) => {
             <button
               key={i}
               id={mark.index}
-              className={mark.class}
+              className={mark.style.class}
               onClick={(e) => markUpHandle(e)}
               // onMouseEnter={(e) => hoverVisibleHandle(e)}
               // onMouseLeave={setHoverId("hidden")}
             >
-              {mark.sign}
+              {mark.style.letter}
             </button>
           </div>
         ))}

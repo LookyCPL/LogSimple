@@ -20,9 +20,11 @@ Data structure:
 
 -- markUpList(Array[Object])
   -- key (String)
-  -- class (String)
   -- index (Integer)
-  -- sign (String)
+  -- style (Object)
+    -- index (integer)
+    -- class (String)
+    -- sign (String)
 
 -- generalConfig (Object)
     -- rowCount
@@ -30,14 +32,15 @@ Data structure:
     -- isUploaded
     -- isFilterBound
     -- isMarkUpListExpanded
-    -- colorIndex
-    -- letterIndex
+    -- markUpStyleList (Array[Object])
+        -- index (Integer)
+        -- class (String)
+        -- letter (String)
 
 
     TODO !!!
     - dodelat neaktivnost markUpu, kdyz nemam radek vyfiltrovany
     - dodelat hover na markUpy
-    - dostylovat markUp list
     - dostylovat dolni panel filtru
     - implementovat vyhledavac keys
 

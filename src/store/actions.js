@@ -46,16 +46,9 @@ export const setMarkUpListExpanded = () => {
     }
 };
 
-export const setColorIndex = (index) => {
+export const setMarkUpStyleList = (newList) => {
     return {
-        type: "SET_COLOR_INDEX",
-        index: index,
-    }
-};
-
-export const setLetterIndex = (index) => {
-    return {
-        type: "SET_LETTER_INDEX",
-        index: index,
+        type: "SET_MARK_UP_STYLE_LIST",
+        new: newList,
     }
 };
