@@ -58,9 +58,18 @@ const configInitial = {
   markUpStyleList: fillMartUpStyleList(),
 };
 
+const hoverStyleInitial = {
+  title: "someTitle",
+  class: "someClass",
+  style: {
+   display: "none"
+  }
+};
+
 export const initialState = {
   filterList: filterListInitial,
   frameList: frameListInitial,
   markUpList: markUpListInitial,
   generalConfig: configInitial,
+  hoverStyle: hoverStyleInitial,
 };

@@ -93,14 +93,12 @@ export const filterItemAddHandle = (filterList, filter) => {
 
     const tempList = filterList.filter((f) => filter.search(f) === -1);
     tempList.push(filter);
-    sessionStorage.setItem("filterList", JSON.stringify(tempList));
     return tempList;
 };
 
 export const filterItemRemoveHandle = (filterList, filter) => {
-    let tempList = filterList.filter((f) => f !== filter);
-    sessionStorage.setItem("filterList", JSON.stringify(tempList));
-    return tempList;
+
+    return filterList.filter((f) => f !== filter);
 };
 
 export const filterItemAssign = (object, filter, filterList, isBound) => {
@@ -256,6 +254,34 @@ export const filterIndexListMerge = (filterItemList) =>
             if (a.id < b.id) return -1;
             return 0;
         });
+
+export const generateHoverStyle = (title, className, rect, type) => {
+    let style;
+
+    switch (type) {
+        case "MARK_UP":
+            style = {
+                color: "#000000",
+                padding: "2px 7px",
+                width: "auto",
+                fontWeight: "bold",
+                height: "18px",
+                border: "solid 1px #000000",
+                borderRadius: "1em",
+                position: "fixed",
+                left: (rect.x + 40) + "px",
+                top: (rect.y + 13) + "px",
+            };
+            break;
+        default:
+            style = {};
+    }
+    return {
+        title: title,
+        class: className,
+        style: style
+    };
+};
 
 
 

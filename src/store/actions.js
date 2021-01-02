@@ -52,3 +52,14 @@ export const setMarkUpStyleList = (newList) => {
         new: newList,
     }
 };
+
+export const setHoverStyle = (isReset, newStyle) => {
+  return isReset
+    ? {
+        type: "RESET_HOVER_STYLE",
+      }
+    : {
+        type: "SET_HOVER_STYLE",
+        new: newStyle,
+      };
+};

@@ -1,50 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setMarkUpListExpanded } from "../store/actions";
+import { setHoverStyle, setMarkUpListExpanded } from "../store/actions";
+import { generateHoverStyle } from "./methods";
 import "./MarkUpList.scss";
 
+
 export const MarkUpList = (props) => {
-  const dispatch = useDispatch();
-  const frameList = useSelector((state) => state.frameList);
-  const markUpList = useSelector((state) => state.markUpList);
+    const dispatch = useDispatch();
+    const frameList = useSelector((state) => state.frameList);
+    const markUpList = useSelector((state) => state.markUpList);
 
-  // const [hoverId, setHoverId] = useState("hidden");
-  // const hoverVisibleHandle = (e) => {
-  //     setHoverId(e.target.id);
-  // };
+    const hoverHandle = (isReset, index, className) => {
+        const rect = !isReset ? document.getElementById("markUp-" + index).getBoundingClientRect() : "";
+        const title = !isReset ? frameList.key[index] : "";
+        dispatch(setHoverStyle(isReset, generateHoverStyle(title, className, rect, "MARK_UP")));
+    };
 
-  const markUpHandle = (e) => {
-    const index = e.target.id;
-    document
-      .getElementById(index + " - " + frameList.key[index])
-      .scrollIntoView();
-  };
+    const calculateCssClass = (cssClass, index) => {
+        const frameClass = frameList.class[index];
+        return frameClass === "hidden" ? cssClass + " disabled" : cssClass;
+    };
 
-  return (
-    <div className={"markUpList " + (props.isExpanded ? "expanded" : "")}>
-      <div className={props.isExpanded ? "listContent" : "hidden"}>
-        {markUpList.map((mark, i) => (
-          <div>
-            <button
-              key={i}
-              id={mark.index}
-              className={mark.style.class}
-              onClick={(e) => markUpHandle(e)}
-              // onMouseEnter={(e) => hoverVisibleHandle(e)}
-              // onMouseLeave={setHoverId("hidden")}
-            >
-              {mark.style.letter}
-            </button>
-          </div>
-        ))}
-      </div>
-      <div>
-        <button
-          onClick={() => dispatch(setMarkUpListExpanded())}
-          className="btnExpand"
-        />
-      </div>
-    </div>
-  );
+    const markUpHandle = (e) => {
+        const index = e.target.id;
+        document
+            .getElementById(index + " - " + frameList.key[index])
+            .scrollIntoView();
+    };
+
+    return (
+        <div className={"markUpList " + (props.isExpanded ? "expanded" : "")}>
+            <div className={props.isExpanded ? "listContent" : "hidden"}>
+                {markUpList.map((mark, i) => (
+                    <div id={"markUp-" + mark.index}>
+                        <button
+                            key={i}
+                            id={mark.index}
+                            className={calculateCssClass(mark.style.class, mark.index)}
+                            onClick={(e) => markUpHandle(e)}
+                            onMouseEnter={(e) => hoverHandle(false, mark.index, calculateCssClass(mark.style.class, mark.index))}
+                            onMouseLeave={(e) => hoverHandle(true)}
+                        >
+                            {mark.style.letter}
+                        </button>
+                    </div>
+                ))}
+            </div>
+            <div>
+                <button
+                    onClick={() => dispatch(setMarkUpListExpanded())}
+                    className="btnExpand"
+                />
+            </div>
+        </div>
+    );
 };

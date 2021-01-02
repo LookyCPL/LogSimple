@@ -49,11 +49,25 @@ const generalConfigReducer = (state = initialState.generalConfig, action) => {
   }
 };
 
+const hoverStyleReducer = (state = initialState.hoverStyle, action) => {
+  switch (action.type) {
+    case "SET_HOVER_STYLE":
+      state = action.new;
+      return state;
+    case "RESET_HOVER_STYLE":
+      state = initialState.hoverStyle;
+      return state;
+    default:
+      return state;
+  }
+};
+
 const allReducers = combineReducers({
   filterList: filterListReducer,
   frameList: frameListReducer,
   generalConfig: generalConfigReducer,
   markUpList: markUpListReducer,
+  hoverStyle: hoverStyleReducer,
 });
 
 export default allReducers;

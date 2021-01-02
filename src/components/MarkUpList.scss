@@ -53,54 +53,47 @@
       min-width: 30px;
       min-height: 30px;
       margin: 10px 0 0 0;
-      font-weight: bold;
+      font-weight: normal;
       cursor: pointer;
       border-radius: 100%;
-      border: none;
-
-      .markUpPopUp {
-        width: 20px;
-        height: 20px;
-        background-color: red;
-        display: inherit;
-        cursor: pointer;
-        position: absolute;
-
-      }
-
-      &.lightGreen {
-        background-color: #66ff66;
-      }
-      &.green {
-        background-color: #00cc00;
-      }
-      &.darkGreen {
-        background-color: #006600;
-      }
-      &.lightBlue {
-        background-color: #33ccff;
-      }
-      &.blue {
-        background-color: #0000ff;
-      }
-      &.darkBlue {
-        background-color: #000080;
-      }
-      &.lightPink {
-        background-color: #ff99ff;
-      }
-      &.pink {
-        background-color: #ff00ff;
-      }
-      &.darkPink {
-        background-color: #cc00cc;
-      }
-
-      &:hover {
-        .markUpPopUp {
-          display: inline-block;
-        }
-      }
+      border: solid 1px #000000;
     }
+  }
+}
+
+.markUp{
+  &.lightGreen {
+    background-color: #66ff66;
+  }
+  &.green {
+    background-color: #00cc00;
+  }
+  &.darkGreen {
+    background-color: #006600;
+  }
+  &.lightBlue {
+    background-color: #33ccff;
+  }
+  &.blue {
+    background-color: #0000ff;
+  }
+  &.darkBlue {
+    background-color: #000080;
+  }
+  &.lightPink {
+    background-color: #ff99ff;
+  }
+  &.pink {
+    background-color: #ff00ff;
+  }
+  &.darkPink {
+    background-color: #cc00cc;
+  }
+
+  &.disabled {
+    border: none !important;
+    background-color: #b3b3cc !important;
+    color: #737373 !important;
+    cursor: auto;
   }
 }
