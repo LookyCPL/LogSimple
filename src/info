@@ -37,11 +37,14 @@ Data structure:
         -- class (String)
         -- letter (String)
 
+-- hoverStyle (Object)
+    -- title (String)
+    -- class (String)
+    -- style (Object)
+
 
     TODO !!!
-    - dodelat neaktivnost markUpu, kdyz nemam radek vyfiltrovany
-    - dodelat hover na markUpy
-    - dostylovat dolni panel filtru
+    - implementovat upload modal
     - implementovat vyhledavac keys
 
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { filterItemAddHandle, filterItemAssign, filterItemRemoveHandle, filterItemUnAssignHandle, classByFilterListSet } from "./methods";
+import { filterItemAddHandle, filterItemAssign, filterItemRemoveHandle, filterItemUnAssignHandle, classByFilterListSet } from "../utils/methods";
 import { setFilterList, setFrameList, setFilterBound, setRowCount } from "../store/actions";
 import "./Filter.scss";
 
@@ -38,7 +38,7 @@ export const Filter = () => {
   };
 
   const filterBindHandle = () => {
-      classByFilterListSet(frameList, filterList, !isFilterBound);
+      dispatch(setFrameList(classByFilterListSet(frameList, filterList, !isFilterBound)));
       dispatch(setFilterBound(!isFilterBound));
   };
 

@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setHoverStyle, setMarkUpListExpanded } from "../store/actions";
-import { generateHoverStyle } from "./methods";
+import { generateHoverStyle } from "../utils/methods";
 import "./MarkUpList.scss";
 
 

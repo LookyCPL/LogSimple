@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { markRowHandle, markUpListSetHandle, markUpStyleListHandle } from "./methods";
+import { markRowHandle, markUpListSetHandle, markUpStyleListHandle } from "../utils/methods";
 import {setFrameList, setMarkUpList, setMarkUpStyleList} from "../store/actions";
 import "./Frame.scss";
 

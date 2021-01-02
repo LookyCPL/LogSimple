@@ -12,6 +12,7 @@ import "./App.scss";
 export const App = () => {
   const hoverStyle = useSelector((state) => state.hoverStyle);
 
+
   const onClickHandler = () => {
     // for testing
   };

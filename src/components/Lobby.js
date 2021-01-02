@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Frame } from "./Frame";
-import { filterIndexListMerge } from "./methods";
+import { filterIndexListMerge } from "../utils/methods";
 import "./App.scss";
 
 export const Lobby = () => {

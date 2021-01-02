@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { dataSeparate } from "./methods";
+import { dataSeparate } from "../utils/methods";
 import { setRowCount, setFilterList, setFrameList, uploadFile as uploadFileAction } from "../store/actions";
 
 export const Upload = () => {

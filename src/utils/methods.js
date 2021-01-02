@@ -1,27 +1,29 @@
 import {initialState} from "../store/initialState";
 
-// --------------------------------------------- UPLOAD LOGIC -------------------------------------------
 
+// --------------------------------------------- STORE LOGIC -------------------------------------------
 export const saveSessionState = (state) => {
-    try {
-        const serializedState = JSON.stringify(state);
-        sessionStorage.setItem("state", serializedState);
-    } catch (error) {
-        // Ignore write errors.
-    }
+  try {
+    const serializedState = JSON.stringify(state);
+    sessionStorage.setItem("state", serializedState);
+  } catch (error) {
+    // Ignore write errors.
+  }
 };
 
 export const loadSessionState = () => {
-    try {
-        const serializedState = sessionStorage.getItem("state");
+  try {
+    const serializedState = sessionStorage.getItem("state");
 
-        if (serializedState === null) return initialState;
+    if (serializedState === null) return initialState;
 
-        return JSON.parse(serializedState);
-    } catch (error) {
-        return undefined;
-    }
+    return JSON.parse(serializedState);
+  } catch (error) {
+    return undefined;
+  }
 };
+
+// --------------------------------------------- UPLOAD LOGIC -------------------------------------------
 
 const keyRecognize = (data) => {
     const dateFormatTypeList = [
@@ -138,7 +140,6 @@ export const filterItemAssign = (object, filter, filterList, isBound) => {
     }
 
     object.class = tempClassList;
-    sessionStorage.setItem("frameList", JSON.stringify(object));
     return {...object};
 };
 
@@ -165,7 +166,6 @@ export const filterItemUnAssignHandle = (object, filter, filterList, isBound) =>
         tempClassList.fill("default", 0, tempClassList.length);
     }
     object.class = tempClassList;
-    sessionStorage.setItem("frameList", JSON.stringify(object));
     return {...object};
 };
 

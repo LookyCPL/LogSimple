@@ -57,7 +57,6 @@ const configInitial = {
   isMarkUpListExpanded: true,
   markUpStyleList: fillMartUpStyleList(),
 };
-
 const hoverStyleInitial = {
   title: "someTitle",
   class: "someClass",

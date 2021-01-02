@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 
 export const Info = () => {
 
+    const frameList = useSelector(state => state.frameList);
     const fileName = useSelector(state => state.generalConfig.fileName);
-    const rowCount = useSelector(state => state.generalConfig.rowCount);
+    const rowCount = frameList.class.filter((f) => f !== "hidden").length;
 
     return(
         <div className="info">
