@@ -42,50 +42,32 @@ const keyRecognize = (data) => {
     return "unknown";
 };
 
-const separateKeys = (rows) => {
-    return rows
-        .map((row) => keyRecognize(row))
-        .filter((key) => key !== "unknown");
-};
-
 export const dataSeparate = (fileContent) => {
     const rows = fileContent.split("\n");
-    let keyList = separateKeys(rows);
-
-    let indexList = [];
-    let dataList = [];
-    let separatorCount = 0;
-    let rowCount = 0;
+    let index = 0;
+    let frameList = [];
 
     rows.forEach((row) => {
+        const key = keyRecognize(row);
 
-        const keyListOnSeparator = keyList[separatorCount];
-        let index = row.search(keyListOnSeparator);
-
-        if (index === 0) {
-            dataList.push(row.substring(keyListOnSeparator.length, row.length));
-            indexList.push(separatorCount);
-            if (separatorCount < keyList.length - 1) separatorCount++;
-            rowCount++;
-        } else if (index > 0) {
-            dataList.push(row.substring(0, index) + row.substring(index + keyListOnSeparator.length, row.length));
-            indexList.push(separatorCount);
-            if (separatorCount < keyList.length - 1) separatorCount++;
-            rowCount++;
-        } else {
-            dataList[dataList.length - 1] += "\n" + row;
+        if (key !== "unknown") {
+            let object = {};
+            object.index = index;
+            object.key = key;
+            object.isMarked = false;
+            object.class = "default";
+            object.colorClass = "default";
+            object.filterItemList = [];
+            object.data =  row.substring(key.length, row.length);
+            frameList.push(object);
+            index++;
+        }  else {
+            if(frameList.length > 0){
+                frameList[frameList.length - 1].data += "\n" + row;
+            }
         }
     });
-
-    return {
-        index: indexList,
-        isMarked: Array(keyList.length).fill(false),
-        key: keyList,
-        data: dataList,
-        class: Array(keyList.length).fill("default"),
-        colorClass: Array(keyList.length).fill("default"),
-        filterItemList: Array(keyList.length).fill([]),
-    };
+    return frameList;
 };
 
 // ------------------------- FILTER LOGIC -----------------------------------------------
@@ -103,21 +85,19 @@ export const filterItemRemoveHandle = (filterList, filter) => {
     return filterList.filter((f) => f !== filter);
 };
 
-export const filterItemAssign = (object, filter, filterList, isBound) => {
-    let dataList = object.data;
-    let tempClassList = [];
+export const filterItemAssign = (frameList, filter, filterList, isBound) => {
 
-    for (let r = 0; r < dataList.length; r++) {
+    frameList.forEach((frame) => {
         // delete sub-duplicities throw all filter items
-        if (object.filterItemList[r].length > 0) {
-            object.filterItemList[r] = object.filterItemList[r].filter(
+        if (frame.filterItemList.length > 0) {
+            frame.filterItemList = frame.filterItemList.filter(
                 (f) => filter.search(f.id) === -1
             );
         }
 
         // check if new filter is match in data
-        if (dataList[r].search(filter) > -1) {
-            const matches = dataList[r].matchAll(RegExp(filter, "g"));
+        if (frame.data.search(filter) > -1) {
+            const matches = frame.data.matchAll(RegExp(filter, "g"));
             const subIndexList = Array.from(matches).map((match) => ({
                 id: match.index,
                 start: match.index,
@@ -129,74 +109,57 @@ export const filterItemAssign = (object, filter, filterList, isBound) => {
                 matchWord: false,
                 indexList: subIndexList,
             };
-            object.filterItemList[r].push(filterItem);
+            frame.filterItemList.push(filterItem);
         }
+        frame.class = frame.filterItemList.length === 0 || (isBound && frame.filterItemList.length !== filterList.length) ? "hidden" : "default";
+    });
 
-        if (object.filterItemList[r].length === 0 || (isBound && object.filterItemList[r].length !== filterList.length)) {
-            tempClassList.push("hidden");
-        } else {
-            tempClassList.push("default");
-        }
-    }
-
-    object.class = tempClassList;
-    return {...object};
+    return [...frameList];
 };
 
-export const filterItemUnAssignHandle = (object, filter, filterList, isBound) => {
-    let tempClassList = [];
+export const filterItemUnAssignHandle = (frameList, filter, filterList, isBound) => {
 
-    for (let w = 0; w < object.filterItemList.length; w++) {
-        if (object.filterItemList[w].length > 0) {
-            for (let i = 0; i < object.filterItemList[w].length; i++) {
-                if (object.filterItemList[w][i].id === filter) {
-                    object.filterItemList[w].splice(i, 1);
+    let itemCount = 0;
+
+    frameList.forEach((frame) => {
+        if (frame.filterItemList.length > 0) {
+            for (let i = 0; i < frame.filterItemList.length; i++) {
+                if (frame.filterItemList[i].id === filter) {
+                    frame.filterItemList.splice(i, 1);
                     break;
                 }
             }
         }
+        frame.class = frame.filterItemList.length === 0 || (isBound && frame.filterItemList.length !== filterList.length) ? "hidden" : "default";
+        itemCount += frame.filterItemList.length;
+    });
 
-        if (object.filterItemList[w].length === 0 || (isBound && object.filterItemList[w].length !== filterList.length)) {
-            tempClassList.push("hidden");
-        } else {
-            tempClassList.push("default");
-        }
-    }
-    if (object.filterItemList.flat().length === 0) {
-        tempClassList.fill("default", 0, tempClassList.length);
-    }
-    object.class = tempClassList;
-    return {...object};
+        itemCount === 0 && frameList.forEach((frame) => frame.class = "default");
+
+    return [...frameList];
 };
 
 
-export const classByFilterListSet = (object, filterList, isBound) => {
-    let tempClassList = [];
-    let filterItemListList = object.filterItemList;
+export const classByFilterListSet = (frameList, filterList, isBound) => {
 
-    for (let i = 0; i < filterItemListList.length; i++) {
-        if (object.filterItemList[i].length === 0 || (isBound && object.filterItemList[i].length !== filterList.length)) {
-            tempClassList.push("hidden");
-        } else {
-            tempClassList.push("default");
-        }
-    }
+    frameList.forEach((frame) => {
+        frame.class = frame.filterItemList.length === 0 || (isBound && frame.filterItemList.length !== filterList.length) ? "hidden" : "default";
+    });
 
-    object.class = tempClassList;
-    return {...object};
+    return [...frameList];
 };
 
 // ------------------------- MARK UP LIST LOGIC -----------------------------------------------
 
 
-export const markUpListSetHandle = (object, index, markUpList, isMarked, styleList) => {
+export const markUpListSetHandle = (frameList, index, markUpList, isMarked, styleList) => {
 
     const style = styleList.filter((i) => (i !== null))[0];
 
     if (!isMarked) {
         markUpList.push({
             index: index,
-            key: object.key[index],
+            key: frameList[index].key,
             style: style,
         });
     } else {
@@ -226,21 +189,20 @@ export const markUpStyleListHandle = (isMarked, styleListIndex, styleList, style
     return [...styleList];
 };
 
-export const markRowHandle = (object, index, isMarked, styleList) => {
-
-    let newClass;
+export const markRowHandle = (frameList, index, isMarked, styleList) => {
 
     if (isMarked) {
-        for (let i = 0; i < styleList.length; i++) {
-            if (styleList[i] !== null) {
-                newClass = styleList[i].class;
+        for (let style of styleList) {
+            if (style !== null) {
+                frameList[index].colorClass = style.class;
                 break;
             }
         }
+    } else {
+        frameList[index].colorClass = "default";
     }
-    object.isMarked[index] = isMarked;
-    object.colorClass[index] = (isMarked ? newClass : "default");
-    return {...object};
+    frameList[index].isMarked = isMarked;
+    return [...frameList];
 };
 
 // ------------------------- USAGE LOGIC -----------------------------------------------

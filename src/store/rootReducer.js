@@ -31,9 +31,6 @@ const generalConfigReducer = (state = initialState.generalConfig, action) => {
       state.fileName = action.fileName;
       state.isUploaded = true;
       return state;
-    case "SET_ROW_COUNT":
-      state.rowCount = action.rowCount;
-      return state;
     case "SET_FILTER_BIND":
       state.isFilterBound = action.isBound;
       return state;

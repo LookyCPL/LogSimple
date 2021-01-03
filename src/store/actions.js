@@ -19,13 +19,6 @@ export const uploadFile = (fileName) => {
   };
 };
 
-export const setRowCount = (count) => {
-  return {
-    type: "SET_ROW_COUNT",
-    rowCount: count,
-  };
-};
-
 export const setFilterBound = (isBound) => {
   return {
     type: "SET_FILTER_BIND",

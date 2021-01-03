@@ -13,19 +13,19 @@ export const MarkUpList = (props) => {
 
     const hoverHandle = (isReset, index, className) => {
         const rect = !isReset ? document.getElementById("markUp-" + index).getBoundingClientRect() : "";
-        const title = !isReset ? frameList.key[index] : "";
+        const title = !isReset ? frameList[index].key : "";
         dispatch(setHoverStyle(isReset, generateHoverStyle(title, className, rect, "MARK_UP")));
     };
 
     const calculateCssClass = (cssClass, index) => {
-        const frameClass = frameList.class[index];
+        const frameClass = frameList[index].class;
         return frameClass === "hidden" ? cssClass + " disabled" : cssClass;
     };
 
     const markUpHandle = (e) => {
         const index = e.target.id;
         document
-            .getElementById(index + " - " + frameList.key[index])
+            .getElementById(index + " - " + frameList[index].key)
             .scrollIntoView();
     };
 

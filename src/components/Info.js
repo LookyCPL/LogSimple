@@ -5,7 +5,7 @@ export const Info = () => {
 
     const frameList = useSelector(state => state.frameList);
     const fileName = useSelector(state => state.generalConfig.fileName);
-    const rowCount = frameList.class.filter((f) => f !== "hidden").length;
+    const rowCount = frameList.filter((f) => f.class !== "hidden").length;
 
     return(
         <div className="info">

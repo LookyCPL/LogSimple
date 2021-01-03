@@ -7,12 +7,6 @@ import "./App.scss";
 export const Lobby = () => {
 
   const frameList = useSelector(state => state.frameList);
-  let classList = frameList.class.slice();
-  let colorClassList = frameList.colorClass.slice();
-  let keyList = frameList.key.slice();
-  let dataList = frameList.data.slice();
-  let filterItemList = frameList.filterItemList.slice();
-  let isMarked = frameList.isMarked.slice();
 
   const prepareData = (filterItemList, data) => {
     if (!data || !filterItemList) return data;
@@ -46,16 +40,16 @@ export const Lobby = () => {
 
   return (
     <div>
-      {keyList.map((key, i) => (
+      {frameList.map((frame, i) => (
         <Frame
-          isMarked={isMarked[i]}
+          isMarked={frame.isMarked}
           index={i}
           key={i}
-          class={classList[i]}
-          colorClass={colorClassList[i]}
-          frKey={key}
-          data={prepareData(filterItemList[i], dataList[i])}
-          filterItemList={filterItemList[i]}
+          class={frame.class}
+          colorClass={frame.colorClass}
+          frKey={frame.key}
+          data={prepareData(frame.filterItemList, frame.data)}
+          filterItemList={frame.filterItemList}
         />
       ))}
     </div>

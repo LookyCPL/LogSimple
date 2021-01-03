@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { filterItemAddHandle, filterItemAssign, filterItemRemoveHandle, filterItemUnAssignHandle, classByFilterListSet } from "../utils/methods";
-import { setFilterList, setFrameList, setFilterBound, setRowCount } from "../store/actions";
+import { setFilterList, setFrameList, setFilterBound } from "../store/actions";
 import "./Filter.scss";
 
 export const Filter = () => {
@@ -19,7 +19,6 @@ export const Filter = () => {
 
     dispatch(setFilterList(newFilterList));
     dispatch(setFrameList(filterItemUnAssignHandle(frameList, e.target.id, newFilterList, isFilterBound)));
-    dispatch(setRowCount(frameList.class.filter((x) => {return x === "default";}).length));
     };
 
   const filterAdd = () => {
@@ -31,7 +30,6 @@ export const Filter = () => {
       } else {
           dispatch(setFilterList(newFilterState));
           dispatch(setFrameList(filterItemAssign(frameList, inputFilter, newFilterState, isFilterBound)));
-          dispatch(setRowCount(frameList.class.filter((x) => {return x === "default";}).length));
       }
     }
       setInputFilter("");

@@ -10,7 +10,6 @@ export const Upload = () => {
     const separated = dataSeparate(content);
 
     dispatch(setFrameList(separated));
-    dispatch(setRowCount(separated.key.length));
   };
 
   const uploadFile = (e) => {
