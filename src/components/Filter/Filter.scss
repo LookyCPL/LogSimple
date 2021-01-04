@@ -40,13 +40,13 @@
       border: none;
       width: 22px;
       height: 22px;
-      background: url("../sourceData/btnFileUpload-normal.svg") no-repeat;
+      background: url("../../sourceData/btnFileUpload-normal.svg") no-repeat;
       background-size: 22px;
       position: relative;
       top: 2px;
 
       &:hover {
-        background: url("../sourceData/btnFileUpload-hover.svg") no-repeat;
+        background: url("../../sourceData/btnFileUpload-hover.svg") no-repeat;
       }
     }
   }
@@ -70,7 +70,7 @@
         border: none;
         height: 16px;
         width: 16px;
-        background: url(../sourceData/filterItemRemove.svg) no-repeat;
+        background: url(../../sourceData/filterItemRemove.svg) no-repeat;
         position: relative;
         right: 4px;
         top: 3px;
@@ -98,17 +98,17 @@
       border: none;
       height: 22px;
       width: 44px;
-      background: url(../sourceData/btnFilterBind-normal.svg) no-repeat;
+      background: url(../../sourceData/btnFilterBind-normal.svg) no-repeat;
 
       &:hover{
-        background: url(../sourceData/btnFilterBind-hover.svg) no-repeat;
+        background: url(../../sourceData/btnFilterBind-hover.svg) no-repeat;
       }
     }
 
     &.bound  button{
-      background: url(../sourceData/btnFilterBind-BoundNormal.svg) no-repeat;
+      background: url(../../sourceData/btnFilterBind-BoundNormal.svg) no-repeat;
       &:hover{
-        background: url(../sourceData/btnFilterBind-hover.svg) no-repeat;
+        background: url(../../sourceData/btnFilterBind-hover.svg) no-repeat;
       }
     }
   }

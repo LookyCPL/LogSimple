@@ -56,3 +56,36 @@ export const setHoverStyle = (isReset, newStyle) => {
         new: newStyle,
       };
 };
+
+export const setModal = (isReset, modalStyle) => {
+    return isReset
+        ? {
+            type: "RESET_MODAL",
+        }
+        : {
+            type: "SET_MODAL_TYPE",
+            new: modalStyle,
+        };
+};
+
+export const setUploadedFile = (newFile) => {
+    return {
+        type: "SET_UPLOADED_FILE",
+        new: newFile,
+    }
+};
+
+export const setVarKeys = (newKeys) => {
+    return {
+        type: "SET_VARIABLE_KEYS",
+        newKeys: newKeys,
+    }
+};
+
+export const chosenKeyListHandle = (isDelete, key) => {
+    return {
+        type: "CHOSEN_KEY_LIST_HANDLE",
+        isDelete: isDelete,
+        key: key,
+    }
+};

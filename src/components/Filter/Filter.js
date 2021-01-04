@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { filterItemAddHandle, filterItemAssign, filterItemRemoveHandle, filterItemUnAssignHandle, classByFilterListSet } from "../utils/methods";
-import { setFilterList, setFrameList, setFilterBound } from "../store/actions";
+import { filterItemAddHandle, filterItemAssign, filterItemRemoveHandle, filterItemUnAssignHandle, classByFilterListSet } from "../../utils/methods";
+import { setFilterList, setFrameList, setFilterBound } from "../../store/actions";
 import "./Filter.scss";
 
 export const Filter = () => {

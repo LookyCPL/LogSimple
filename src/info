@@ -42,9 +42,23 @@ Data structure:
     -- class (String)
     -- style (Object)
 
+-- modalStyle (Object)
+    -- class (String)
+    -- type (String)
+
+-- uploadedFile (Object)
+    -- fileName (String)
+    -- contentType (String)
+    -- size (Integer)
+    -- rowCount (Integer)
+    -- content (String)
+
+-- keySeparatorList (Array[Object])
+    -- type (String)
+    -- values (Array[String])
 
     TODO !!!
-    - implementovat upload modal
+    - implementovat upload modal - modal pripraveny, dodelat content modalu a logiku uploadu
     - implementovat vyhledavac keys
 
 

@@ -41,15 +41,17 @@ const fillMartUpStyleList = () => {
 
 const filterListInitial = [];
 const markUpListInitial = [];
-const frameListInitial = [{
-  index: 0,
-  isMarked: false,
-  colorClass: "default",
-  class: "hidden",
-  key: "key1",
-  data: "data1",
-  filterItemList: [],
-}];
+const frameListInitial = [
+  {
+    index: 0,
+    isMarked: false,
+    colorClass: "default",
+    class: "hidden",
+    key: "key1",
+    data: "data1",
+    filterItemList: [],
+  },
+];
 const configInitial = {
   fileName: "unknown",
   isUploaded: false,
@@ -58,17 +60,43 @@ const configInitial = {
   markUpStyleList: fillMartUpStyleList(),
 };
 const hoverStyleInitial = {
-  title: "someTitle",
-  class: "someClass",
-  style: {
-   display: "none"
-  }
+  title: "",
+  class: "hidden",
+  style: {},
+};
+const modalStyleInitial = {
+  class: "hidden",
+  type: "none",
 };
 
+const uploadedFileInitial = {
+  fileName: "",
+  contentType: "",
+  size: 0,
+  rowCount: 0,
+  content: "",
+};
+
+const chosenKeyListInitial = [];
+
+const keySeparatorListInitial = [
+  {
+    type: "DATE_TYPES",
+    values: ["YYYY-MM-DD HH:mm:ss,SSS", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DD"],
+  },
+  {
+    type: "VAR_TYPES",
+    values: [],
+  },
+];
 export const initialState = {
   filterList: filterListInitial,
   frameList: frameListInitial,
   markUpList: markUpListInitial,
   generalConfig: configInitial,
   hoverStyle: hoverStyleInitial,
+  modalStyle: modalStyleInitial,
+  uploadedFile: uploadedFileInitial,
+  keySeparatorList: keySeparatorListInitial,
+  chosenKeyList: chosenKeyListInitial,
 };

@@ -1,4 +1,4 @@
-import {initialState} from "../store/initialState";
+import { initialState } from "../store/initialState";
 
 
 // --------------------------------------------- STORE LOGIC -------------------------------------------
@@ -25,16 +25,11 @@ export const loadSessionState = () => {
 
 // --------------------------------------------- UPLOAD LOGIC -------------------------------------------
 
-const keyRecognize = (data) => {
-    const dateFormatTypeList = [
-        "YYYY-MM-DD HH:mm:ss,SSS",
-        "YYYY-MM-DD HH:mm:ss",
-        "YYYY-MM-DD",
-    ];
-
+const keyRecognize = (row, keyList) => {
     //date check
-    for (const format of dateFormatTypeList) {
-        let temp = data.substring(0, format.length);
+    for (const key of keyList) {
+
+        let temp = row.substring(0, key.length);
         if (!isNaN(Date.parse(temp.replace(",", ".")))) {
             return temp;
         }
@@ -42,13 +37,13 @@ const keyRecognize = (data) => {
     return "unknown";
 };
 
-export const dataSeparate = (fileContent) => {
+export const dataSeparate = (fileContent, keyList) => {
     const rows = fileContent.split("\n");
     let index = 0;
     let frameList = [];
 
     rows.forEach((row) => {
-        const key = keyRecognize(row);
+        const key = keyRecognize(row, keyList);
 
         if (key !== "unknown") {
             let object = {};
@@ -243,6 +238,18 @@ export const generateHoverStyle = (title, className, rect, type) => {
         class: className,
         style: style
     };
+};
+
+export const getModalStyle = (type) => {
+  switch (type) {
+    case "UPLOAD_MODAL":
+      return {
+        class: "modal-bg",
+        type: "UPLOAD_MODAL",
+      };
+    default: {
+    }
+  }
 };
 
 
