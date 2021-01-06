@@ -2,14 +2,16 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setHoverStyle, setMarkUpListExpanded } from "../../store/actions";
-import { generateHoverStyle } from "../../utils/methods";
+import {generateFrameClass, generateHoverStyle} from "../../utils/methods";
 import "./MarkUpList.scss";
 
 
 export const MarkUpList = (props) => {
     const dispatch = useDispatch();
     const frameList = useSelector((state) => state.frameList);
+    const filterList = useSelector(state => state.filterList);
     const markUpList = useSelector((state) => state.markUpList);
+    const isFilterBound = useSelector(state => state.generalConfig.isFilterBound);
 
     const hoverHandle = (isReset, index, className) => {
         const rect = !isReset ? document.getElementById("markUp-" + index).getBoundingClientRect() : "";
@@ -18,7 +20,7 @@ export const MarkUpList = (props) => {
     };
 
     const calculateCssClass = (cssClass, index) => {
-        const frameClass = frameList[index].class;
+        const frameClass = generateFrameClass(isFilterBound, filterList, frameList[index]);
         return frameClass === "hidden" ? cssClass + " disabled" : cssClass;
     };
 

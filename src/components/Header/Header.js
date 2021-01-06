@@ -1,15 +1,18 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setModal } from "../../store/actions";
-import { getModalStyle } from "../../utils/methods";
+import { getModalStyle, getRowCount } from "../../utils/methods";
 import "./Header.scss";
 
 export const Header = () => {
 
     const dispatch = useDispatch();
     const frameList = useSelector(state => state.frameList);
+    const filterList = useSelector(state => state.filterList);
     const fileName = useSelector(state => state.generalConfig.fileName);
-    const rowCount = frameList.filter((f) => f.class !== "hidden").length;
+    const isFilterBound = useSelector(state => state.generalConfig.isFilterBound);
+
+    const rowCount = getRowCount(isFilterBound, filterList, frameList);
 
     const uploadFile = () => {
         dispatch(setModal(false, getModalStyle("UPLOAD_MODAL")));

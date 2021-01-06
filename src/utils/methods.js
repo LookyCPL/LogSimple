@@ -50,7 +50,6 @@ export const dataSeparate = (fileContent, keyList) => {
             object.index = index;
             object.key = key;
             object.isMarked = false;
-            object.class = "default";
             object.colorClass = "default";
             object.filterItemList = [];
             object.data =  row.substring(key.length, row.length);
@@ -67,20 +66,23 @@ export const dataSeparate = (fileContent, keyList) => {
 
 // ------------------------- FILTER LOGIC -----------------------------------------------
 export const filterItemAddHandle = (filterList, filter) => {
-    const hasDuplicity = filterList.some((f) => f.search(filter) > -1);
+    const hasDuplicity = filterList.some((f) => f.key.search(filter) > -1);
     if (hasDuplicity) return "duplicity";
 
-    const tempList = filterList.filter((f) => filter.search(f) === -1);
-    tempList.push(filter);
+    const tempList = filterList.filter((f) => filter.search(f.key) === -1);
+    tempList.push({
+        key: filter,
+        isFilterOn: true,
+    });
     return tempList;
 };
 
 export const filterItemRemoveHandle = (filterList, filter) => {
 
-    return filterList.filter((f) => f !== filter);
+    return filterList.filter((f) => f.key !== filter);
 };
 
-export const filterItemAssign = (frameList, filter, filterList, isBound) => {
+export const filterItemAssign = (frameList, filter) => {
 
     frameList.forEach((frame) => {
         // delete sub-duplicities throw all filter items
@@ -106,15 +108,11 @@ export const filterItemAssign = (frameList, filter, filterList, isBound) => {
             };
             frame.filterItemList.push(filterItem);
         }
-        frame.class = frame.filterItemList.length === 0 || (isBound && frame.filterItemList.length !== filterList.length) ? "hidden" : "default";
     });
-
     return [...frameList];
 };
 
-export const filterItemUnAssignHandle = (frameList, filter, filterList, isBound) => {
-
-    let itemCount = 0;
+export const filterItemUnAssignHandle = (frameList, filter) => {
 
     frameList.forEach((frame) => {
         if (frame.filterItemList.length > 0) {
@@ -125,27 +123,20 @@ export const filterItemUnAssignHandle = (frameList, filter, filterList, isBound)
                 }
             }
         }
-        frame.class = frame.filterItemList.length === 0 || (isBound && frame.filterItemList.length !== filterList.length) ? "hidden" : "default";
-        itemCount += frame.filterItemList.length;
     });
-
-        itemCount === 0 && frameList.forEach((frame) => frame.class = "default");
-
     return [...frameList];
 };
 
+export const changeFilterStateHandle = (filter, filterList) => {
 
-export const classByFilterListSet = (frameList, filterList, isBound) => {
-
-    frameList.forEach((frame) => {
-        frame.class = frame.filterItemList.length === 0 || (isBound && frame.filterItemList.length !== filterList.length) ? "hidden" : "default";
-    });
-
-    return [...frameList];
+    for (let item of filterList) {
+        if (item.key === filter) {
+            item.isFilterOn = !item.isFilterOn;
+        }
+    }
+    return [...filterList];
 };
-
 // ------------------------- MARK UP LIST LOGIC -----------------------------------------------
-
 
 export const markUpListSetHandle = (frameList, index, markUpList, isMarked, styleList) => {
 
@@ -252,6 +243,31 @@ export const getModalStyle = (type) => {
   }
 };
 
+export const getRowCount = (isFilterBound, filterList, frameList) => {
+    const listByOnState = filterList.filter((f) => f.isFilterOn);
+    const filterKeys = listByOnState.map((f) => f.key);
+
+    if (listByOnState.length === 0) return frameList.length;
+
+       if(!isFilterBound){
+           return frameList.filter((frame) => (frame.filterItemList.filter((fr) => filterKeys.indexOf(fr.id) > -1).length) > 0).length;
+       }
+       else {
+           return frameList.filter((frame) => (frame.filterItemList.filter((fr) => filterKeys.indexOf(fr.id) > -1).length) === listByOnState.length).length;
+       }
+};
+
+export const generateFrameClass = (isFilterBound, filterList, frame) => {
+    const listByOnState = filterList.filter((f) => f.isFilterOn);
+
+    if (listByOnState.length === 0) return "default";
+    if (listByOnState.length > 0 && frame.filterItemList.length === 0) return "hidden";
+
+    const filterKeys = listByOnState.map((f) => f.key);
+    const matchCount = frame.filterItemList.filter((fr) => filterKeys.indexOf(fr.id) > -1).length;
+    if (isFilterBound && matchCount === listByOnState.length || !isFilterBound && matchCount > 0) return "default";
+    return "hidden";
+};
 
 
 

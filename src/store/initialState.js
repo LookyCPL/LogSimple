@@ -42,15 +42,7 @@ const fillMartUpStyleList = () => {
 const filterListInitial = [];
 const markUpListInitial = [];
 const frameListInitial = [
-  {
-    index: 0,
-    isMarked: false,
-    colorClass: "default",
-    class: "hidden",
-    key: "key1",
-    data: "data1",
-    filterItemList: [],
-  },
+
 ];
 const configInitial = {
   fileName: "unknown",

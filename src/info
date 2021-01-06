@@ -3,7 +3,6 @@ Data structure:
 -- frameList (Array[Object])
     -- index (Integer)
     -- isMarked (Boolean)
-    -- class (String)
     -- colorClass (String)
     -- key (String)
     -- data (String)
@@ -16,7 +15,9 @@ Data structure:
             -- start (Integer)
             -- end (Integer)
 
--- filterList (Array[String])
+-- filterList (Array[Object])
+    -- key (String)
+    -- isFilterOn (Boolean)
 
 -- markUpList(Array[Object])
   -- key (String)
@@ -27,11 +28,11 @@ Data structure:
     -- sign (String)
 
 -- generalConfig (Object)
-    -- rowCount
-    -- fileName
-    -- isUploaded
-    -- isFilterBound
-    -- isMarkUpListExpanded
+    -- rowCount (Integer)
+    -- fileName (String)
+    -- isUploaded (Boolean)
+    -- isFilterBound (Boolean)
+    -- isMarkUpListExpanded (Boolean)
     -- markUpStyleList (Array[Object])
         -- index (Integer)
         -- class (String)
@@ -59,7 +60,10 @@ Data structure:
 
     TODO !!!
     - implementovat upload modal - modal pripraveny, dodelat content modalu a logiku uploadu
+    - implementovat vypinani filtru !!! - HOTOVO
+    - predelat logiku zobrazovani framu dle filtru !!! - HOTOVO
     - implementovat vyhledavac keys
+    - implementovat case sensitive filtru ??
 
 
 

@@ -57,40 +57,69 @@
     max-height: 35px;
 
     .filterItem {
+      cursor: pointer;
       font-family: calibri, serif;
       display: flex;
       margin: 6px 10px 0 0;
       max-height: 23px;
-      background: #5b5b5b;
       width: auto;
-      color: #ffd217;
       border-radius: 1em;
+      border: none;
 
       button {
         border: none;
         height: 16px;
         width: 16px;
-        background: url(../../sourceData/filterItemRemove.svg) no-repeat;
         position: relative;
         right: 4px;
         top: 3px;
         cursor: pointer;
       }
 
-      label {
+      div {
+        cursor: pointer;
         font-size: 16px;
         padding: 1px 12px 0 16px;
+      }
+
+      &.on {
+        background: #5b5b5b;
+        color: #ffd217;
+        button {
+          background: url(../../sourceData/filterItemRemove.svg) no-repeat;
+          &:hover {
+            background: url(../../sourceData/filterItemRemove-hover.svg)
+              no-repeat !important;
+          }
+        }
+        &:hover {
+          background: #6d6d6d;
+        }
+      }
+      &.off {
+        background-color: #b3b3cc;
+        color: #5b5b5b;
+        button {
+          background: url(../../sourceData/filterItemRemove-off.svg) no-repeat;
+          &:hover {
+            background: url(../../sourceData/filterItemRemove-off-hover.svg)
+              no-repeat !important;
+          }
+        }
+        &:hover {
+          background: #bfbfbf;
+        }
       }
     }
   }
 
-  .binder{
+  .binder {
     position: absolute;
     right: 0;
     width: 50px;
     height: 35px;
 
-    button{
+    button {
       cursor: pointer;
       position: relative;
       right: 4px;
@@ -100,18 +129,16 @@
       width: 44px;
       background: url(../../sourceData/btnFilterBind-normal.svg) no-repeat;
 
-      &:hover{
+      &:hover {
         background: url(../../sourceData/btnFilterBind-hover.svg) no-repeat;
       }
     }
 
-    &.bound  button{
+    &.bound button {
       background: url(../../sourceData/btnFilterBind-BoundNormal.svg) no-repeat;
-      &:hover{
+      &:hover {
         background: url(../../sourceData/btnFilterBind-hover.svg) no-repeat;
       }
     }
   }
 }
-
-

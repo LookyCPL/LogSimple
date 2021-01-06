@@ -1,25 +1,24 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { filterItemAddHandle, filterItemAssign, filterItemRemoveHandle, filterItemUnAssignHandle, classByFilterListSet } from "../../utils/methods";
+import { filterItemAddHandle, filterItemAssign, filterItemRemoveHandle, filterItemUnAssignHandle, changeFilterStateHandle } from "../../utils/methods";
 import { setFilterList, setFrameList, setFilterBound } from "../../store/actions";
 import "./Filter.scss";
 
 export const Filter = () => {
-
-    const dispatch = useDispatch();
-    const filterList = useSelector(state => state.filterList);
-    const frameList = useSelector(state => state.frameList);
-    const isFilterBound = useSelector(state => state.generalConfig.isFilterBound);
+  const dispatch = useDispatch();
+  const filterList = useSelector((state) => state.filterList);
+  const frameList = useSelector((state) => state.frameList);
+  const isFilterBound = useSelector(
+    (state) => state.generalConfig.isFilterBound
+  );
 
   const [inputFilter, setInputFilter] = useState(null);
 
   const filterRemove = (e) => {
-    let newFilterList = filterItemRemoveHandle(filterList, e.target.id);
-
-    dispatch(setFilterList(newFilterList));
-    dispatch(setFrameList(filterItemUnAssignHandle(frameList, e.target.id, newFilterList, isFilterBound)));
-    };
+    dispatch(setFilterList(filterItemRemoveHandle(filterList, e.target.id)));
+    dispatch(setFrameList(filterItemUnAssignHandle(frameList, e.target.id)));
+  };
 
   const filterAdd = () => {
     if (inputFilter && inputFilter.replace(/ /g, "").length !== 0) {
@@ -28,16 +27,19 @@ export const Filter = () => {
       if (newFilterState === "duplicity") {
         alert("Duplicity!");
       } else {
-          dispatch(setFilterList(newFilterState));
-          dispatch(setFrameList(filterItemAssign(frameList, inputFilter, newFilterState, isFilterBound)));
+        dispatch(setFilterList(newFilterState));
+        dispatch(setFrameList(filterItemAssign(frameList, inputFilter)));
       }
     }
-      setInputFilter("");
+    setInputFilter("");
+  };
+
+  const filterStatechange = (e) => {
+    dispatch(setFilterList(changeFilterStateHandle(e.target.id, filterList)));
   };
 
   const filterBindHandle = () => {
-      dispatch(setFrameList(classByFilterListSet(frameList, filterList, !isFilterBound)));
-      dispatch(setFilterBound(!isFilterBound));
+    dispatch(setFilterBound(!isFilterBound));
   };
 
   return (
@@ -50,12 +52,19 @@ export const Filter = () => {
         <button onClick={filterAdd} />
       </div>
       <div className="filterList">
-        {filterList.map((filter, i) => (
-          <div className="filterItem">
-            <label>{filterList[i]}</label>
+        {filterList.map((filter) => (
+          <div
+            id={filter.key}
+            onClick={filterStatechange}
+            className={"filterItem " + (filter.isFilterOn ? "on" : "off")}
+          >
+            <div id={filter.key}>{filter.key}</div>
             <button
-              onClick={filterRemove}
-              id={filterList[i]}
+              onClick={(e) => {
+                e.stopPropagation();
+                filterRemove(e);
+              }}
+              id={filter.key}
               className="removeItem"
             />
           </div>
@@ -70,3 +79,4 @@ export const Filter = () => {
     </div>
   );
 };
+

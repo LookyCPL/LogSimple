@@ -1,12 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Frame } from "./Frame/Frame";
-import { filterIndexListMerge } from "../utils/methods";
+import {filterIndexListMerge, generateFrameClass} from "../utils/methods";
 import "./App/App.scss";
 
 export const Lobby = () => {
 
   const frameList = useSelector(state => state.frameList);
+  const filterList = useSelector(state => state.filterList);
+  const isFilterBound = useSelector(state => state.generalConfig.isFilterBound);
 
   const prepareData = (filterItemList, data) => {
     if (!data || !filterItemList) return data;
@@ -16,7 +18,9 @@ export const Lobby = () => {
     let endSubstring = data;
     let indexShift = 0;
 
-    const indexList = filterIndexListMerge(filterItemList);
+    filterList.filter((f) => f.isFilterOn);
+    const filterKeys = filterList.filter((f) => f.isFilterOn).map((f) => f.key);
+    const indexList = filterIndexListMerge(filterItemList.filter((item) => filterKeys.indexOf(item.id) > -1));
 
     indexList.forEach((indexes) => {
       temp.push(
@@ -45,7 +49,7 @@ export const Lobby = () => {
           isMarked={frame.isMarked}
           index={i}
           key={i}
-          class={frame.class}
+          class={generateFrameClass(isFilterBound, filterList, frame)}
           colorClass={frame.colorClass}
           frKey={frame.key}
           data={prepareData(frame.filterItemList, frame.data)}
