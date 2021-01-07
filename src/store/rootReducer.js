@@ -27,10 +27,6 @@ const markUpListReducer = (state = initialState.markUpList, action) => {
 
 const generalConfigReducer = (state = initialState.generalConfig, action) => {
   switch (action.type) {
-    case "UPLOAD_FILE":
-      state.fileName = action.fileName;
-      state.isUploaded = true;
-      return state;
     case "SET_FILTER_BIND":
       state.isFilterBound = action.isBound;
       return state;
@@ -87,15 +83,23 @@ const chosenKeyListReducer = (state = initialState.chosenKeyList, action) => {
 };
 
 const uploadedFileReducer = (state = initialState.uploadedFile, action) => {
-  if (action.type === "SET_UPLOADED_FILE") {
-    state = action.new;
-    return state;
-  } else {
-    return state;
+  switch (action.type) {
+    case "SET_UPLOADED_FILE":
+      state = action.new;
+      return state;
+    case "SET_START_END_ROW":
+      state.startRow = action.start;
+      state.endRow = action.end;
+      return { ...state };
+    default:
+      return state;
   }
 };
 
-const keySeparatorListReducer = (state = initialState.keySeparatorList, action) => {
+const keySeparatorListReducer = (
+  state = initialState.keySeparatorList,
+  action
+) => {
   if (action.type === "SET_VARIABLE_KEYS") {
     const newVarKeys = {
       type: "VAR_TYPES",

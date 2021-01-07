@@ -45,7 +45,6 @@ const frameListInitial = [
 
 ];
 const configInitial = {
-  fileName: "unknown",
   isUploaded: false,
   isFilterBound: false,
   isMarkUpListExpanded: true,
@@ -67,6 +66,8 @@ const uploadedFileInitial = {
   size: 0,
   rowCount: 0,
   content: "",
+  startRow: 0,
+  endRow: 0,
 };
 
 const chosenKeyListInitial = [];

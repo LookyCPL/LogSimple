@@ -64,6 +64,7 @@ Data structure:
     - predelat logiku zobrazovani framu dle filtru !!! - HOTOVO
     - implementovat vyhledavac keys
     - implementovat case sensitive filtru ??
+    - implementovat nahled scrollu
 
 
 

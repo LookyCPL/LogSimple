@@ -9,7 +9,7 @@ export const Header = () => {
     const dispatch = useDispatch();
     const frameList = useSelector(state => state.frameList);
     const filterList = useSelector(state => state.filterList);
-    const fileName = useSelector(state => state.generalConfig.fileName);
+    const uploadedFile = useSelector(state => state.uploadedFile);
     const isFilterBound = useSelector(state => state.generalConfig.isFilterBound);
 
     const rowCount = getRowCount(isFilterBound, filterList, frameList);
@@ -18,7 +18,7 @@ export const Header = () => {
         dispatch(setModal(false, getModalStyle("UPLOAD_MODAL")));
     };
 
-    const onClickHandler = () => {
+    const onClickHandler = (e) => {
         // for testing
     };
 
@@ -39,7 +39,7 @@ export const Header = () => {
             <div className="info">
                 <div className="infoItem">
                     <label className="title">File name</label>
-                    <label className="value">{fileName}</label>
+                    <label className="value">{uploadedFile.fileName}</label>
                 </div>
                 <div className="infoItem">
                     <label className="title">Row count</label>
@@ -47,7 +47,7 @@ export const Header = () => {
                 </div>
             </div>
             <button onClick={clearSession}>CLEAR</button>
-            <button onClick={onClickHandler}>TEST</button>
+            <button id="test" onClick={onClickHandler}>TEST</button>
         </div>
     );
 };

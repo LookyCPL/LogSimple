@@ -37,8 +37,7 @@ const keyRecognize = (row, keyList) => {
     return "unknown";
 };
 
-export const dataSeparate = (fileContent, keyList) => {
-    const rows = fileContent.split("\n");
+export const dataSeparate = (rows, keyList) => {
     let index = 0;
     let frameList = [];
 

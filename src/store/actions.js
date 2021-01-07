@@ -12,13 +12,6 @@ export const setFrameList = (newList) => {
   };
 };
 
-export const uploadFile = (fileName) => {
-  return {
-    type: "UPLOAD_FILE",
-    fileName: fileName,
-  };
-};
-
 export const setFilterBound = (isBound) => {
   return {
     type: "SET_FILTER_BIND",
@@ -72,6 +65,14 @@ export const setUploadedFile = (newFile) => {
     return {
         type: "SET_UPLOADED_FILE",
         new: newFile,
+    }
+};
+
+export const setStartEndRow = (start, end) => {
+    return {
+        type: "SET_START_END_ROW",
+        start: start,
+        end: end,
     }
 };
 

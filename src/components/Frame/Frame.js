@@ -31,7 +31,7 @@ export const Frame = (props) => {
                 </button>
             </div>
             <div className="data">
-                <label>{props.data}</label>
+                <span>{props.data}</span>
             </div>
         </div>
     );
