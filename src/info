@@ -56,12 +56,12 @@ Data structure:
 
 -- keySeparatorList (Array[Object])
     -- type (String)
-    -- values (Array[String])
+    -- formatters (Array[Object])
+        -- value (String)
+        -- isPickedUp (Boolean)
 
     TODO !!!
-    - implementovat upload modal - modal pripraveny, dodelat content modalu a logiku uploadu
-    - implementovat vypinani filtru !!! - HOTOVO
-    - predelat logiku zobrazovani framu dle filtru !!! - HOTOVO
+    - implementovat upload modal - dodelat logiku vybirani keys + nastylovat !!, implementovat vyhledavac contentu !!, nastylovat buttony !!
     - implementovat vyhledavac keys
     - implementovat case sensitive filtru ??
     - implementovat nahled scrollu

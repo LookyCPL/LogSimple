@@ -83,10 +83,11 @@ export const setVarKeys = (newKeys) => {
     }
 };
 
-export const chosenKeyListHandle = (isDelete, key) => {
+export const chosenKeyListHandle = (isPickedUp, keyType, key) => {
     return {
         type: "CHOSEN_KEY_LIST_HANDLE",
-        isDelete: isDelete,
+        isPickedUp: isPickedUp,
+        keyType: keyType,
         key: key,
     }
 };

@@ -41,9 +41,7 @@ const fillMartUpStyleList = () => {
 
 const filterListInitial = [];
 const markUpListInitial = [];
-const frameListInitial = [
-
-];
+const frameListInitial = [];
 const configInitial = {
   isUploaded: false,
   isFilterBound: false,
@@ -70,18 +68,30 @@ const uploadedFileInitial = {
   endRow: 0,
 };
 
-const chosenKeyListInitial = [];
-
 const keySeparatorListInitial = [
   {
     type: "DATE_TYPES",
-    values: ["YYYY-MM-DD HH:mm:ss,SSS", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DD"],
+    formatters: [
+      {
+        value: "YYYY-MM-DD HH:mm:ss,SSS",
+        isPickedUp: false,
+      },
+      {
+        value: "YYYY-MM-DD HH:mm:ss",
+        isPickedUp: false,
+      },
+      {
+        value: "YYYY-MM-DD",
+        isPickedUp: false,
+      },
+    ],
   },
   {
     type: "VAR_TYPES",
-    values: [],
+    formatters: [],
   },
 ];
+
 export const initialState = {
   filterList: filterListInitial,
   frameList: frameListInitial,
@@ -91,5 +101,4 @@ export const initialState = {
   modalStyle: modalStyleInitial,
   uploadedFile: uploadedFileInitial,
   keySeparatorList: keySeparatorListInitial,
-  chosenKeyList: chosenKeyListInitial,
 };

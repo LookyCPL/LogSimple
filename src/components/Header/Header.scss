@@ -10,11 +10,11 @@
     display: inline-block;
     height: 60px;
     width: 60px;
-    background: url("../../sourceData/btnFileUpload-normal.svg") no-repeat;
+    background: url("../../sourceData/btnPlus-normal.svg") no-repeat;
     cursor: pointer;
 
     &:hover {
-      background: url("../../sourceData/btnFileUpload-hover.svg") no-repeat;
+      background: url("../../sourceData/btnPlus-hover.svg") no-repeat;
     }
   }
 

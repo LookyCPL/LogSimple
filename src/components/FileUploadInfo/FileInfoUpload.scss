@@ -1,0 +1,51 @@
+.upload-info {
+  width: 280px;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  border-right: solid 2px #5b5b5b;
+
+
+
+  > div {
+    display: flex;
+    flex-direction: row;
+
+    .item-name,
+    .item-value {
+      font-size: 16px;
+      color: #5b5b5b;
+    }
+
+    .item-name {
+      min-width: 100px;
+      max-height: 22px;
+      display: flex;
+      flex-direction: row;
+      font-weight: normal;
+
+      > span {
+        width: auto;
+        height: 22px;
+      }
+      .btn-start-row,
+      .btn-end-row {
+        cursor: pointer;
+        border: none;
+        border-radius: 100%;
+        width: 12px;
+        height: 12px;
+        margin: 4px 0 0 5px;
+      }
+      .btn-start-row {
+        background: #66cc00;
+      }
+      .btn-end-row {
+        background: #ff0000;
+      }
+    }
+    .item-value {
+      font-weight: bold;
+    }
+  }
+}

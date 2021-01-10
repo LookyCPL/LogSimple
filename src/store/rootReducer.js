@@ -68,19 +68,6 @@ const hoverModalReducer = (state = initialState.modalStyle, action) => {
   }
 };
 
-const chosenKeyListReducer = (state = initialState.chosenKeyList, action) => {
-  if (action.type === "CHOSEN_KEY_LIST_HANDLE") {
-    if (action.isDelete) {
-      state = state.filter((k) => k !== action.key);
-    } else {
-      let temp = [action.key];
-      state = [...state, ...temp];
-    }
-    return state;
-  } else {
-    return state;
-  }
-};
 
 const uploadedFileReducer = (state = initialState.uploadedFile, action) => {
   switch (action.type) {
@@ -100,16 +87,30 @@ const keySeparatorListReducer = (
   state = initialState.keySeparatorList,
   action
 ) => {
-  if (action.type === "SET_VARIABLE_KEYS") {
-    const newVarKeys = {
-      type: "VAR_TYPES",
-      values: action.newKeys,
-    };
-    const withoutVars = state.filter((s) => s.type !== "VAR_TYPES");
-    withoutVars.push(newVarKeys);
-    return withoutVars;
-  } else {
-    return state;
+  switch (action.type) {
+    case "SET_VARIABLE_KEYS":
+      const newVarKeys = {
+        type: "VAR_TYPES",
+        values: action.newKeys,
+      };
+      const withoutVars = state.filter((s) => s.type !== "VAR_TYPES");
+      withoutVars.push(newVarKeys);
+      return withoutVars;
+    case "CHOSEN_KEY_LIST_HANDLE":
+      for (let keyList of state) {
+        if (keyList.type === action.keyType) {
+          for (let formatter of keyList.formatters) {
+            if (formatter.value === action.key) {
+              formatter.isPickedUp = action.isPickedUp;
+              break;
+            }
+          }
+          break;
+        }
+      }
+      return [...state];
+    default:
+      return state;
   }
 };
 
@@ -122,7 +123,6 @@ const allReducers = combineReducers({
   modalStyle: hoverModalReducer,
   uploadedFile: uploadedFileReducer,
   keySeparatorList: keySeparatorListReducer,
-  chosenKeyList: chosenKeyListReducer,
 });
 
 export default allReducers;
