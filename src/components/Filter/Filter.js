@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { filterItemAddHandle, filterItemAssign, filterItemRemoveHandle, filterItemUnAssignHandle, changeFilterStateHandle } from "../../utils/methods";
-import { setFilterList, setFrameList, setFilterBound } from "../../store/actions";
+import { setFilterList } from "../../redux/actions/filterActions";
 import "./Filter.scss";
+import {setFilterBind} from "../../redux/actions/configActions";
+import {setFrameList} from "../../redux/actions/frameListActions";
+import {selectConfig} from "../../redux/selectors/configSelectors";
+import {selectFilterList} from "../../redux/selectors/filterSelectors";
+import {selectFrameList} from "../../redux/selectors/frameListSelectors";
 
 export const Filter = () => {
   const dispatch = useDispatch();
-  const filterList = useSelector((state) => state.filterList);
-  const frameList = useSelector((state) => state.frameList);
-  const isFilterBound = useSelector(
-    (state) => state.generalConfig.isFilterBound
-  );
+  const filterList = useSelector(selectFilterList);
+  const frameList = useSelector(selectFrameList);
+  const isFilterBound = useSelector(selectConfig).isFilterBound;
 
   const [inputFilter, setInputFilter] = useState(null);
 
@@ -39,7 +42,7 @@ export const Filter = () => {
   };
 
   const filterBindHandle = () => {
-    dispatch(setFilterBound(!isFilterBound));
+    dispatch(setFilterBind(!isFilterBound));
   };
 
   return (

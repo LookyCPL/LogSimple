@@ -1,17 +1,13 @@
-import React from 'react';
-import { getModal } from "../../utils/methods";
+import React from "react";
 import { useDispatch } from "react-redux";
+import { UploadModal } from "../UploadModal/UploadModal";
+import { setModal } from "../../redux/actions/modalActions";
 import "./Modal.scss";
-import { UploadModal } from "./UploadModal";
-import { setModal } from "../../store/actions";
 
 export const Modal = (props) => {
 
     const dispatch = useDispatch();
-    const resetModal = () => {
-        dispatch(setModal(true));
-    };
-
+    
     const getModal = (type) => {
       switch (type) {
         case "UPLOAD_MODAL":
@@ -23,7 +19,7 @@ export const Modal = (props) => {
 
     return (
             <div className={props.class} >
-                <div className="bg" onClick={() => resetModal()}/>
+                <div className="bg" onClick={() => dispatch(setModal({isReset: true}))}/>
                 {getModal(props.modal)}
             </div>
     );

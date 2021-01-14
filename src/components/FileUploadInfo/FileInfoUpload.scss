@@ -1,9 +1,11 @@
+@import "../../utils/cssConfig.scss";
+
 .upload-info {
   width: 280px;
   margin-left: 30px;
   display: flex;
   flex-direction: column;
-  border-right: solid 2px #5b5b5b;
+  border-right: solid 2px $basic-grey;
 
 
 
@@ -14,7 +16,7 @@
     .item-name,
     .item-value {
       font-size: 16px;
-      color: #5b5b5b;
+      color: $basic-grey;
     }
 
     .item-name {
@@ -38,10 +40,10 @@
         margin: 4px 0 0 5px;
       }
       .btn-start-row {
-        background: #66cc00;
+        background: $positive-green;
       }
       .btn-end-row {
-        background: #ff0000;
+        background: $negative-red;
       }
     }
     .item-value {

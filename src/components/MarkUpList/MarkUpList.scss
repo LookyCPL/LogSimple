@@ -1,15 +1,15 @@
+@import "../../utils/cssConfig.scss";
+
 .markUpList {
   display: flex;
   width: 15px;
-  background-color: #ffd217;
 
   &.expanded {
     width: 75px;
-    background-color: #ffd217;
+    background-color: $base-yellow;
 
     .btnExpand {
-      background: url(../../sourceData/markUpListExpandBtn.svg) no-repeat center
-        #dbb412;
+      background: url(../../sourceData/markUpListExpandBtn.svg) no-repeat center $second-yellow;
       background-size: 15px 30px;
     }
   }
@@ -25,8 +25,7 @@
     width: 15px;
     height: 100%;
     cursor: pointer;
-    background: url(../../sourceData/markUpListUnExpandBtn.svg) no-repeat center
-      #dbb412;
+    background: url(../../sourceData/markUpListUnExpandBtn.svg) no-repeat center $second-yellow;
     background-size: 15px 30px;
   }
 
@@ -54,46 +53,47 @@
       min-height: 30px;
       margin: 10px 0 0 0;
       font-weight: normal;
+      color: $black;
       cursor: pointer;
       border-radius: 100%;
-      border: solid 1px #000000;
+      border: solid 1px $black;
     }
   }
 }
 
 .markUp{
   &.lightGreen {
-    background-color: #66ff66;
+    background-color: $light-green;
   }
   &.green {
-    background-color: #00cc00;
+    background-color: $medium-green;
   }
   &.darkGreen {
-    background-color: #006600;
+    background-color: $dark-green;
   }
   &.lightBlue {
-    background-color: #33ccff;
+    background-color: $light-blue;
   }
   &.blue {
-    background-color: #0000ff;
+    background-color: $medium-blue;
   }
   &.darkBlue {
-    background-color: #000080;
+    background-color: $dark-blue;
   }
   &.lightPink {
-    background-color: #ff99ff;
+    background-color: $light-pink;
   }
   &.pink {
-    background-color: #ff00ff;
+    background-color: $medium-pink;
   }
   &.darkPink {
-    background-color: #cc00cc;
+    background-color: $dark-pink;
   }
 
   &.disabled {
     border: none !important;
-    background-color: #b3b3cc !important;
-    color: #737373 !important;
+    background-color: $basic-light-grey !important;
+    color: $basic-grey !important;
     cursor: auto;
   }
 }

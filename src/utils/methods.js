@@ -1,4 +1,4 @@
-import { initialState } from "../store/initialState";
+import { initialState } from "../redux/initialState";
 
 
 // --------------------------------------------- STORE LOGIC -------------------------------------------
@@ -7,7 +7,7 @@ export const saveSessionState = (state) => {
     const serializedState = JSON.stringify(state);
     sessionStorage.setItem("state", serializedState);
   } catch (error) {
-    // Ignore write errors.
+   console.log("shit", error);
   }
 };
 
@@ -190,7 +190,7 @@ export const markRowHandle = (frameList, index, isMarked, styleList) => {
     return [...frameList];
 };
 
-// ------------------------- USAGE LOGIC -----------------------------------------------
+// ------------------------- USAGE METHODS -----------------------------------------------
 
 export const filterIndexListMerge = (filterItemList) =>
     filterItemList
@@ -267,6 +267,7 @@ export const generateFrameClass = (isFilterBound, filterList, frame) => {
     if (isFilterBound && matchCount === listByOnState.length || !isFilterBound && matchCount > 0) return "default";
     return "hidden";
 };
+
 
 
 

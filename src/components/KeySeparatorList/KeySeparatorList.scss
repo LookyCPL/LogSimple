@@ -1,7 +1,9 @@
+@import "../../utils/cssConfig.scss";
+
 .key-separators {
   width: 280px;
   margin-left: 30px;
-  border-right: solid 2px #5b5b5b;
+  border-right: solid 2px $basic-grey;
 
   .keyItem {
     display: flex;
@@ -11,7 +13,7 @@
       min-height: 20px;
       font-size: 17px;
       font-weight: normal;
-      color: #5b5b5b;
+      color: $basic-grey;
       margin-bottom: 7px;
     }
 
@@ -28,7 +30,7 @@
         cursor: pointer;
       }
       &.picked-up {
-        color: #66cc00;
+        color: $positive-green;
 
         .btn {
           background: url("../../sourceData/btnMinus-normal.svg") no-repeat;
@@ -39,7 +41,7 @@
       }
 
       &.not-picked {
-        color: #5b5b5b;
+        color: $basic-grey;
         .btn {
           background: url("../../sourceData/btnPlus-normal.svg") no-repeat;
           &:hover{

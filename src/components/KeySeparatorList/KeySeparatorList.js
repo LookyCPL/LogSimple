@@ -1,17 +1,24 @@
 import React from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from "react-redux";
-import { chosenKeyListHandle } from "../../store/actions";
 import { translateValue } from "../../utils/valueList";
 import "./KeySeparatorList.scss";
+import { chosenKeyListHandle } from "../../redux/actions/keySeparatorListActions";
+import {selectKeySeparatorList} from "../../redux/selectors/keySeparatorListSelectors";
 
 export const KeySeparatorList = () => {
 
     const dispatch = useDispatch();
-    const keyTypeList = useSelector((state) => state.keySeparatorList);
+    const keyTypeList = useSelector(selectKeySeparatorList);
 
-    const chosenKeyHandle = (isPickedUP, keyType, key) => {
-        dispatch(chosenKeyListHandle(isPickedUP, keyType, key));
+    const chosenKeyHandle = (isPickedUp, keyType, key) => {
+      dispatch(
+        chosenKeyListHandle({
+          isPickedUp: isPickedUp,
+          keyType: keyType,
+          key: key,
+        })
+      );
     };
 
     return (

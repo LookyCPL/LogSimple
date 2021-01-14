@@ -1,15 +1,21 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { markRowHandle, markUpListSetHandle, markUpStyleListHandle } from "../../utils/methods";
-import { setFrameList, setMarkUpList, setMarkUpStyleList } from "../../store/actions";
+import { setMarkUpStyleList } from "../../redux/actions/configActions";
+import { setFrameList } from "../../redux/actions/frameListActions";
+import { setMarkUpList } from "../../redux/actions/markUpListActions";
 import "./Frame.scss";
+import {selectConfig} from "../../redux/selectors/configSelectors";
+import {selectFrameList} from "../../redux/selectors/frameListSelectors";
+import {selectMarkupList} from "../../redux/selectors/markUpListSelectors";
+
 
 export const Frame = (props) => {
 
     const dispatch = useDispatch();
-    const frameList = useSelector(state => state.frameList);
-    const markUpList = useSelector(state => state.markUpList);
-    const markUpStyleList = useSelector(state => state.generalConfig.markUpStyleList);
+    const frameList = useSelector(selectFrameList);
+    const markUpList = useSelector(selectMarkupList);
+    const markUpStyleList = useSelector(selectConfig).markUpStyleList;
 
     const markHandle = (e, isMarked) => {
 

@@ -1,3 +1,5 @@
+@import "../../utils/cssConfig.scss";
+
 .content {
   .key {
     button {
@@ -7,50 +9,50 @@
       border: none;
       cursor: pointer;
       padding: 1px 18px;
-      background-color: #ffd217;
+      background-color: $base-yellow;
       font-weight: bold;
       font-family: calibri, serif;
       font-size: 16px;
 
       &:hover {
-        background-color: #dbb412;
+        background-color: $second-yellow;
       }
     }
 
     &.marked {
       & button {
-        background-color: #66cc00;
+        background-color: $positive-green;
 
         &:hover {
-          background-color: #ff0000;
+          background-color: $negative-red;
         }
       }
       .lightGreen {
-        background-color: #66ff66;
+        background-color: $light-green;
       }
       .green {
-        background-color: #00cc00;
+        background-color: $medium-green;
       }
       .darkGreen {
-        background-color: #006600;
+        background-color: $dark-green;
       }
       .lightBlue {
-        background-color: #33ccff;
+        background-color: $light-blue;
       }
       .blue {
-        background-color: #0000ff;
+        background-color: $medium-blue;
       }
       .darkBlue {
-        background-color: #000080;
+        background-color: $dark-blue;
       }
       .lightPink {
-        background-color: #ff99ff;
+        background-color: $light-pink;
       }
       .pink {
-        background-color: #ff00ff;
+        background-color: $medium-pink;
       }
       .darkPink {
-        background-color: #cc00cc;
+        background-color: $dark-pink;
       }
     }
   }
@@ -61,11 +63,11 @@
     width: calc(100% - 40px);
     padding: 4px 14px 4px 15px;
     white-space: pre-wrap;
-    color: #fff;
+    color: $white;
 
     .filterItemSubstring {
       font-weight: bold;
-      color: #ffd217;
+      color: $base-yellow;
     }
   }
 

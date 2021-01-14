@@ -1,11 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import './FileInfoUpload.scss'
+import {selectUploadedFile} from "../../redux/selectors/uploadedFileSelectors";
 
 
-export const FileUploadInfo = () => {
+export const FileUploadInfo = (props) => {
 
-    const uploadedFile = useSelector((state) => state.uploadedFile);
+    const uploadedFile = useSelector(selectUploadedFile);
     const fileInfoList = [
         {
             name: "File name",
@@ -33,13 +34,6 @@ export const FileUploadInfo = () => {
         }
     ];
 
-
-    const scrollToStartEndMark = (i) => {
-        document
-            .getElementById("row " + i )
-            .scrollIntoView();
-    };
-
     return (
         <div className="upload-info">
             {fileInfoList.map((item) => (
@@ -49,7 +43,7 @@ export const FileUploadInfo = () => {
                         {["Start row", "End row"].includes(item.name) && (
                             <div
                                 onClick={() =>
-                                    scrollToStartEndMark(
+                                    props.scrollToStartEndMark(
                                         item.name === "Start row"
                                             ? uploadedFile.startRow
                                             : uploadedFile.endRow

@@ -27,23 +27,22 @@ Data structure:
     -- class (String)
     -- sign (String)
 
--- generalConfig (Object)
-    -- rowCount (Integer)
-    -- fileName (String)
+-- config (Object)
     -- isUploaded (Boolean)
     -- isFilterBound (Boolean)
     -- isMarkUpListExpanded (Boolean)
+    -- uploadContentScrollUp (Integer)
     -- markUpStyleList (Array[Object])
         -- index (Integer)
         -- class (String)
         -- letter (String)
 
--- hoverStyle (Object)
+-- hover (Object)
     -- title (String)
     -- class (String)
     -- style (Object)
 
--- modalStyle (Object)
+-- modal (Object)
     -- class (String)
     -- type (String)
 
@@ -60,7 +59,11 @@ Data structure:
         -- value (String)
         -- isPickedUp (Boolean)
 
+
     TODO !!!
+    -- probiha mensi refactoring ... dodelat useSelectory !! .. namrdat vsude Ref misto document.getBlaBla !!! Predelat lazy upload !!!
+
+
     - implementovat upload modal - dodelat logiku vybirani keys + nastylovat !!, implementovat vyhledavac contentu !!, nastylovat buttony !!
     - implementovat vyhledavac keys
     - implementovat case sensitive filtru ??

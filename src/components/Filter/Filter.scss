@@ -1,9 +1,11 @@
+@import "../../utils/cssConfig.scss";
+
 .filter {
   display: flex;
   width: 100%;
   height: 35px;
   max-height: 35px;
-  background-color: #ffd217;
+  background-color: $base-yellow;
 
   .input {
     padding: 0;
@@ -14,12 +16,12 @@
     max-width: 200px;
 
     input {
-      border-bottom: solid 2px #5b5b5b;
+      border-bottom: solid 2px $basic-grey;
       border-top: none;
       border-left: none;
       border-right: none;
       background-color: transparent;
-      color: #5b5b5b;
+      color: $basic-grey;
       font-family: calibri, serif;
       font-weight: bold;
       font-size: 16px;
@@ -32,7 +34,7 @@
       top: 8px;
 
       &:hover {
-        border-bottom-color: #dbb412;
+        border-bottom-color: $second-yellow;
       }
     }
     button {
@@ -83,8 +85,8 @@
       }
 
       &.on {
-        background: #5b5b5b;
-        color: #ffd217;
+        background: $basic-grey;
+        color: $base-yellow;
         button {
           background: url(../../sourceData/filterItemRemove.svg) no-repeat;
           &:hover {
@@ -93,12 +95,12 @@
           }
         }
         &:hover {
-          background: #6d6d6d;
+          background: $second-grey;
         }
       }
       &.off {
-        background-color: #b3b3cc;
-        color: #5b5b5b;
+        background-color: $basic-light-grey;
+        color: $basic-grey;
         button {
           background: url(../../sourceData/filterItemRemove-off.svg) no-repeat;
           &:hover {
@@ -107,7 +109,7 @@
           }
         }
         &:hover {
-          background: #bfbfbf;
+          background: $second-light-grey;
         }
       }
     }

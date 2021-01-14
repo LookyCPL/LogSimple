@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-import allReducers from "./store/rootReducer";
+import allReducers from "./redux/rootReducer";
 import { saveSessionState, loadSessionState } from "./utils/methods";
 
 export default function configureStore() {

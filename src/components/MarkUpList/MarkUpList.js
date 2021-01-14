@@ -1,22 +1,25 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setHoverStyle, setMarkUpListExpanded } from "../../store/actions";
 import { generateFrameClass, generateHoverStyle } from "../../utils/methods";
 import "./MarkUpList.scss";
+import {setMarkUpListExpanded} from "../../redux/actions/configActions";
+import {setHover} from "../../redux/actions/hoverActions";
+import {selectConfig} from "../../redux/selectors/configSelectors";
+import {selectFilterList} from "../../redux/selectors/filterSelectors";
+import {selectFrameList} from "../../redux/selectors/frameListSelectors";
+import {selectMarkupList} from "../../redux/selectors/markUpListSelectors";
 
 
 export const MarkUpList = (props) => {
     const dispatch = useDispatch();
-    const frameList = useSelector((state) => state.frameList);
-    const filterList = useSelector(state => state.filterList);
-    const markUpList = useSelector((state) => state.markUpList);
-    const isFilterBound = useSelector(state => state.generalConfig.isFilterBound);
+    const frameList = useSelector(selectFrameList);
+    const filterList = useSelector(selectFilterList);
+    const markUpList = useSelector(selectMarkupList);
+    const isFilterBound = useSelector(selectConfig).isFilterBound;
 
     const hoverHandle = (isReset, index, className) => {
-        const rect = !isReset ? document.getElementById("markUp-" + index).getBoundingClientRect() : "";
-        const title = !isReset ? frameList[index].key : "";
-        dispatch(setHoverStyle(isReset, generateHoverStyle(title, className, rect, "MARK_UP")));
+        dispatch(setHover(isReset ? {isReset: isReset} : generateHoverStyle(frameList[index].key, className, document.getElementById("markUp-" + index).getBoundingClientRect(), "MARK_UP")));
     };
 
     const calculateCssClass = (cssClass, index) => {

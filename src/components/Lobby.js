@@ -3,12 +3,15 @@ import { useSelector } from "react-redux";
 import { Frame } from "./Frame/Frame";
 import {filterIndexListMerge, generateFrameClass} from "../utils/methods";
 import "./App/App.scss";
+import {selectConfig} from "../redux/selectors/configSelectors";
+import {selectFilterList} from "../redux/selectors/filterSelectors";
+import {selectFrameList} from "../redux/selectors/frameListSelectors";
 
 export const Lobby = () => {
 
-  const frameList = useSelector(state => state.frameList);
-  const filterList = useSelector(state => state.filterList);
-  const isFilterBound = useSelector(state => state.generalConfig.isFilterBound);
+  const frameList = useSelector(selectFrameList);
+  const filterList = useSelector(selectFilterList);
+  const isFilterBound = useSelector(selectConfig).isFilterBound;
 
   const prepareData = (filterItemList, data) => {
     if (!data || !filterItemList) return data;
