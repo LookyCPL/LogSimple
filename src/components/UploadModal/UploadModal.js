@@ -4,24 +4,22 @@ import { KeySeparatorList } from "../KeySeparatorList/KeySeparatorList";
 import { dataSeparate } from "../../utils/methods";
 import { FileUploadInfo } from "../FileUploadInfo/FileUploadInfo";
 import { setUploadContentScrollUp } from "../../redux/actions/configActions";
-import { setStartEndRow, setUploadedFile } from "../../redux/actions/uploadedFileActions";
+import { setUploadedFile } from "../../redux/actions/uploadedFileActions";
 import { setFrameList } from "../../redux/actions/frameListActions";
 import { setModal } from "../../redux/actions/modalActions";
-import { selectConfig } from "../../redux/selectors/configSelectors";
 import { selectUploadedFile } from "../../redux/selectors/uploadedFileSelectors";
 import { selectKeySeparatorList } from "../../redux/selectors/keySeparatorListSelectors";
+import { FileView } from "../FileView/FileView";
 import "./UploadModal.scss";
+
 
 
 export const UploadModal = () => {
     const dispatch = useDispatch();
-    const generalConfig = useSelector(selectConfig);
     const uploadedFile = useSelector(selectUploadedFile);
     const keySeparatorList = useSelector(selectKeySeparatorList);
-    const rows = uploadedFile.content.split("\n").map((row, i) => {
-        return { row: row, index: i };
-    });
-   const fileViewRef = useRef(null);
+    const fileViewRef = useRef(null);
+
 
     const uploadFile = (e) => {
         const file = e.target.files[0];
@@ -45,62 +43,6 @@ export const UploadModal = () => {
         };
     };
 
-    const getStartEndMark = (e, i) => {
-
-        if (e.ctrlKey && i === uploadedFile.end || i === uploadedFile.start) return;
-        let start = uploadedFile.startRow;
-        let end = uploadedFile.endRow;
-
-        if (i > uploadedFile.endRow) {
-            end = i;
-        } else if (i < uploadedFile.startRow) {
-
-            start = i;
-        } else if (e.ctrlKey) {
-            end = i;
-        } else {
-            start = i
-        }
-        dispatch(setStartEndRow({ start: start, end: end }));
-    };
-
-    const generateMarkClass = (start, end, i) => {
-
-        if (start === i) return "start";
-        if (end === i) return "end";
-        return "default";
-    };
-
-    const MakeSlider = (scrollUp) => {
-        let start = scrollUp / 20;
-        let end = (scrollUp / 20) + 18;
-
-        const beforeStyle = {
-            height: scrollUp + 'px',
-        };
-        const afterStyle = {
-            height: ((rows.length * 20) - 360 - scrollUp) + 'px',
-        };
-
-        return (
-            <div>
-                <div style={beforeStyle} className="before"/>
-                {rows.slice(start, end).map((row) => (
-                    <div id={"row " + row.index} className={"row " + row.index}>
-                        <button id={row.index} className={generateMarkClass(uploadedFile.startRow, uploadedFile.endRow, row.index)}
-                                onClick={(e) => getStartEndMark(e, row.index)}/>
-                        <span>{row.row}</span>
-                    </div>
-                ))}
-                <div  style={afterStyle} className="after"/>
-            </div>
-        )
-    };
-
-    const handleScroll = () => {
-        dispatch(setUploadContentScrollUp(fileViewRef.current.scrollTop));
-        //scrollTop = document.getElementById("file-view").scrollTop;
-    };
 
     const confirm = () => {
 
@@ -118,6 +60,12 @@ export const UploadModal = () => {
         dispatch(setModal({isReset: true}));
     };
 
+
+    const handleScroll = () => {
+        dispatch(setUploadContentScrollUp(fileViewRef.current.scrollTop));
+        //scrollTop = document.getElementById("file-view").scrollTop;
+    };
+
     const scrollToStartEndMark = (i) => {
         dispatch(setUploadContentScrollUp(i*20));
         fileViewRef.current.scrollTop = i*20;
@@ -126,7 +74,7 @@ export const UploadModal = () => {
 
     return (
       <div id={"test"} className="modal-upload" onScroll={() => handleScroll()}>
-        <div ref={fileViewRef} id="file-view" className="file-view">{MakeSlider(generalConfig.uploadContentScrollUp)}</div>
+        <FileView ref={fileViewRef} />
         <div className="panel-options">
           <div className="btn-upload">
             <label className="upload">

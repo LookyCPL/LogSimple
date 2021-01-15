@@ -14,7 +14,7 @@ export const Header = () => {
     const frameList = useSelector(selectFrameList);
     const filterList = useSelector(selectFilterList);
     const uploadedFile = useSelector(selectUploadedFile);
-    const isFilterBound = useSelector(selectConfig).isFilterBound;
+    const {isFilterBound} = useSelector(selectConfig);
 
     const rowCount = getRowCount(isFilterBound, filterList, frameList);
 
