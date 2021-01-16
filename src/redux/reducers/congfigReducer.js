@@ -15,9 +15,6 @@ export const configReducer: Reducer<ConfigState, ConfigAction> = (state = config
         case ConfigTypes.SET_MARK_UP_STYLE_LIST:
             state.markUpStyleList = action.payload;
             return state;
-        case ConfigTypes.SET_UPLOAD_CONTENT_SCROLL_UP:
-            state.uploadContentScrollUp = action.payload;
-            return {...state};
         default:
             return state;
     }

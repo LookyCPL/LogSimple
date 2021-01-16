@@ -1,7 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { selectUploadedFile } from "../../redux/selectors/uploadedFileSelectors";
 import './FileInfoUpload.scss'
-import {selectUploadedFile} from "../../redux/selectors/uploadedFileSelectors";
 
 
 export const FileUploadInfo = (props) => {

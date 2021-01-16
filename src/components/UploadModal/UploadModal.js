@@ -1,23 +1,14 @@
 import React, { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { KeySeparatorList } from "../KeySeparatorList/KeySeparatorList";
-import { dataSeparate } from "../../utils/methods";
 import { FileUploadInfo } from "../FileUploadInfo/FileUploadInfo";
-import { setUploadContentScrollUp } from "../../redux/actions/configActions";
 import { setUploadedFile } from "../../redux/actions/uploadedFileActions";
-import { setFrameList } from "../../redux/actions/frameListActions";
-import { setModal } from "../../redux/actions/modalActions";
-import { selectUploadedFile } from "../../redux/selectors/uploadedFileSelectors";
-import { selectKeySeparatorList } from "../../redux/selectors/keySeparatorListSelectors";
+import { UploadControlPanel } from "../UploadControlPanel/UploadControlPanel";
 import { FileView } from "../FileView/FileView";
 import "./UploadModal.scss";
 
-
-
 export const UploadModal = () => {
     const dispatch = useDispatch();
-    const uploadedFile = useSelector(selectUploadedFile);
-    const keySeparatorList = useSelector(selectKeySeparatorList);
     const fileViewRef = useRef(null);
 
 
@@ -43,37 +34,12 @@ export const UploadModal = () => {
         };
     };
 
-
-    const confirm = () => {
-
-        let temp = [];
-        keySeparatorList.forEach((k) => {
-            temp = [...temp, ...k.formatters]
-        });
-        const pickedUpSeparatorList = temp.filter((f) => f.isPickedUp).map((a) => a.value);
-
-        dispatch(setFrameList(dataSeparate(uploadedFile.content.split("\n").filter((row, i) => i >= uploadedFile.startRow && i <= uploadedFile.endRow), pickedUpSeparatorList)));
-        dispatch(setModal({isReset: true}));
-    };
-
-    const cancel = () => {
-        dispatch(setModal({isReset: true}));
-    };
-
-
-    const handleScroll = () => {
-        dispatch(setUploadContentScrollUp(fileViewRef.current.scrollTop));
-        //scrollTop = document.getElementById("file-view").scrollTop;
-    };
-
     const scrollToStartEndMark = (i) => {
-        dispatch(setUploadContentScrollUp(i*20));
         fileViewRef.current.scrollTop = i*20;
     };
 
-
     return (
-      <div id={"test"} className="modal-upload" onScroll={() => handleScroll()}>
+      <div className="modal-upload" >
         <FileView ref={fileViewRef} />
         <div className="panel-options">
           <div className="btn-upload">
@@ -89,35 +55,7 @@ export const UploadModal = () => {
           </div>
           <FileUploadInfo scrollToStartEndMark = {scrollToStartEndMark} />
           <KeySeparatorList />
-          <div className="pnl-right">
-            <div className="content-search">
-              <span className="title">Search in content</span>
-              <div className="content">
-                <input className="input" />
-                <div className="btn-search">Search</div>
-                <div className="pnl-find">
-                  <div className="btn-up" />
-                  <div className="btn-down" />
-                </div>
-              </div>
-            </div>
-            <div className="var-key-loader">
-              <span className="title">Key separator add</span>
-              <div className="content">
-                <input className="input" />
-                <div className="btn-add">Add</div>
-                <div className="info" />
-              </div>
-            </div>
-            <div className="pnl-buttons">
-              <div className={"btn cancel"} onClick={() => cancel()}>
-                Cancel
-              </div>
-              <div className={"btn confirm"} onClick={() => confirm()}>
-                Upload
-              </div>
-            </div>
-          </div>
+          <UploadControlPanel />
         </div>
       </div>
     );

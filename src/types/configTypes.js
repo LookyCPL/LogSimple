@@ -3,8 +3,7 @@ import {configInitial} from "../redux/initialState";
 export const ConfigTypes = {
     SET_FILTER_BIND: "SET_FILTER_BIND",
     SET_MARK_UP_LIST_EXPANDED: "SET_MARK_UP_LIST_EXPANDED",
-    SET_MARK_UP_STYLE_LIST: "SET_MARK_UP_STYLE_LIST",
-    SET_UPLOAD_CONTENT_SCROLL_UP: "SET_UPLOAD_CONTENT_SCROLL_UP",
+    SET_MARK_UP_STYLE_LIST: "SET_MARK_UP_STYLE_LIST"
 };
 
 export type ConfigState = configInitial;
@@ -24,12 +23,7 @@ export interface SetMarkUpStyleList {
     payload: Array;
 }
 
-export interface SetUploadContentScrollUp {
-    type: ConfigTypes.SET_UPLOAD_CONTENT_SCROLL_UP;
-    payload: BigInteger;
-}
 export type ConfigAction =
     | SetFilterBind
     | SetMarkUpListExpanded
     | SetMarkUpStyleList
-    | SetUploadContentScrollUp;
