@@ -7,7 +7,6 @@ export const configInitial = {
   isUploaded: false,
   isFilterBound: false,
   isMarkUpListExpanded: true,
-  uploadContentScrollUp: 0,
   markUpStyleList: markUpStyleList,
 };
 export const hoverInitial = {
@@ -25,7 +24,9 @@ export const uploadedFileInitial = {
   contentType: "",
   size: 0,
   rowCount: 0,
-  content: "",
+  content: [],
+  uploadSearchIndexes: [],
+  uploadSearchExpression: "",
   startRow: 0,
   endRow: 0,
 };

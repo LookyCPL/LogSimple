@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef } from "react";
+import React, { useRef, forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUploadedFile } from "../../redux/selectors/uploadedFileSelectors";
 import { setStartEndRow } from "../../redux/actions/uploadedFileActions";
@@ -9,12 +9,9 @@ export const FileView = forwardRef((props, ref) => {
 
     const dispatch = useDispatch();
     const fileViewRef = useRef(null);
-    const [scrollUpSize, setScrollUp] = useState(0);
     const uploadedFile = useSelector(selectUploadedFile);
     const combinedRef = useCombinedRefs(ref, fileViewRef);
-    const rows = uploadedFile.content.split("\n").map((row, i) => {
-        return { row: row, index: i };
-    });
+    const rows = props.rows;
     const rowsCount = rows.length;
     const viewHeight = rowsCount*20;
     const viewContentStyle = {
@@ -22,16 +19,37 @@ export const FileView = forwardRef((props, ref) => {
     };
 
     const generateMarkClass = (start, end, i) => {
-
-        if (start === i) return "start";
-        if (end === i) return "end";
-        return "default";
+      if (start === i) return "start";
+      if (end === i) return "end";
+      return "default";
     };
 
-    const handleScroll = () => {
-      const scrollTop = fileViewRef.current.scrollTop;
-      if (scrollTop === null) return;
-      setScrollUp(scrollTop);
+    const modifyRow = (row, indexList) => {
+      if (indexList.length === 0) return row;
+
+      let temp = [];
+      let endSubstring = row;
+      let indexShift = 0;
+
+      indexList.forEach((index) => {
+        temp.push(
+          endSubstring.substring(0, index.start - indexShift),
+          <span className="searchedSubstring">
+            {endSubstring.substring(
+              index.start - indexShift,
+              index.end - indexShift
+            )}
+          </span>
+        );
+
+        endSubstring = endSubstring.substring(
+          index.end - indexShift,
+          endSubstring.length
+        );
+        indexShift = index.end;
+      });
+      temp.push(endSubstring);
+      return temp;
     };
 
     const getStartEndMark = (e, i) => {
@@ -54,14 +72,14 @@ export const FileView = forwardRef((props, ref) => {
     };
 
     const MakeSlider = (scrollUp) => {
-        let start = scrollUp / 20 - 4;
-        let end = (scrollUp / 20) + 22;
-        let top = scrollUp - 40;
-        if (start < 0) {
-          start = 0;
-          top = scrollUp;
-        }
-        if (end > rowsCount) end = rowsCount;
+        let start = scrollUp / 20;
+        let end = (scrollUp / 20) + 18;
+        let top = scrollUp;
+        // if (start < 0) {
+        //   start = 0;
+        //   top = scrollUp;
+        // }
+        // if (end > rowsCount) end = rowsCount;
 
         return (
           <div className="slider" style={viewContentStyle}>
@@ -76,7 +94,7 @@ export const FileView = forwardRef((props, ref) => {
                   )}
                   onClick={(e) => getStartEndMark(e, row.index)}
                 />
-                <span>{row.row}</span>
+                <span className="row-content">{modifyRow(row.row, row.indexList)}</span>
               </div>
             ))}
           </div>
@@ -84,7 +102,7 @@ export const FileView = forwardRef((props, ref) => {
     };
 
     return (
-        <div  onScroll={() => handleScroll()} ref={combinedRef} id="file-view" className="file-view">{MakeSlider(scrollUpSize)}</div>
+        <div  onScrollCapture={() => props.handleScroll()} ref={combinedRef} id="file-view" className="file-view">{MakeSlider(props.scrollUpSize)}</div>
     );
 });
 

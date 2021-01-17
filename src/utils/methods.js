@@ -1,4 +1,4 @@
-import { initialState } from "../redux/initialState";
+import {initialState} from "../redux/initialState";
 
 
 // --------------------------------------------- STORE LOGIC -------------------------------------------
@@ -7,7 +7,7 @@ export const saveSessionState = (state) => {
     const serializedState = JSON.stringify(state);
     sessionStorage.setItem("state", serializedState);
   } catch (error) {
-   console.log("shit", error);
+      // catch some shit here
   }
 };
 
@@ -268,6 +268,14 @@ export const generateFrameClass = (isFilterBound, filterList, frame) => {
     return "hidden";
 };
 
+export const findMatchedIndexes = (text, expression) => {
+
+    const matches = text.matchAll(RegExp(expression, "g"));
+    return Array.from(matches).map((match) => ({
+        start: match.index,
+        end: match.index + match[0].length,
+    }));
+};
 
 
 

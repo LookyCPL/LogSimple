@@ -14,7 +14,7 @@ export const App = () => {
 
     const hover = useSelector(hoverConfig);
     const modal = useSelector(selectModal);
-    const isMarkUpListExpanded = useSelector(selectConfig).isMarkUpListExpanded
+    const isMarkUpListExpanded = useSelector(selectConfig).isMarkUpListExpanded;
 
     return (
       <div className={"main"}>

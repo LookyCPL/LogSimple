@@ -9,7 +9,6 @@
   flex-direction: column;
   overflow-x: hidden;
   overflow-y: scroll;
-  scroll-behavior: smooth;
 
   .slider {
 
@@ -55,12 +54,16 @@
           background: url("../../sourceData/btnUploadCut-hover.svg");
         }
       }
-      span {
+     > .row-content {
         width: 100%;
         height: 20px;
         font-size: 14px;
         color: $white;
         padding-left: 15px;
+
+       .searchedSubstring{
+         color: $base-yellow;
+       }
       }
     }
   }

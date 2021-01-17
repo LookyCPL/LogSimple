@@ -15,7 +15,7 @@ export const Frame = (props) => {
     const dispatch = useDispatch();
     const frameList = useSelector(selectFrameList);
     const markUpList = useSelector(selectMarkupList);
-    const markUpStyleList = useSelector(selectConfig).markUpStyleList;
+    const {markUpStyleList} = useSelector(selectConfig);
 
     const markHandle = (e, isMarked) => {
 

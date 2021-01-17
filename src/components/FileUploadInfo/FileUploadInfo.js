@@ -43,7 +43,7 @@ export const FileUploadInfo = (props) => {
                         {["Start row", "End row"].includes(item.name) && (
                             <div
                                 onClick={() =>
-                                    props.scrollToStartEndMark(
+                                    props.scrollToRow(
                                         item.name === "Start row"
                                             ? uploadedFile.startRow
                                             : uploadedFile.endRow

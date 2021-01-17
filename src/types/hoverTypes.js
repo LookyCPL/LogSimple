@@ -8,7 +8,7 @@ export type HoverState = hoverInitial;
 
 export interface SetHover {
     type: HoverTypes.SET_HOVER;
-    payload: boolean;
+    payload: Object;
 }
 
 export type HoverAction =

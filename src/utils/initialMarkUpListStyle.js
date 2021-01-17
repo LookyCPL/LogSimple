@@ -1,4 +1,4 @@
-export let markUpStyleList;
+export let markUpStyleList = [];
 
 let cssColorClassList = [
     "lightGreen", //#66ff66
@@ -14,13 +14,12 @@ let cssColorClassList = [
 
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXY";
 let index = 0;
-let styleList = [];
 
 for (let i = 0; i < cssColorClassList.length; i++) {
     let colorIndex = 0;
 
     for (let h = 0; h < alphabet.length; h++) {
-        styleList.push({
+        markUpStyleList.push({
             index: index,
             class: "markUp " + cssColorClassList[colorIndex],
             letter: alphabet[h],
@@ -30,10 +29,7 @@ for (let i = 0; i < cssColorClassList.length; i++) {
         index++;
     }
 
-
     let firstValue = cssColorClassList[0];
     cssColorClassList.shift();
     cssColorClassList.push(firstValue);
 }
-
-markUpStyleList = styleList;
