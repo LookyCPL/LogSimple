@@ -4,7 +4,6 @@ export const ConfigTypes = {
   SET_FILTER_BIND: "SET_FILTER_BIND",
   SET_MARK_UP_LIST_EXPANDED: "SET_MARK_UP_LIST_EXPANDED",
   SET_MARK_UP_STYLE_LIST: "SET_MARK_UP_STYLE_LIST",
-
 };
 
 export type ConfigState = configInitial;
@@ -27,4 +26,4 @@ export interface SetMarkUpStyleList {
 export type ConfigAction =
   | SetFilterBind
   | SetMarkUpListExpanded
-  | SetMarkUpStyleList
+  | SetMarkUpStyleList;

@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setModal } from "../../redux/actions/modalActions";
+import { resetModal } from "../../redux/actions/modalActions";
 import { setFrameList } from "../../redux/actions/frameListActions";
-import { modifyUploadContent, setUploadSearchExpression } from "../../redux/actions/uploadedFileActions";
+import { expressionSearch, setUploadSearchExpression } from "../../redux/actions/uploadedFileActions";
 import { dataSeparate } from "../../utils/methods";
 import { selectKeySeparatorList } from "../../redux/selectors/keySeparatorListSelectors";
 import { selectUploadedFile } from "../../redux/selectors/uploadedFileSelectors";
+import { setMarkUpList } from "../../redux/actions/markUpListActions";
 import "./UploadControlPanel.scss";
 
 export const UploadControlPanel = (props) => {
   const dispatch = useDispatch();
   const keySeparatorList = useSelector(selectKeySeparatorList);
-  const { uploadSearchIndexes, uploadSearchExpression, startRow, endRow, content, } = useSelector(selectUploadedFile);
+  const { uploadSearchIndexes, uploadSearchExpression, startRow, endRow, content } = useSelector(selectUploadedFile);
   const [searchIndex, setSearchIndex] = useState(0);
 
   const searchForExpression = () => {
-    uploadSearchExpression.length > 0 && dispatch(modifyUploadContent(uploadSearchExpression));
-    //uploadSearchIndexes.length > 0 && props.scrollToRow(uploadSearchIndexes[0]); vyresit !!!
+    uploadSearchExpression.length > 0 && dispatch(expressionSearch());
   };
+
+  useEffect(() => {
+    uploadSearchIndexes.length > 0 && props.scrollToRow(uploadSearchIndexes[0]);
+  }, [uploadSearchIndexes]);
 
   const walkThroughExpression = (direction) => {
 
@@ -35,7 +39,7 @@ export const UploadControlPanel = (props) => {
   };
 
   const cancel = () => {
-    dispatch(setModal({ isReset: true }));
+    dispatch(resetModal());
   };
 
   const confirm = () => {
@@ -57,7 +61,8 @@ export const UploadControlPanel = (props) => {
         )
       )
     );
-    dispatch(setModal({ isReset: true }));
+    dispatch(resetModal());
+    dispatch(setMarkUpList([]))
   };
 
   return (

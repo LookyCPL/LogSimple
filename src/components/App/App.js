@@ -8,7 +8,7 @@ import { Hover } from "../Hover";
 import { Modal } from "../Modal/Modal";
 import { selectConfig } from "../../redux/selectors/configSelectors";
 import { hoverConfig } from "../../redux/selectors/hoverSelectors";
-import {selectModal} from "../../redux/selectors/modalSelectors";
+import { selectModal } from "../../redux/selectors/modalSelectors";
 
 export const App = () => {
 

@@ -7,7 +7,7 @@ export const configReducer: Reducer<ConfigState, ConfigAction> = (state = config
     switch (action.type) {
         case ConfigTypes.SET_FILTER_BIND:
             state.isFilterBound = action.payload;
-            return state;
+            return {...state};
         case ConfigTypes.SET_MARK_UP_LIST_EXPANDED:
             const isExpanded = state.isMarkUpListExpanded;
             state.isMarkUpListExpanded = !isExpanded;

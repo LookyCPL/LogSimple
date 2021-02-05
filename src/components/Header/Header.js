@@ -1,31 +1,30 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getModalStyle, getRowCount } from "../../utils/methods";
+import {getModalStyle, getRowCount, loadSessionState} from "../../utils/methods";
+import { setModal } from "../../redux/actions/modalActions";
+import { selectConfig } from "../../redux/selectors/configSelectors";
+import { selectFilterList } from "../../redux/selectors/filterSelectors";
+import { selectFrameList } from "../../redux/selectors/frameListSelectors";
+import { selectUploadedFile } from "../../redux/selectors/uploadedFileSelectors";
+import { ModalTypes } from "../../types/modalTypes";
 import "./Header.scss";
-import {setModal} from "../../redux/actions/modalActions";
-import {selectConfig} from "../../redux/selectors/configSelectors";
-import {selectFilterList} from "../../redux/selectors/filterSelectors";
-import {selectFrameList} from "../../redux/selectors/frameListSelectors";
-import {selectUploadedFile} from "../../redux/selectors/uploadedFileSelectors";
 
 export const Header = () => {
 
     const dispatch = useDispatch();
     const frameList = useSelector(selectFrameList);
     const filterList = useSelector(selectFilterList);
-    const uploadedFile = useSelector(selectUploadedFile);
+    const {fileName} = useSelector(selectUploadedFile);
     const {isFilterBound} = useSelector(selectConfig);
 
     const rowCount = getRowCount(isFilterBound, filterList, frameList);
 
     const uploadFile = () => {
-      dispatch(
-        setModal({ isReset: false, modal: getModalStyle("UPLOAD_MODAL") })
-      );
+      dispatch(setModal(getModalStyle(ModalTypes.UPLOAD_MODAL)));
     };
 
     const onClickHandler = (e) => {
-        // for testing
+       //console.log(loadSessionState());
     };
 
     const clearSession = () => {
@@ -45,7 +44,7 @@ export const Header = () => {
             <div className="info">
                 <div className="infoItem">
                     <label className="title">File name</label>
-                    <label className="value">{uploadedFile.fileName}</label>
+                    <label className="value">{fileName}</label>
                 </div>
                 <div className="infoItem">
                     <label className="title">Row count</label>
