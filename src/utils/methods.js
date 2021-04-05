@@ -1,4 +1,4 @@
-import {initialState} from "../redux/initialState";
+import {initialState, modalInitial} from "../redux/initialState";
 
 
 // --------------------------------------------- STORE LOGIC -------------------------------------------
@@ -37,12 +37,13 @@ const keyRecognize = (row, keyList) => {
     return "unknown";
 };
 
-export const dataSeparate = (rows, keyList) => {
+export const dataSeparate = (rows, keyList ,charWidthMap, contentWidth) => {
     let index = 0;
     let frameList = [];
 
     rows.forEach((row) => {
         const key = keyRecognize(row, keyList);
+        const data = row.substring(key.length, row.length);
 
         if (key !== "unknown") {
             let object = {};
@@ -51,12 +52,14 @@ export const dataSeparate = (rows, keyList) => {
             object.isMarked = false;
             object.colorClass = "default";
             object.filterItemList = [];
-            object.data =  row.substring(key.length, row.length);
+            object.data =  data;
+            object.dataLengthList = [data.length];
             frameList.push(object);
             index++;
         }  else {
             if(frameList.length > 0){
                 frameList[frameList.length - 1].data += "\n" + row;
+                frameList[frameList.length - 1].dataLengthList.push(row.length);
             }
         }
     });
@@ -237,8 +240,9 @@ export const getModalStyle = (type) => {
         class: "modal-bg",
         type: "UPLOAD_MODAL",
       };
-    default: {
-    }
+      default: {
+          return modalInitial;
+      }
   }
 };
 

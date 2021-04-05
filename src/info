@@ -6,6 +6,7 @@ Data structure:
     -- colorClass (String)
     -- key (String)
     -- data (String)
+    -- dataLengthList (Integer[])
     -- filterItemList (Array[Object])
         -- id (String)
         -- caseSens (Boolean)
@@ -35,6 +36,7 @@ Data structure:
         -- index (Integer)
         -- class (String)
         -- letter (String)
+    -- charWidthMap (Map(Key: (String), Value(integer))
 
 -- hover (Object)
     -- title (String)
@@ -53,17 +55,20 @@ Data structure:
     -- content (Array[Object])
         -- row (String)
         -- index (Integer)
-        -- indexList (Array[Integer])
+        -- indexList (Array[Object])
+            -- start
+            -- end
     -- uploadSearchIndexes (Array[Integer])
     -- uploadSearchExpression (String)
     -- startRow (Integer)
-    --  endRow (Integer)
+    -- endRow (Integer)
 
 -- keySeparatorList (Array[Object])
     -- type (String)
     -- formatters (Array[Object])
         -- value (String)
         -- isPickedUp (Boolean)
+
 
 
     TODO !!!

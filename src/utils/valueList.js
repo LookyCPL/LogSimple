@@ -26,3 +26,6 @@ export const translateValue = (key, type) => {
   }
   return "";
 };
+
+export const allCharString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.:;,-+*/#&@<>(){}[]§$|°%=";
+export const charList = allCharString.split("");
