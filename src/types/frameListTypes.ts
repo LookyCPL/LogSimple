@@ -3,6 +3,13 @@ export const FrameListTypes = {
     SET_FRAME_LIST: "SET_FRAME_LIST",
 };
 
+export interface FrameHeight {
+    index: number
+    height: number
+    top: number
+    orderIndex: number
+}
+
 export interface IndexItem {
     id: string
     start: number

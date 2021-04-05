@@ -13,7 +13,7 @@ export type FilterState = Filter[]
 
 export interface SetFilterList {
     type: typeof FilterTypes.SET_FILTER_LIST,
-    payload: FilterState,
+    payload: Filter[],
 }
 
 export type FilterAction =

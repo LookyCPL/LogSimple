@@ -72,10 +72,13 @@ Data structure:
 
 
     TODO !!!
-    -- probiha mensi refactoring ... dodelat useSelectory !! .. namrdat vsude Ref misto document.getBlaBla !!! Predelat lazy upload !!!
+    -- mega refactoring done .. jedeme uz na typescriptu
+    -- implementovat lazy loading v lobby .. doladit (posledni zaznam zlobi!)
+    -- namrdat vsude Ref misto document.getBlaBla !!!
 
 
-    - implementovat upload modal - dodelat logiku vybirani keys + nastylovat !!, implementovat vyhledavac contentu !!, nastylovat buttony !!
+    - dodelat upload modal
+    - implementovat ukladani do clipboardu
     - implementovat vyhledavac keys
     - implementovat case sensitive filtru ??
     - implementovat nahled scrollu

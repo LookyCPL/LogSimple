@@ -8,6 +8,7 @@ import { selectFrameList } from "../../redux/selectors/frameListSelectors";
 import { selectUploadedFile } from "../../redux/selectors/uploadedFileSelectors";
 import { ModalTypes } from "../../types";
 import "./Header.scss";
+import {CharList} from "../CharList/CharList";
 
 export const Header = () => {
   const dispatch = useDispatch();

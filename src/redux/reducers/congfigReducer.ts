@@ -22,8 +22,11 @@ export const configReducer: Reducer<ConfigState, ConfigActions> = (state = confi
             state.charWidthMap = <Map<string,number>>action.payload;
             return {...state};
 
-        case ConfigTypes.SET_CONTENT_PAGE_WIDTH:
-            state.contentPageWidth = <number>action.payload;
+        case ConfigTypes.SET_LOBBY_WIDTH:
+            state.lobbyWidth = <number>action.payload;
+            return state;
+        case ConfigTypes.SET_LOBBY_HEIGHT:
+            state.lobbyHeight = <number>action.payload;
             return state;
         default:
             return state;

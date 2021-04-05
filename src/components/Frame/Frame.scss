@@ -1,85 +1,92 @@
 @import "../../utils/cssConfig.scss";
 
-.content {
-  .key {
-    button {
-      height: 21px;
-      width: auto;
-      border-radius: 1em;
-      border: none;
-      cursor: pointer;
-      padding: 1px 18px;
-      background-color: $base-yellow;
-      font-weight: bold;
-      font-family: calibri, serif;
-      font-size: 16px;
+.lobby {
 
-      &:hover {
-        background-color: $second-yellow;
-      }
-    }
+  .frame{
+    position: absolute;
 
-    &.marked {
-      & button {
-        background-color: $positive-green;
+    .key {
+      button {
+        height: 21px;
+        width: auto;
+        border-radius: 1em;
+        border: none;
+        cursor: pointer;
+        padding: 1px 18px;
+        background-color: $base-yellow;
+        font-weight: bold;
+        font-family: calibri, serif;
+        font-size: 16px;
 
         &:hover {
-          background-color: $negative-red;
+          background-color: $second-yellow;
         }
       }
-      .lightGreen {
-        background-color: $light-green;
+
+      &.marked {
+        & button {
+          background-color: $positive-green;
+
+          &:hover {
+            background-color: $negative-red;
+          }
+        }
+        .lightGreen {
+          background-color: $light-green;
+        }
+        .green {
+          background-color: $medium-green;
+        }
+        .darkGreen {
+          background-color: $dark-green;
+        }
+        .lightBlue {
+          background-color: $light-blue;
+        }
+        .blue {
+          background-color: $medium-blue;
+        }
+        .darkBlue {
+          background-color: $dark-blue;
+        }
+        .lightPink {
+          background-color: $light-pink;
+        }
+        .pink {
+          background-color: $medium-pink;
+        }
+        .darkPink {
+          background-color: $dark-pink;
+        }
       }
-      .green {
-        background-color: $medium-green;
+    }
+
+    .data {
+      display: inline-block;
+      height: auto;
+      width: calc(100% - 40px);
+      padding: 4px 0 4px 15px;
+      white-space: pre-wrap;
+      color: $white;
+      font-size: 16px;
+      font-family: 'times new roman';
+
+      .filterItemSubstring {
+        font-weight: bold;
+        color: $base-yellow;
       }
-      .darkGreen {
-        background-color: $dark-green;
-      }
-      .lightBlue {
-        background-color: $light-blue;
-      }
-      .blue {
-        background-color: $medium-blue;
-      }
-      .darkBlue {
-        background-color: $dark-blue;
-      }
-      .lightPink {
-        background-color: $light-pink;
-      }
-      .pink {
-        background-color: $medium-pink;
-      }
-      .darkPink {
-        background-color: $dark-pink;
-      }
+    }
+
+    .body {
+      display: inline-block;
+      max-height: 500px;
+      overflow: auto;
+      margin: 0;
+      background: #f3f2f2;
+      line-height: 2em;
+      padding: 8px 14px 12px 15px;
     }
   }
 
-  .data {
-    display: inline-block;
-    height: auto;
-    width: calc(100% - 40px);
-    padding: 4px 0 4px 15px;
-    white-space: pre-wrap;
-    color: $white;
-    font-size: 16px;
-    font-family: 'times new roman';
 
-    .filterItemSubstring {
-      font-weight: bold;
-      color: $base-yellow;
-    }
-  }
-
-  .body {
-    display: inline-block;
-    max-height: 500px;
-    overflow: auto;
-    margin: 0;
-    background: #f3f2f2;
-    line-height: 2em;
-    padding: 8px 14px 12px 15px;
-  }
 }

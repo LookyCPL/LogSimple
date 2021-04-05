@@ -10,7 +10,8 @@ export const configInitial: ConfigState = {
   isMarkUpListExpanded: true,
   markUpStyleList: markUpStyleList,
   charWidthMap: new Map<string, number>(),
-  contentPageWidth: 0,
+  lobbyWidth: 0,
+  lobbyHeight: 0,
 };
 
 export const hoverInitial = {

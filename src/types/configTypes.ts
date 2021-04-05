@@ -1,21 +1,31 @@
 import { MarkUpStyle } from "./markUpListTypes";
+import { FrameHeight } from "./frameListTypes";
 
 export const ConfigTypes = {
   SET_FILTER_BIND: "SET_FILTER_BIND",
   SET_MARK_UP_LIST_EXPANDED: "SET_MARK_UP_LIST_EXPANDED",
   SET_MARK_UP_STYLE_LIST: "SET_MARK_UP_STYLE_LIST",
   SET_CHAR_WIDTH_MAP: "SET_CHAR_WIDTH_MAP",
-  SET_CONTENT_PAGE_WIDTH: "SET_CONTENT_PAGE_WIDTH",
+  SET_LOBBY_WIDTH: "SET_LOBBY_WIDTH",
+  SET_LOBBY_HEIGHT: "SET_LOBBY_HEIGHT",
 };
 
-export interface ConfigState {
-  isUploaded: boolean;
-  isFilterBound: boolean;
-  isMarkUpListExpanded: boolean;
-  charWidthMap: Map<string, number>;
-  markUpStyleList: MarkUpStyle[];
-  contentPageWidth: number;
+export interface LobbyConfig {
+  totalHeight: number
+  lobbyHeight: number
+  frameHeightList: FrameHeight[]
 }
+
+export interface Config {
+  isUploaded: boolean
+  isFilterBound: boolean
+  isMarkUpListExpanded: boolean
+  charWidthMap: Map<string, number>
+  markUpStyleList: MarkUpStyle[]
+  lobbyWidth: number
+  lobbyHeight: number
+}
+export type ConfigState = Config;
 
 export interface SetFilterBind {
   type: typeof ConfigTypes.SET_FILTER_BIND;
@@ -37,8 +47,13 @@ export interface SetCharWidthMap {
   payload: Map<string, number>;
 }
 
-export interface SetContentPageWidth {
-  type: typeof ConfigTypes.SET_CONTENT_PAGE_WIDTH;
+export interface SetLobbyWidth {
+  type: typeof ConfigTypes.SET_LOBBY_WIDTH;
+  payload: number;
+}
+
+export interface SetLobbyHeight {
+  type: typeof ConfigTypes.SET_LOBBY_HEIGHT;
   payload: number;
 }
 
@@ -47,4 +62,5 @@ export type ConfigActions =
   | SetMarkUpListExpanded
   | SetMarkUpStyleList
   | SetCharWidthMap
-  | SetContentPageWidth;
+  | SetLobbyWidth
+  | SetLobbyHeight;

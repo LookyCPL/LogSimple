@@ -20,7 +20,6 @@ export const UploadControlPanel = (props: UploadControlPanelProps) => {
   const { scrollToRow } = props;
   const dispatch = useDispatch();
   const keySeparatorList = useSelector(selectKeySeparatorList);
-  const { charWidthMap, contentPageWidth } = useSelector(selectConfig);
   const {
     uploadSearchIndexes,
     uploadSearchExpression,
@@ -73,9 +72,7 @@ export const UploadControlPanel = (props: UploadControlPanelProps) => {
           content
             .filter((row, i) => i >= startRow && i <= endRow)
             .map((row) => row.row),
-          pickedUpSeparatorList,
-          charWidthMap,
-          contentPageWidth
+          pickedUpSeparatorList
         )
       )
     );

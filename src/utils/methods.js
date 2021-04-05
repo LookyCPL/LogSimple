@@ -37,7 +37,7 @@ const keyRecognize = (row, keyList) => {
     return "unknown";
 };
 
-export const dataSeparate = (rows, keyList ,charWidthMap, contentWidth) => {
+export const dataSeparate = (rows, keyList) => {
     let index = 0;
     let frameList = [];
 

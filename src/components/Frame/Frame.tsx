@@ -1,4 +1,5 @@
 import React from "react";
+import CSS from 'csstype';
 import "./Frame.scss";
 import { useSelector } from "react-redux";
 import { filterIndexListMerge } from "../../utils/methods";
@@ -8,8 +9,8 @@ import { selectFilterList } from "../../redux/selectors/filterSelectors";
 
 export interface FrameProps {
     frame: FrameItem
-    className: string
     onClick: () => void
+    style: CSS.Properties
 }
 
 const prepareData = (filterItemList: FilterItem[], data: string, filterList: Filter[]) => {
@@ -46,17 +47,17 @@ const prepareData = (filterItemList: FilterItem[], data: string, filterList: Fil
 
 export const Frame = (props: FrameProps) => {
 
-    const { frame, onClick, className } = props;
+    const { frame, onClick, style } = props;
     const { index, isMarked, colorClass, key, data, filterItemList} = frame;
     const filterList = useSelector(selectFilterList);
-    const {  contentPageWidth } = useSelector(selectConfig);
+    const { lobbyWidth } = useSelector(selectConfig);
 
     const dataStyle = {
-        width: contentPageWidth - 60,
+        width: lobbyWidth,
     };
 
     return (
-        <div id={index + " - " + key} className={className}>
+        <div id={index + " - " + key} style={style} className={'frame'}>
             <div className={isMarked ? "key marked " : "key"}>
                 <button className={colorClass} key={key} onClick={onClick}>
                     {key}
