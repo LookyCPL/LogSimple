@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import {ConfigTypes, MarkUpStyle} from "../../types";
+import {ConfigTypes, FrameHeight, LobbyConfig, LobbySize, MarkUpStyle} from "../../types";
 import type { ConfigState, ConfigActions } from "../../types";
 import { configInitial } from "../initialState";
 
@@ -22,12 +22,20 @@ export const configReducer: Reducer<ConfigState, ConfigActions> = (state = confi
             state.charWidthMap = <Map<string,number>>action.payload;
             return {...state};
 
-        case ConfigTypes.SET_LOBBY_WIDTH:
-            state.lobbyWidth = <number>action.payload;
+        case ConfigTypes.SET_LOBBY_SIZE:
+            const lobbySize: LobbySize = <LobbySize>action.payload;
+            state.lobbyConfig.lobbyWidth = lobbySize.width;
+            state.lobbyConfig.lobbyHeight = lobbySize.height;
             return state;
-        case ConfigTypes.SET_LOBBY_HEIGHT:
-            state.lobbyHeight = <number>action.payload;
+
+        case ConfigTypes.SET_LOBBY_CONFIG:
+            state.lobbyConfig = <LobbyConfig>action.payload;
             return state;
+
+        case ConfigTypes.SET_TOP_FRAME:
+            state.lobbyConfig.topFrame = <FrameHeight>action.payload;
+            return {...state};
+
         default:
             return state;
     }

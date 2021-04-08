@@ -50,10 +50,10 @@ export const Frame = (props: FrameProps) => {
     const { frame, onClick, style } = props;
     const { index, isMarked, colorClass, key, data, filterItemList} = frame;
     const filterList = useSelector(selectFilterList);
-    const { lobbyWidth } = useSelector(selectConfig);
+    const { lobbyConfig } = useSelector(selectConfig);
 
     const dataStyle = {
-        width: lobbyWidth,
+        width: lobbyConfig.lobbyWidth,
     };
 
     return (

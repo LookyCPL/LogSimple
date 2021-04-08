@@ -1,17 +1,32 @@
 import { markUpStyleList } from "../utils/initialMarkUpListStyle";
-import { ConfigState } from "../types";
+import {ConfigState, FrameHeight, LobbyConfig} from "../types";
 
 export const filterListInitial = [];
 export const markUpListInitial = [];
 export const frameListInitial = [];
+
+export const topFrameInitial: FrameHeight = {
+  index: 0,
+  height: 0,
+  top: 0,
+  orderIndex: 0,
+}
+
+export const lobbyConfigInitial: LobbyConfig = {
+  totalHeight: 0,
+  lobbyHeight: 0,
+  lobbyWidth: 0,
+  frameHeightList: [],
+  topFrame: topFrameInitial,
+};
+
 export const configInitial: ConfigState = {
   isUploaded: false,
   isFilterBound: false,
   isMarkUpListExpanded: true,
   markUpStyleList: markUpStyleList,
   charWidthMap: new Map<string, number>(),
-  lobbyWidth: 0,
-  lobbyHeight: 0,
+  lobbyConfig: lobbyConfigInitial,
 };
 
 export const hoverInitial = {

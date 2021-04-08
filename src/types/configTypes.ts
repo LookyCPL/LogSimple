@@ -1,30 +1,44 @@
 import { MarkUpStyle } from "./markUpListTypes";
-import { FrameHeight } from "./frameListTypes";
 
 export const ConfigTypes = {
   SET_FILTER_BIND: "SET_FILTER_BIND",
   SET_MARK_UP_LIST_EXPANDED: "SET_MARK_UP_LIST_EXPANDED",
   SET_MARK_UP_STYLE_LIST: "SET_MARK_UP_STYLE_LIST",
   SET_CHAR_WIDTH_MAP: "SET_CHAR_WIDTH_MAP",
-  SET_LOBBY_WIDTH: "SET_LOBBY_WIDTH",
-  SET_LOBBY_HEIGHT: "SET_LOBBY_HEIGHT",
+  SET_LOBBY_SIZE: "SET_LOBBY_SIZE",
+  SET_LOBBY_CONFIG: "SET_LOBBY_CONFIG",
+  SET_TOP_FRAME: "SET_TOP_FRAME",
 };
 
+export interface FrameHeight {
+  index: number
+  height: number
+  top: number
+  orderIndex: number
+}
+
+export interface LobbySize {
+  height: number;
+  width: number;
+}
+
 export interface LobbyConfig {
-  totalHeight: number
-  lobbyHeight: number
-  frameHeightList: FrameHeight[]
+  totalHeight: number;
+  lobbyHeight: number;
+  lobbyWidth: number;
+  frameHeightList: FrameHeight[];
+  topFrame: FrameHeight;
 }
 
 export interface Config {
-  isUploaded: boolean
-  isFilterBound: boolean
-  isMarkUpListExpanded: boolean
-  charWidthMap: Map<string, number>
-  markUpStyleList: MarkUpStyle[]
-  lobbyWidth: number
-  lobbyHeight: number
+  isUploaded: boolean;
+  isFilterBound: boolean;
+  isMarkUpListExpanded: boolean;
+  charWidthMap: Map<string, number>;
+  markUpStyleList: MarkUpStyle[];
+  lobbyConfig: LobbyConfig;
 }
+
 export type ConfigState = Config;
 
 export interface SetFilterBind {
@@ -47,14 +61,19 @@ export interface SetCharWidthMap {
   payload: Map<string, number>;
 }
 
-export interface SetLobbyWidth {
-  type: typeof ConfigTypes.SET_LOBBY_WIDTH;
-  payload: number;
+export interface SetLobbySize {
+  type: typeof ConfigTypes.SET_LOBBY_SIZE;
+  payload: LobbySize;
 }
 
-export interface SetLobbyHeight {
-  type: typeof ConfigTypes.SET_LOBBY_HEIGHT;
-  payload: number;
+export interface SetLobbyConfig {
+  type: typeof ConfigTypes.SET_LOBBY_CONFIG;
+  payload: LobbyConfig;
+}
+
+export interface SetTopFrame {
+  type: typeof ConfigTypes.SET_TOP_FRAME;
+  payload: FrameHeight;
 }
 
 export type ConfigActions =
@@ -62,5 +81,6 @@ export type ConfigActions =
   | SetMarkUpListExpanded
   | SetMarkUpStyleList
   | SetCharWidthMap
-  | SetLobbyWidth
-  | SetLobbyHeight;
+  | SetLobbySize
+  | SetLobbyConfig
+  | SetTopFrame;

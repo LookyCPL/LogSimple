@@ -1,4 +1,4 @@
-import React, {useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { markUpStyleList } from "../../utils/initialMarkUpListStyle";
 import { selectFrameList } from "../../redux/selectors/frameListSelectors";
@@ -6,13 +6,13 @@ import { Frame } from "../Frame/Frame";
 import { selectMarkupList } from "../../redux/selectors/markUpListSelectors";
 import { markRowHandle, markUpListSetHandle, markUpStyleListHandle } from "../../utils/methods";
 import { setFrameList } from "../../redux/actions/frameListActions";
-import { setMarkUpStyleList } from "../../redux/actions/configActions";
+import { setMarkUpStyleList, setTopFrame } from "../../redux/actions/configActions";
 import { setMarkUpList } from "../../redux/actions/markUpListActions";
-import { FrameItem, LobbyConfig } from "../../types";
+import { FrameItem } from "../../types";
+import { selectConfig } from "../../redux/selectors/configSelectors";
 
 export interface FrameListSliderProps {
     scrollUpSize: number
-    lobbyConfig: LobbyConfig
     framesOnPlace: FrameItem[]
 }
 
@@ -24,12 +24,12 @@ const getStyle = (height: number, top: number) => {
 };
 
 export const FrameListSlider = (props: FrameListSliderProps) => {
-    const { scrollUpSize, lobbyConfig, framesOnPlace } = props;
+    const { scrollUpSize, framesOnPlace } = props;
     const dispatch = useDispatch();
     const frameList = useSelector(selectFrameList);
     const markUpList = useSelector(selectMarkupList);
-    const { lobbyHeight, totalHeight, frameHeightList } = lobbyConfig;
-    const [topFrame, setTopFrame] = useState(frameHeightList[0]);
+    const { lobbyConfig } = useSelector(selectConfig);
+    const { lobbyHeight, totalHeight, frameHeightList, topFrame } = lobbyConfig;
 
     const markHandle = (index: number, isMarked: boolean) => {
         if (
@@ -64,50 +64,51 @@ export const FrameListSlider = (props: FrameListSliderProps) => {
         }
     };
 
-    const makeSliderContent = () => {
-      let currentTopFrame = topFrame;
+    const handleTopFrameChange = useEffect(() => {
+            if (topFrame.top + topFrame.height <= scrollUpSize && topFrame.orderIndex < frameHeightList.length - 1) {
+                dispatch(setTopFrame(frameHeightList[topFrame.orderIndex + 1]));
+            } else if (topFrame.top > scrollUpSize && topFrame.orderIndex !== 0) {
+                dispatch(setTopFrame(frameHeightList[topFrame.orderIndex - 1]));
+            }
+    }, [scrollUpSize]);
+
+
+    const MakeSliderContent = useMemo(() => {
       let counter: number = 0;
       let end: number = 0;
 
-      if (topFrame.top + topFrame.height <= scrollUpSize && topFrame.orderIndex < frameHeightList.length - 1) {
-        currentTopFrame = frameHeightList[topFrame.index + 1];
-        setTopFrame(currentTopFrame);
-      } else if (topFrame.top > scrollUpSize && topFrame.orderIndex !== 0) {
-        currentTopFrame = frameHeightList[topFrame.index - 1];
-        setTopFrame(currentTopFrame);
-      }
+      counter = topFrame.height + topFrame.top - scrollUpSize;
 
-      counter = currentTopFrame.height + currentTopFrame.top - scrollUpSize;
-
-      for (let g = currentTopFrame.orderIndex + 1; g < frameHeightList.length; g++) {
+      for (let g = topFrame.orderIndex + 1; g < frameHeightList.length; g++) {
         counter += frameHeightList[g].height;
 
-        if (counter >= lobbyHeight) {
+        if (counter >= lobbyHeight + topFrame.height) {
           end = g;
           break;
+        } else {
+          end = frameHeightList.length - 1;
         }
       }
-
-        return (
-          <div className={"slider"} style={getStyle(totalHeight, 0)}>
-            {framesOnPlace.slice(topFrame.orderIndex, end + 1).map((frame) => {
-              const framePars = frameHeightList.find(
-                (i) => i.index === frame.index
-              );
-              return (
-                <Frame
-                  // @ts-ignore
-                  style={getStyle(framePars.height, framePars.top)}
-                  frame={frame}
-                  onClick={() => markHandle(frame.index, !frame.isMarked)}
-                />
-              );
-            })}
-          </div>
-        );
-    };
+      return (
+        <div className={"slider"} style={getStyle(totalHeight, 0)}>
+          {framesOnPlace.slice(topFrame.orderIndex, end + 1).map((frame) => {
+            const framePars = frameHeightList.find(
+              (i) => i.index === frame.index
+            );
+            return (
+              <Frame
+                // @ts-ignore
+                style={getStyle(framePars.height, framePars.top)}
+                frame={frame}
+                onClick={() => markHandle(frame.index, !frame.isMarked)}
+              />
+            );
+          })}
+        </div>
+      );
+    }, [topFrame]);
 
     return (
-        <div>{makeSliderContent()}</div>
+        <div>{MakeSliderContent}</div>
     );
 }

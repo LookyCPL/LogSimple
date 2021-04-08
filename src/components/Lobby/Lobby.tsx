@@ -1,14 +1,15 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useMemo, useCallback, forwardRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./Lobby.scss";
 import "../App/App.scss";
 import { selectConfig } from "../../redux/selectors/configSelectors";
 import { selectFilterList } from "../../redux/selectors/filterSelectors";
 import { selectFrameList } from "../../redux/selectors/frameListSelectors";
-import { setLobbyHeight, setLobbyWidth } from "../../redux/actions/configActions";
-import { Filter, FrameHeight, FrameItem } from "../../types";
+import {setLobbyConfig, setLobbySize as setLobbySizeAction} from "../../redux/actions/configActions";
+import { Filter, FrameHeight, FrameItem, LobbySize } from "../../types";
 import { averageCharLength } from "../../utils/valueList";
 import { FrameListSlider } from "../FrameListSlider/FrameListSlider";
+import { useCombinedRefs } from "../../utils/useCombinedRefs";
 
 export const evaluateFrameVisibility = (isFilterBound: boolean, filterList: Filter[], frame: FrameItem) => {
   const listByOnState = filterList.filter((f) => f.isFilterOn);
@@ -26,63 +27,70 @@ const generateFrameHeight = (dataLengthList: number[], maxCharCountPerLine: numb
   let height = 40.0;
 
   dataLengthList.forEach((line) => {
-  height += Math.ceil(line/maxCharCountPerLine) * 18;
+  height += Math.ceil(line/maxCharCountPerLine) * 18.4;
   });
-
     return height;
 };
 
-
-export const Lobby = () => {
+export const Lobby = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const lobbyRef = useRef(null);
+  const combinedRef = useCombinedRefs(lobbyRef, ref);
   const frameList = useSelector(selectFrameList);
   const filterList = useSelector(selectFilterList);
-  const { isFilterBound, lobbyWidth, lobbyHeight } = useSelector(selectConfig);
+  const { isFilterBound, lobbyConfig } = useSelector(selectConfig);
+  const { lobbyWidth, lobbyHeight } = lobbyConfig;
   const framesOnPlace = frameList.filter((frame) => evaluateFrameVisibility(isFilterBound, filterList, frame));
   const maxCharCountPerLine = Math.ceil(lobbyWidth / averageCharLength);
   const [scrollUpSize, setScrollUp] = useState(0);
-
+console.log('hmm');
   const handleScroll = () => {
-    if (lobbyRef.current === null) return;
+    if (combinedRef.current === null) return;
     // @ts-ignore
     // console.log(lobbyRef.current.scrollTop);
     // @ts-ignore
-    setScrollUp(lobbyRef.current.scrollTop);
+    setScrollUp(combinedRef.current.scrollTop);
   }
 
-  const getLobbyConfig = useCallback(() => {
-
+  const getLobbyConfig = useMemo(() => {
+    console.log(framesOnPlace);
     const frameHeightList: FrameHeight[] = [];
     let totalHeight: number = 0;
 
     framesOnPlace.forEach((frame, i) => {
-      const height = generateFrameHeight(frame.dataLengthList, maxCharCountPerLine);
+      const height = generateFrameHeight(
+        frame.dataLengthList,
+        maxCharCountPerLine
+      );
 
-      frameHeightList.push(
-          {
-            index: frame.index,
-            height: height,
-            top: totalHeight,
-            orderIndex: i,
-          }
-      )
+      frameHeightList.push({
+        index: frame.index,
+        height: height,
+        top: totalHeight,
+        orderIndex: i,
+      });
       totalHeight += height;
     });
 
-    return {
-      totalHeight: totalHeight,
-      lobbyHeight: lobbyHeight,
-      frameHeightList: frameHeightList
-    };
+    dispatch(
+      setLobbyConfig({
+        totalHeight: totalHeight,
+        lobbyHeight: lobbyHeight,
+        lobbyWidth: lobbyWidth,
+        frameHeightList: frameHeightList,
+        topFrame: frameHeightList[0]
+      })
+    );
   },[framesOnPlace]);
-
 
   const setLobbySize = useEffect(() => {
     const content = document.getElementById("lobby");
     if (content) {
-      dispatch(setLobbyWidth(Math.ceil(content.getBoundingClientRect().width - 60)));
-      dispatch(setLobbyHeight(Math.ceil(content.getBoundingClientRect().height)));
+      const lobbySize: LobbySize = {
+        height: Math.ceil(content.getBoundingClientRect().height),
+        width: Math.ceil(content.getBoundingClientRect().width - 60),
+      };
+      dispatch(setLobbySizeAction(lobbySize));
     }
   }, []);
 
@@ -90,14 +98,13 @@ export const Lobby = () => {
     <div
       id={"lobby"}
       className={"lobby"}
-      ref={lobbyRef}
+      ref={combinedRef}
       onScrollCapture={handleScroll}
     >
-      <FrameListSlider
+      {framesOnPlace.length > 0 && <FrameListSlider
           scrollUpSize={scrollUpSize}
-          lobbyConfig={getLobbyConfig()}
           framesOnPlace={framesOnPlace}
-      />
+      />}
     </div>
   );
-};
+});
