@@ -19,7 +19,7 @@ export const MarkUpList = (props: MarkUpListProps) => {
     const frameList = useSelector(selectFrameList);
     const filterList = useSelector(selectFilterList);
     const markUpList = useSelector(selectMarkupList);
-    const { isFilterBound, lobbyConfig } = useSelector(selectConfig);
+    const { isFilterBound } = useSelector(selectConfig);
     const { isMarkUpListExpanded } = useSelector(selectConfig);
 
     const hoverHandle = (index: number, className: string) => {

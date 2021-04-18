@@ -1,16 +1,14 @@
-import React from "react";
-import CSS from 'csstype';
+import React, { CSSProperties } from "react";
 import "./Frame.scss";
 import { useSelector } from "react-redux";
 import { filterIndexListMerge } from "../../utils/methods";
-import { selectConfig } from "../../redux/selectors/configSelectors";
 import { Filter, FilterItem, FrameItem, IndexItem } from "../../types";
 import { selectFilterList } from "../../redux/selectors/filterSelectors";
 
 export interface FrameProps {
     frame: FrameItem
     onClick: () => void
-    style: CSS.Properties
+    style: CSSProperties
 }
 
 const prepareData = (filterItemList: FilterItem[], data: string, filterList: Filter[]) => {
@@ -50,20 +48,15 @@ export const Frame = (props: FrameProps) => {
     const { frame, onClick, style } = props;
     const { index, isMarked, colorClass, key, data, filterItemList} = frame;
     const filterList = useSelector(selectFilterList);
-    const { lobbyConfig } = useSelector(selectConfig);
-
-    const dataStyle = {
-        width: lobbyConfig.lobbyWidth,
-    };
 
     return (
-        <div id={index + " - " + key} style={style} className={'frame'}>
+        <div id={index + " - " + key}  style={style} className={'frame'}>
             <div className={isMarked ? "key marked " : "key"}>
                 <button className={colorClass} key={key} onClick={onClick}>
                     {key}
                 </button>
             </div>
-            <div className="data" style={dataStyle}>
+            <div className="data">
                 <span>{prepareData(filterItemList, data, filterList)}</span>
             </div>
         </div>

@@ -8,7 +8,6 @@ import { selectFrameList } from "../../redux/selectors/frameListSelectors";
 import { selectUploadedFile } from "../../redux/selectors/uploadedFileSelectors";
 import { ModalTypes } from "../../types";
 import "./Header.scss";
-import {CharList} from "../CharList/CharList";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -16,7 +15,6 @@ export const Header = () => {
   const filterList = useSelector(selectFilterList);
   const { fileName } = useSelector(selectUploadedFile);
   const { isFilterBound } = useSelector(selectConfig);
-  const { charWidthMap } = useSelector(selectConfig);
 
   const rowCount = getRowCount(isFilterBound, filterList, frameList);
 
@@ -26,7 +24,6 @@ export const Header = () => {
 
   const onClickHandler = () => {
 
-    console.log(charWidthMap);
   };
 
   const clearSession = () => {

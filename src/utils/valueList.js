@@ -26,7 +26,3 @@ export const translateValue = (key, type) => {
   }
   return "";
 };
-
-export const allCharString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.:;,-+*/#&@<>(){}[]§$\"|°%='_`";
-export const charList = allCharString.split("");
-export const averageCharLength = 8.27124543242402;

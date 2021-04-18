@@ -1,110 +1,149 @@
-import React, { useEffect, useRef, useState, useMemo, useCallback, forwardRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {AutoSizer, CellMeasurer, CellMeasurerCache, List, ListRowProps} from "react-virtualized";
 import "./Lobby.scss";
 import "../App/App.scss";
 import { selectConfig } from "../../redux/selectors/configSelectors";
 import { selectFilterList } from "../../redux/selectors/filterSelectors";
 import { selectFrameList } from "../../redux/selectors/frameListSelectors";
-import {setLobbyConfig, setLobbySize as setLobbySizeAction} from "../../redux/actions/configActions";
-import { Filter, FrameHeight, FrameItem, LobbySize } from "../../types";
-import { averageCharLength } from "../../utils/valueList";
-import { FrameListSlider } from "../FrameListSlider/FrameListSlider";
-import { useCombinedRefs } from "../../utils/useCombinedRefs";
+import { setMarkUpStyleList } from "../../redux/actions/configActions";
+import { Filter, FrameItem } from "../../types";
+import { MarkUpList } from "../MarkUpList/MarkUpList";
+import { Frame } from "../Frame/Frame";
+import { markUpStyleList } from "../../utils/initialMarkUpListStyle";
+import {
+  markRowHandle,
+  markUpListSetHandle,
+  markUpStyleListHandle,
+} from "../../utils/methods";
+import { setFrameList } from "../../redux/actions/frameListActions";
+import { setMarkUpList } from "../../redux/actions/markUpListActions";
+import { selectMarkupList } from "../../redux/selectors/markUpListSelectors";
 
-export const evaluateFrameVisibility = (isFilterBound: boolean, filterList: Filter[], frame: FrameItem) => {
+export const evaluateFrameVisibility = (
+  isFilterBound: boolean,
+  filterList: Filter[],
+  frame: FrameItem
+) => {
   const listByOnState = filterList.filter((f) => f.isFilterOn);
 
   if (listByOnState.length === 0) return true;
-  if (listByOnState.length > 0 && frame.filterItemList.length === 0) return false;
+  if (listByOnState.length > 0 && frame.filterItemList.length === 0)
+    return false;
 
   const filterKeys = listByOnState.map((f) => f.key);
-  const matchCount = frame.filterItemList.filter((fr) => filterKeys.indexOf(fr.id) > -1).length;
-  return isFilterBound && matchCount === listByOnState.length || !isFilterBound && matchCount > 0;
+  const matchCount = frame.filterItemList.filter(
+    (fr) => filterKeys.indexOf(fr.id) > -1
+  ).length;
+  return (
+    (isFilterBound && matchCount === listByOnState.length) ||
+    (!isFilterBound && matchCount > 0)
+  );
 };
 
-const generateFrameHeight = (dataLengthList: number[], maxCharCountPerLine: number) => {
-
-  let height = 40.0;
-
-  dataLengthList.forEach((line) => {
-  height += Math.ceil(line/maxCharCountPerLine) * 18.4;
-  });
-    return height;
-};
-
-export const Lobby = forwardRef((props, ref) => {
+export const Lobby = () => {
   const dispatch = useDispatch();
-  const lobbyRef = useRef(null);
-  const combinedRef = useCombinedRefs(lobbyRef, ref);
   const frameList = useSelector(selectFrameList);
   const filterList = useSelector(selectFilterList);
-  const { isFilterBound, lobbyConfig } = useSelector(selectConfig);
-  const { lobbyWidth, lobbyHeight } = lobbyConfig;
-  const framesOnPlace = frameList.filter((frame) => evaluateFrameVisibility(isFilterBound, filterList, frame));
-  const maxCharCountPerLine = Math.ceil(lobbyWidth / averageCharLength);
-  const [scrollUpSize, setScrollUp] = useState(0);
-console.log('hmm');
-  const handleScroll = () => {
-    if (combinedRef.current === null) return;
-    // @ts-ignore
-    // console.log(lobbyRef.current.scrollTop);
-    // @ts-ignore
-    setScrollUp(combinedRef.current.scrollTop);
-  }
+  const markUpList = useSelector(selectMarkupList);
+  const { isFilterBound } = useSelector(selectConfig);
+  const [scrollToIndex, setScrollToIndex] = useState<number>();
+  const framesOnPlace = useMemo(
+    () =>
+      frameList.filter((frame) =>
+        evaluateFrameVisibility(isFilterBound, filterList, frame)
+      ),
+    [isFilterBound, filterList, frameList]
+  );
+  const cache = useRef(
+    new CellMeasurerCache({
+      fixedWidth: true,
+      minHeight: 40,
+      defaultHeight: 100,
+    })
+  );
 
-  const getLobbyConfig = useMemo(() => {
-    console.log(framesOnPlace);
-    const frameHeightList: FrameHeight[] = [];
-    let totalHeight: number = 0;
-
-    framesOnPlace.forEach((frame, i) => {
-      const height = generateFrameHeight(
-        frame.dataLengthList,
-        maxCharCountPerLine
+  const markHandle = (index: number, isMarked: boolean) => {
+    if (
+      (isMarked &&
+        markUpStyleList.filter((item) => item === null).length !==
+          markUpStyleList.length) ||
+      !isMarked
+    ) {
+      let newMarkUpList = markUpListSetHandle(
+        frameList,
+        index,
+        markUpList,
+        !isMarked,
+        markUpStyleList
       );
+      const target = markUpList.filter((item) => item.index === index)[0];
 
-      frameHeightList.push({
-        index: frame.index,
-        height: height,
-        top: totalHeight,
-        orderIndex: i,
-      });
-      totalHeight += height;
-    });
-
-    dispatch(
-      setLobbyConfig({
-        totalHeight: totalHeight,
-        lobbyHeight: lobbyHeight,
-        lobbyWidth: lobbyWidth,
-        frameHeightList: frameHeightList,
-        topFrame: frameHeightList[0]
-      })
-    );
-  },[framesOnPlace]);
-
-  const setLobbySize = useEffect(() => {
-    const content = document.getElementById("lobby");
-    if (content) {
-      const lobbySize: LobbySize = {
-        height: Math.ceil(content.getBoundingClientRect().height),
-        width: Math.ceil(content.getBoundingClientRect().width - 60),
-      };
-      dispatch(setLobbySizeAction(lobbySize));
+      dispatch(
+        setFrameList(markRowHandle(frameList, index, isMarked, markUpStyleList))
+      );
+      dispatch(setMarkUpList(newMarkUpList));
+      dispatch(
+        setMarkUpStyleList(
+          markUpStyleListHandle(
+            !isMarked,
+            target.style.index,
+            markUpStyleList,
+            target.style
+          )
+        )
+      );
     }
+  };
+
+  const renderRow = ({ index, parent, style }: ListRowProps) => {
+    const frame = framesOnPlace[index];
+    return (
+      <CellMeasurer
+        key={frame.key}
+        cache={cache.current}
+        parent={parent}
+        columnIndex={0}
+        rowIndex={frame.index}
+      >
+        <Frame
+          style={style}
+          frame={frame}
+          onClick={() => markHandle(frame.index, !frame.isMarked)}
+        />
+      </CellMeasurer>
+    );
+  };
+
+  const clickHandle = useCallback((index: number) => {
+    setScrollToIndex(index);
+    console.log(index);
   }, []);
 
+   useEffect(() => {
+     setScrollToIndex(undefined);
+   }, [scrollToIndex]);
+
   return (
-    <div
-      id={"lobby"}
-      className={"lobby"}
-      ref={combinedRef}
-      onScrollCapture={handleScroll}
-    >
-      {framesOnPlace.length > 0 && <FrameListSlider
-          scrollUpSize={scrollUpSize}
-          framesOnPlace={framesOnPlace}
-      />}
+    <div className={"lobby"}>
+      <MarkUpList onClick={clickHandle} />
+      <div className={'lobby-content'}>
+        <AutoSizer>
+          {({ height, width }) => (
+              <List
+                  height={height}
+                  width={width}
+                  rowCount={framesOnPlace.length}
+                  deferredMeasurementCache={cache.current}
+                  rowHeight={cache.current.rowHeight}
+                  rowRenderer={renderRow}
+                  overscanRowCount={3}
+                  scrollToAlignment={"start"}
+                  scrollToIndex={scrollToIndex}
+              />
+          )}
+        </AutoSizer>
+      </div>
     </div>
   );
-});
+};
